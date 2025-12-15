@@ -1,0 +1,142 @@
+{
+  "tu-bi": {
+    "type": "tu-bi",
+    "name": "Từ Bi",
+    "value": 20,
+    "description": "Hồi 20 HP + Passive: Hồi thêm 5 HP cho đồng minh mỗi turn",
+    "color": "bg-gradient-to-br from-yellow-500 to-orange-500",
+    "icon": "🙏",
+    "image": "/tubi.jpg",
+    "passive": "compassion-heal"
+  },
+  "bat-dong-tam": {
+    "type": "bat-dong-tam",
+    "name": "Bất Động Tâm",
+    "value": 0,
+    "description": "Miễn nhiễm damage lần đầu trong 2 turn + Giảm 30% damage",
+    "color": "bg-gradient-to-br from-green-400 to-emerald-600",
+    "icon": "🧘",
+    "image": "/batdongtam.jpg",
+    "passive": "immunity-and-reduction"
+  },
+  "nhan-qua": {
+    "type": "nhan-qua",
+    "name": "Nhân Quả",
+    "value": 0,
+    "description": "Counter: Phản lại x2.5 damage",
+    "color": "bg-gradient-to-br from-purple-600 to-indigo-800",
+    "icon": "☸️",
+    "image": "/nhanqua.jpg",
+    "passive": "counter-2.5x"
+  },
+  "loi-cau-nguyen": {
+    "type": "loi-cau-nguyen",
+    "name": "Lời Cầu Nguyện",
+    "value": 25,
+    "description": "Hồi 25 HP + Bonus: Nếu HP < 30%, hồi thêm 15 HP",
+    "color": "bg-gradient-to-br from-white to-gray-300",
+    "icon": "🙏",
+    "image": "/loicaunguyen.jpg",
+    "passive": "low-hp-bonus"
+  },
+  "phep-la": {
+    "type": "phep-la",
+    "name": "Phép Lạ",
+    "value": 0,
+    "description": "Hồi sinh với 50 HP khi chết (1 lần/game)",
+    "color": "bg-gradient-to-br from-yellow-300 to-amber-500",
+    "icon": "🕊️",
+    "image": "/phepla.png",
+    "passive": "revive-once"
+  },
+  "thap-tu-giao": {
+    "type": "thap-tu-giao",
+    "name": "Thập Tự Giáo",
+    "value": -18,
+    "description": "Gây 18 damage + Nếu đối thủ đã nhận damage turn trước, gây thêm 12 damage",
+    "color": "bg-gradient-to-br from-red-700 to-red-900",
+    "icon": "⚔️",
+    "image": "/thaptugiao.jpg",
+    "passive": "combo-damage"
+  },
+  "tam-giao-hop-nhat": {
+    "type": "tam-giao-hop-nhat",
+    "name": "Tam Giáo Hợp Nhất",
+    "value": 0,
+    "description": "Chọn: Phật (Hồi 15 HP) / Đạo (+10 DEF 2 turn) / Nho (+10 DMG lần đánh tiếp)",
+    "color": "bg-gradient-to-br from-blue-500 via-yellow-500 to-red-500",
+    "icon": "👁️",
+    "image": "/tamgiaohopnhat.jpg",
+    "passive": "choice-3-paths"
+  },
+  "thien-nhan": {
+    "type": "thien-nhan",
+    "name": "Thiên Nhãn",
+    "value": 0,
+    "description": "Xem 3 thẻ tiếp của đối thủ + Nếu có thẻ ATK, được đặt counter miễn phí",
+    "color": "bg-gradient-to-br from-purple-600 to-indigo-700",
+    "icon": "🔮",
+    "image": "/thiennhan.jpg",
+    "passive": "preview-cards"
+  },
+  "tu-tai-gia": {
+    "type": "tu-tai-gia",
+    "name": "Tu Tại Gia",
+    "value": 15,
+    "description": "Hồi 15 HP + Rút 1 thẻ (Không cần trả lời câu hỏi)",
+    "color": "bg-gradient-to-br from-amber-700 to-yellow-900",
+    "icon": "🏠",
+    "image": "/tutaigia.jpg",
+    "passive": "draw-card"
+  },
+  "tinh-than-dan-toc": {
+    "type": "tinh-than-dan-toc",
+    "name": "Tinh Thần Dân Tộc",
+    "value": -15,
+    "description": "Gây 15 damage + Nếu HP đối thủ > 70%, gây thêm 15 damage",
+    "color": "bg-gradient-to-br from-yellow-600 to-amber-800",
+    "icon": "🇻🇳",
+    "image": "/tinhThanDanToc.jpg",
+    "passive": "execute-bonus"
+  },
+  "an-dien": {
+    "type": "an-dien",
+    "name": "Ân Điển",
+    "value": 18,
+    "description": "Hồi 18 HP + Nếu trả lời đúng ngay lần 1, hồi thêm 12 HP",
+    "color": "bg-gradient-to-br from-blue-400 to-blue-600",
+    "icon": "🕊️",
+    "image": "/andien.jpg",
+    "passive": "perfect-answer-bonus"
+  },
+  "truyen-giao": {
+    "type": "truyen-giao",
+    "name": "Truyền Giáo",
+    "value": -12,
+    "description": "Gây 12 damage + Làm yếu: Đối thủ nhận +5 damage mọi nguồn (2 turn)",
+    "color": "bg-gradient-to-br from-orange-500 to-red-600",
+    "icon": "📖",
+    "image": "/truyengiao.jpg",
+    "passive": "weaken-debuff"
+  },
+  "bon-cung-thanh-mau": {
+    "type": "bon-cung-thanh-mau",
+    "name": "Bốn Cung Thánh Mẫu",
+    "value": 0,
+    "description": "Chọn: Thiên (20 DMG) / Địa (+20 DEF) / Thủy (Hồi 20 HP) / Sơn lâm (Độc 5 HP/turn x3)",
+    "color": "bg-gradient-to-br from-pink-400 via-blue-400 to-yellow-400",
+    "icon": "👸",
+    "image": "/boncungthanhmau.jpg",
+    "passive": "choice-4-elements"
+  },
+  "hau-dong": {
+    "type": "hau-dong",
+    "name": "Hầu Đồng",
+    "value": 0,
+    "description": "Copy 1 thẻ đã dùng trong game (random)",
+    "color": "bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500",
+    "icon": "💃",
+    "image": "/haudong.jpg",
+    "passive": "copy-card"
+  }
+}

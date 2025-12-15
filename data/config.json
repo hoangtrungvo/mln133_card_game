@@ -1,0 +1,6 @@
+{
+  "maxRooms": 10,
+  "defaultPlayerHealth": 100,
+  "cardsPerPlayer": 5,
+  "enableLeaderboard": true
+}

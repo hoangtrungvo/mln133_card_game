@@ -1,0 +1,24 @@
+[
+  {
+    "playerName": "asd",
+    "wins": 1,
+    "score": 195,
+    "timeFinished": 1765642747155,
+    "gamesPlayed": 1,
+    "totalDamageDealt": 114,
+    "totalQuestionPoints": 80,
+    "correctAnswers": 8,
+    "partialAnswers": 0
+  },
+  {
+    "playerName": "bxc",
+    "wins": 0,
+    "score": 0,
+    "timeFinished": 0,
+    "gamesPlayed": 1,
+    "totalDamageDealt": 15,
+    "totalQuestionPoints": 20,
+    "correctAnswers": 2,
+    "partialAnswers": 0
+  }
+]

@@ -1,0 +1,1205 @@
+{
+  "tu-bi": [
+    {
+      "question": "Theo Mác-Lênin tôn giáo là gì?",
+      "answer": "Ý thức đảo lộn về thế giới",
+      "options": [
+        "Ý thức đảo lộn về thế giới",
+        "Chân lý tuyệt đối",
+        "Khoa học xã hội",
+        "Nghệ thuật"
+      ]
+    },
+    {
+      "question": "Đảng Cộng sản Việt Nam thực hiện chính sách gì về tôn giáo?",
+      "answer": "Tôn trọng và bảo đảm quyền tự do tín ngưỡng",
+      "options": [
+        "Cấm tôn giáo",
+        "Tôn trọng và bảo đảm quyền tự do tín ngưỡng",
+        "Bắt buộc theo đạo",
+        "Hạn chế tôn giáo"
+      ]
+    },
+    {
+      "question": "Hiến pháp 2013 quy định về quyền tự do tín ngưỡng tôn giáo ở điều nào?",
+      "answer": "Điều 24",
+      "options": [
+        "Điều 10",
+        "Điều 24",
+        "Điều 30",
+        "Điều 50"
+      ]
+    },
+    {
+      "question": "Nhà nước Việt Nam có can thiệp vào giáo lý tôn giáo không?",
+      "answer": "Không",
+      "options": [
+        "Có",
+        "Không",
+        "Tùy trường hợp",
+        "Chỉ với tôn giáo lớn"
+      ]
+    },
+    {
+      "question": "Luật Tín ngưỡng Tôn giáo được Quốc hội thông qua năm nào?",
+      "answer": "2016",
+      "options": [
+        "2010",
+        "2013",
+        "2016",
+        "2020"
+      ]
+    },
+    {
+      "question": "Mác-Lênin cho rằng tôn giáo sẽ biến mất khi nào?",
+      "answer": "Khi xã hội phát triển cao về kinh tế và văn hóa",
+      "options": [
+        "Ngay lập tức",
+        "Khi xã hội phát triển cao về kinh tế và văn hóa",
+        "Không bao giờ",
+        "Khi cấm đoán"
+      ]
+    },
+    {
+      "question": "Đảng ta xác định vấn đề tôn giáo là vấn đề gì?",
+      "answer": "Vấn đề lâu dài trong thời kỳ quá độ lên CNXH",
+      "options": [
+        "Vấn đề ngắn hạn",
+        "Vấn đề lâu dài trong thời kỳ quá độ lên CNXH",
+        "Không quan trọng",
+        "Vấn đề cấp bách"
+      ]
+    },
+    {
+      "question": "Hồ Chí Minh chủ trương gì về đại đoàn kết dân tộc?",
+      "answer": "Đoàn kết tất cả người Việt Nam bất kể tôn giáo",
+      "options": [
+        "Chỉ đoàn kết người không đạo",
+        "Đoàn kết tất cả người Việt Nam bất kể tôn giáo",
+        "Chia rẽ tín đồ",
+        "Hạn chế người có đạo"
+      ]
+    },
+    {
+      "question": "Ai là người sáng lập Đạo Cao Đài?",
+      "answer": "Ngô Văn Chiêu",
+      "options": [
+        "Huỳnh Phú Sổ",
+        "Ngô Văn Chiêu",
+        "Phật Thầy Tây An",
+        "Trần Quang Vinh"
+      ]
+    },
+    {
+      "question": "Ai là người sáng lập Đạo Hòa Hảo?",
+      "answer": "Huỳnh Phú Sổ",
+      "options": [
+        "Ngô Văn Chiêu",
+        "Huỳnh Phú Sổ",
+        "Phan Trung Bính",
+        "Lê Văn Trung"
+      ]
+    },
+    {
+      "question": "Theo CNXH khoa học xây dựng CNXH phải dựa vào lực lượng nào?",
+      "answer": "Toàn dân bao gồm cả tín đồ tôn giáo",
+      "options": [
+        "Chỉ người không đạo",
+        "Toàn dân bao gồm cả tín đồ tôn giáo",
+        "Chỉ Đảng viên",
+        "Chỉ công nhân"
+      ]
+    },
+    {
+      "question": "Đặc điểm nào của Đạo Mẫu Việt Nam?",
+      "answer": "Thờ các vị thánh mẫu bốn cung",
+      "options": [
+        "Thờ một thần",
+        "Thờ các vị thánh mẫu bốn cung",
+        "Không thờ thần",
+        "Thờ Phật"
+      ]
+    },
+    {
+      "question": "Đạo Phật Việt Nam thuộc hệ phái nào?",
+      "answer": "Bắc tông (Đại thừa)",
+      "options": [
+        "Nam tông (Tiểu thừa)",
+        "Bắc tông (Đại thừa)",
+        "Kim cương thừa",
+        "Mật tông"
+      ]
+    },
+    {
+      "question": "Nhà thờ Đức Bà Sài Gòn xây dựng năm nào?",
+      "answer": "1880",
+      "options": [
+        "1850",
+        "1880",
+        "1900",
+        "1920"
+      ]
+    },
+    {
+      "question": "Giáo phận Công giáo đầu tiên ở Việt Nam là?",
+      "answer": "Giáo phận Bắc Kỳ",
+      "options": [
+        "Giáo phận Sài Gòn",
+        "Giáo phận Bắc Kỳ",
+        "Giáo phận Huế",
+        "Giáo phận Đà Nẵng"
+      ]
+    },
+    {
+      "question": "Mác cho rằng tôn giáo tồn tại do nguyên nhân gì?",
+      "answer": "Nguyên nhân xã hội và nhận thức",
+      "options": [
+        "Do thần linh",
+        "Nguyên nhân xã hội và nhận thức",
+        "Do di truyền",
+        "Do bản năng"
+      ]
+    },
+    {
+      "question": "Theo Lê-nin tôn giáo có vai trò gì trong xã hội cũ?",
+      "answer": "Công cụ thống trị của giai cấp bóc lột",
+      "options": [
+        "Giải phóng con người",
+        "Công cụ thống trị của giai cấp bóc lột",
+        "Phát triển xã hội",
+        "Tiến bộ xã hội"
+      ]
+    },
+    {
+      "question": "Đảng ta chủ trương đối với hoạt động tôn giáo như thế nào?",
+      "answer": "Bảo đảm quyền sinh hoạt tôn giáo hợp pháp",
+      "options": [
+        "Cấm hoạt động",
+        "Bảo đảm quyền sinh hoạt tôn giáo hợp pháp",
+        "Hạn chế mọi hoạt động",
+        "Kiểm soát chặt chẽ"
+      ]
+    },
+    {
+      "question": "Lễ hội chùa Hương diễn ra ở tỉnh nào?",
+      "answer": "Hà Nội",
+      "options": [
+        "Ninh Bình",
+        "Hà Nội",
+        "Hà Nam",
+        "Hải Phòng"
+      ]
+    },
+    {
+      "question": "Thiền phái nào nổi tiếng thời Trần?",
+      "answer": "Thiền phái Trúc Lâm",
+      "options": [
+        "Thiền phái Lâm Tế",
+        "Thiền phái Trúc Lâm",
+        "Thiền phái Tào Động",
+        "Thiền phái Vô Ngôn Thông"
+      ]
+    }
+  ],
+  "bat-dong-tam": [
+    {
+      "question": "Mác nói tôn giáo là thuốc phiện của nhân dân có nghĩa gì?",
+      "answer": "Tôn giáo làm con người quên đi khổ đau hiện tại",
+      "options": [
+        "Tôn giáo là ma túy",
+        "Tôn giáo làm con người quên đi khổ đau hiện tại",
+        "Tôn giáo độc hại",
+        "Tôn giáo gây nghiện"
+      ]
+    },
+    {
+      "question": "Theo CNXH khoa học vấn đề tôn giáo sẽ được giải quyết như thế nào?",
+      "answer": "Tự tiêu vong khi điều kiện kinh tế xã hội phát triển",
+      "options": [
+        "Cấm đoán ngay",
+        "Tự tiêu vong khi điều kiện kinh tế xã hội phát triển",
+        "Bắt buộc bỏ đạo",
+        "Duy trì mãi mãi"
+      ]
+    },
+    {
+      "question": "Đảng ta khẳng định tín đồ các tôn giáo là gì?",
+      "answer": "Bộ phận không tách rời của khối đại đoàn kết dân tộc",
+      "options": [
+        "Giai cấp thấp",
+        "Bộ phận không tách rời của khối đại đoàn kết dân tộc",
+        "Kẻ thù",
+        "Người lạc hậu"
+      ]
+    },
+    {
+      "question": "Chủ tịch Hồ Chí Minh nói gì về tín đồ các tôn giáo?",
+      "answer": "Đồng bào có đạo cũng là con cháu Lạc Long Quân",
+      "options": [
+        "Đồng bào có đạo cũng là con cháu Lạc Long Quân",
+        "Tín đồ là kẻ thù",
+        "Không được theo đạo",
+        "Phải bỏ đạo"
+      ]
+    },
+    {
+      "question": "Nguyên tắc nào được Đảng ta đề ra về công tác tôn giáo?",
+      "answer": "Đoàn kết tín đồ vào sự nghiệp xây dựng và bảo vệ Tổ quốc",
+      "options": [
+        "Chia rẽ tín đồ",
+        "Đoàn kết tín đồ vào sự nghiệp xây dựng và bảo vệ Tổ quốc",
+        "Cấm hoạt động tôn giáo",
+        "Hạn chế quyền tín đồ"
+      ]
+    },
+    {
+      "question": "Đại hội XIII của Đảng khẳng định điều gì về tôn giáo?",
+      "answer": "Tôn giáo là nhu cầu tinh thần chính đáng",
+      "options": [
+        "Tôn giáo là mê tín",
+        "Tôn giáo là nhu cầu tinh thần chính đáng",
+        "Tôn giáo lạc hậu",
+        "Tôn giáo nguy hiểm"
+      ]
+    },
+    {
+      "question": "Nguyên tắc nào trong quan hệ Nhà nước và tôn giáo?",
+      "answer": "Các tôn giáo bình đẳng trước pháp luật",
+      "options": [
+        "Tôn giáo lớn được ưu tiên",
+        "Các tôn giáo bình đẳng trước pháp luật",
+        "Phân biệt đối xử",
+        "Ưu tiên tôn giáo mới"
+      ]
+    },
+    {
+      "question": "Luật Tín ngưỡng Tôn giáo có hiệu lực từ năm nào?",
+      "answer": "2018",
+      "options": [
+        "2016",
+        "2017",
+        "2018",
+        "2019"
+      ]
+    },
+    {
+      "question": "Ai là Tổng Giám mục đầu tiên người Việt Nam?",
+      "answer": "Ngô Đình Thục",
+      "options": [
+        "Phaolô Nguyễn Bá Tòng",
+        "Ngô Đình Thục",
+        "Nguyễn Văn Thuận",
+        "Phạm Đình Tụng"
+      ]
+    },
+    {
+      "question": "Chùa nào lâu đời nhất Việt Nam?",
+      "answer": "Chùa Dâu (Bắc Ninh)",
+      "options": [
+        "Chùa Một Cột",
+        "Chùa Dâu (Bắc Ninh)",
+        "Chùa Trấn Quốc",
+        "Chùa Hương"
+      ]
+    },
+    {
+      "question": "Đại lễ Phật đản là ngày mấy âm lịch?",
+      "answer": "15/4",
+      "options": [
+        "8/4",
+        "15/4",
+        "19/5",
+        "1/1"
+      ]
+    },
+    {
+      "question": "Đạo Cao Đài có trụ sở Tòa Thánh ở đâu?",
+      "answer": "Tây Ninh",
+      "options": [
+        "Hà Nội",
+        "Long An",
+        "Tây Ninh",
+        "Sài Gòn"
+      ]
+    },
+    {
+      "question": "Văn khấn của Đạo Cao Đài dùng ngôn ngữ nào?",
+      "answer": "Tiếng Việt",
+      "options": [
+        "Tiếng Hán",
+        "Tiếng Việt",
+        "Tiếng Pháp",
+        "Tiếng Sanskrit"
+      ]
+    },
+    {
+      "question": "Đạo Hòa Hảo có đặc điểm gì?",
+      "answer": "Tu tại gia không cần nghi lễ phức tạp",
+      "options": [
+        "Phải xuất gia",
+        "Tu tại gia không cần nghi lễ phức tạp",
+        "Phải vào chùa",
+        "Phải đi tu"
+      ]
+    },
+    {
+      "question": "Ai là nhà truyền giáo Công giáo đầu tiên vào Việt Nam?",
+      "answer": "Linh mục Alexandre de Rhodes",
+      "options": [
+        "Linh mục Pigneau de Behaine",
+        "Linh mục Alexandre de Rhodes",
+        "Đức Giáo hoàng",
+        "Linh mục Taberd"
+      ]
+    },
+    {
+      "question": "Đạo Cao Đài thờ vị thần nào chủ yếu?",
+      "answer": "Đức Cao Đài Tiên Ông Đại Bồ Tát Ma Ha Tát",
+      "options": [
+        "Đức Phật",
+        "Đức Cao Đài Tiên Ông Đại Bồ Tát Ma Ha Tát",
+        "Đức Chúa Trời",
+        "Allah"
+      ]
+    },
+    {
+      "question": "Đạo Hòa Hảo tu theo hình thức nào?",
+      "answer": "Tu tại gia",
+      "options": [
+        "Xuất gia",
+        "Tu tại gia",
+        "Vào chùa",
+        "Ẩn cư"
+      ]
+    },
+    {
+      "question": "Nhà thờ Cầu Đá ở tỉnh nào?",
+      "answer": "Ninh Bình",
+      "options": [
+        "Hà Nội",
+        "Ninh Bình",
+        "Nam Định",
+        "Thái Bình"
+      ]
+    },
+    {
+      "question": "Nhà thờ chính tòa Phát Diệm ở tỉnh nào?",
+      "answer": "Ninh Bình",
+      "options": [
+        "Nam Định",
+        "Ninh Bình",
+        "Hà Nam",
+        "Hải Dương"
+      ]
+    },
+    {
+      "question": "Lễ Vu Lan là ngày mấy âm lịch?",
+      "answer": "15/7",
+      "options": [
+        "15/4",
+        "15/7",
+        "1/1",
+        "30/12"
+      ]
+    }
+  ],
+  "nhan-qua": [
+    {
+      "question": "Theo Mác-Lênin nguồn gốc của tôn giáo là gì?",
+      "answer": "Từ sự bất lực của con người trước tự nhiên và xã hội",
+      "options": [
+        "Từ thần linh",
+        "Từ sự bất lực của con người trước tự nhiên và xã hội",
+        "Do Đấng sáng tạo",
+        "Từ bản năng"
+      ]
+    },
+    {
+      "question": "Ai nói câu Tôn giáo là tiếng thở dài của sinh vật bị áp bức?",
+      "answer": "Các Mác",
+      "options": [
+        "Các Mác",
+        "Ăng-ghen",
+        "Lê-nin",
+        "Hồ Chí Minh"
+      ]
+    },
+    {
+      "question": "Đảng ta đấu tranh chống khuynh hướng nào trong vấn đề tôn giáo?",
+      "answer": "Cả thái quá và nước đôi",
+      "options": [
+        "Chỉ thái quá",
+        "Chỉ nước đôi",
+        "Cả thái quá và nước đôi",
+        "Không đấu tranh"
+      ]
+    },
+    {
+      "question": "Nghị quyết nào của Đảng về công tác tôn giáo trong tình hình mới?",
+      "answer": "Nghị quyết 25-NQ/TW",
+      "options": [
+        "Nghị quyết 10-NQ/TW",
+        "Nghị quyết 25-NQ/TW",
+        "Nghị quyết 30-NQ/TW",
+        "Nghị quyết 50-NQ/TW"
+      ]
+    },
+    {
+      "question": "Ban Tôn giáo Chính phủ thuộc cơ quan nào?",
+      "answer": "Văn phòng Chính phủ",
+      "options": [
+        "Bộ Nội vụ",
+        "Bộ Văn hóa",
+        "Văn phòng Chính phủ",
+        "UBND"
+      ]
+    },
+    {
+      "question": "Ăng-ghen nói nguồn gốc tôn giáo là gì?",
+      "answer": "Từ quan niệm sai lầm về tự nhiên và xã hội",
+      "options": [
+        "Từ thần linh",
+        "Từ quan niệm sai lầm về tự nhiên và xã hội",
+        "Do trời sinh",
+        "Từ bản năng"
+      ]
+    },
+    {
+      "question": "Lê-nin chỉ ra rằng xoá bỏ tôn giáo bằng cách nào?",
+      "answer": "Không thể bằng cưỡng bức mà phải bằng giáo dục",
+      "options": [
+        "Cấm đoán",
+        "Bắt buộc",
+        "Không thể bằng cưỡng bức mà phải bằng giáo dục",
+        "Dùng vũ lực"
+      ]
+    },
+    {
+      "question": "Đặc điểm nào nổi bật của tôn giáo Việt Nam?",
+      "answer": "Gắn liền với dân tộc và lịch sử dân tộc",
+      "options": [
+        "Hoàn toàn ngoại lai",
+        "Gắn liền với dân tộc và lịch sử dân tộc",
+        "Không liên quan văn hóa",
+        "Chỉ ở thành thị"
+      ]
+    },
+    {
+      "question": "Thánh địa Cao Đài ở tỉnh nào?",
+      "answer": "Tây Ninh",
+      "options": [
+        "Hà Nội",
+        "Long An",
+        "Tây Ninh",
+        "Đồng Nai"
+      ]
+    },
+    {
+      "question": "Đạo Hòa Hảo phát triển mạnh ở khu vực nào?",
+      "answer": "Đồng bằng sông Cửu Long",
+      "options": [
+        "Đồng bằng Bắc Bộ",
+        "Đồng bằng sông Cửu Long",
+        "Tây Nguyên",
+        "Duyên hải miền Trung"
+      ]
+    },
+    {
+      "question": "Mác chỉ ra bản chất của tôn giáo là gì?",
+      "answer": "Phản ánh sai lầm về thực tại",
+      "options": [
+        "Chân lý tuyệt đối",
+        "Phản ánh sai lầm về thực tại",
+        "Khoa học đích thực",
+        "Triết học cao cấp"
+      ]
+    },
+    {
+      "question": "Lê-nin khẳng định xóa bỏ tôn giáo phải làm gì?",
+      "answer": "Xóa bỏ gốc rễ xã hội của tôn giáo",
+      "options": [
+        "Cấm ngay",
+        "Xóa bỏ gốc rễ xã hội của tôn giáo",
+        "Bắt buộc bỏ đạo",
+        "Tuyên truyền thường xuyên"
+      ]
+    },
+    {
+      "question": "Đảng ta xem xét vấn đề tôn giáo trên lập trường nào?",
+      "answer": "Lập trường giai cấp công nhân",
+      "options": [
+        "Lập trường tư sản",
+        "Lập trường giai cấp công nhân",
+        "Lập trường trung lập",
+        "Lập trường tôn giáo"
+      ]
+    },
+    {
+      "question": "Người Chăm Việt Nam theo tôn giáo nào chủ yếu?",
+      "answer": "Hồi giáo và Bà-la-môn giáo",
+      "options": [
+        "Phật giáo",
+        "Hồi giáo và Bà-la-môn giáo",
+        "Công giáo",
+        "Tin Lành"
+      ]
+    },
+    {
+      "question": "Người Khmer Việt Nam theo tôn giáo nào?",
+      "answer": "Phật giáo Nam tông",
+      "options": [
+        "Phật giáo Bắc tông",
+        "Phật giáo Nam tông",
+        "Công giáo",
+        "Tin Lành"
+      ]
+    },
+    {
+      "question": "Ăng-ghen chỉ ra điều gì về tôn giáo trong tương lai?",
+      "answer": "Sẽ tự biến mất khi xã hội phát triển",
+      "options": [
+        "Tồn tại mãi mãi",
+        "Sẽ tự biến mất khi xã hội phát triển",
+        "Phải cấm ngay",
+        "Không thể biến mất"
+      ]
+    },
+    {
+      "question": "Lê-nin chủ trương gì về tuyên truyền chống tôn giáo?",
+      "answer": "Phải khéo léo không làm tổn thương tín đồ",
+      "options": [
+        "Mạnh mẽ công kích",
+        "Phải khéo léo không làm tổn thương tín đồ",
+        "Không tuyên truyền",
+        "Cấm tuyên truyền"
+      ]
+    },
+    {
+      "question": "Đảng ta xử lý thế nào với hành vi lợi dụng tôn giáo?",
+      "answer": "Xử lý nghiêm theo pháp luật",
+      "options": [
+        "Không xử lý",
+        "Xử lý nghiêm theo pháp luật",
+        "Khuyên nhủ",
+        "Bỏ qua"
+      ]
+    },
+    {
+      "question": "Thánh tịch Tây An của Đạo Hòa Hảo ở tỉnh nào?",
+      "answer": "An Giang",
+      "options": [
+        "Kiên Giang",
+        "An Giang",
+        "Cần Thơ",
+        "Đồng Tháp"
+      ]
+    },
+    {
+      "question": "Phật giáo Việt Nam có bao nhiêu tông phái chính?",
+      "answer": "Nhiều tông phái",
+      "options": [
+        "Một tông",
+        "Nhiều tông phái",
+        "Hai tông",
+        "Ba tông"
+      ]
+    }
+  ],
+  "loi-cau-nguyen": [
+    {
+      "question": "Theo Lê-nin thái độ của Đảng đối với tôn giáo là gì?",
+      "answer": "Kiên quyết đấu tranh về tư tưởng nhưng tôn trọng quyền tự do",
+      "options": [
+        "Cấm đoán",
+        "Kiên quyết đấu tranh về tư tưởng nhưng tôn trọng quyền tự do",
+        "Ép buộc bỏ đạo",
+        "Thờ ơ"
+      ]
+    },
+    {
+      "question": "Việt Nam có bao nhiêu tôn giáo được công nhận?",
+      "answer": "16",
+      "options": [
+        "10",
+        "13",
+        "16",
+        "20"
+      ]
+    },
+    {
+      "question": "Đạo nào là tôn giáo bản địa của Việt Nam?",
+      "answer": "Đạo Cao Đài và Đạo Hòa Hảo",
+      "options": [
+        "Phật giáo",
+        "Công giáo",
+        "Đạo Cao Đài và Đạo Hòa Hảo",
+        "Tin Lành"
+      ]
+    },
+    {
+      "question": "Phật giáo truyền vào Việt Nam từ thế kỷ nào?",
+      "answer": "Thế kỷ II",
+      "options": [
+        "Thế kỷ I",
+        "Thế kỷ II",
+        "Thế kỷ X",
+        "Thế kỷ XV"
+      ]
+    },
+    {
+      "question": "Công giáo truyền vào Việt Nam từ thế kỷ nào?",
+      "answer": "Thế kỷ XVI",
+      "options": [
+        "Thế kỷ X",
+        "Thế kỷ XVI",
+        "Thế kỷ XIX",
+        "Thế kỷ XX"
+      ]
+    },
+    {
+      "question": "Theo Mác tôn giáo là hình thức ý thức xã hội nào?",
+      "answer": "Ý thức xã hội duy tâm",
+      "options": [
+        "Ý thức xã hội duy vật",
+        "Ý thức xã hội duy tâm",
+        "Ý thức khoa học",
+        "Ý thức triết học"
+      ]
+    },
+    {
+      "question": "Đảng ta coi tín đồ tôn giáo là lực lượng gì?",
+      "answer": "Lực lượng xây dựng và bảo vệ Tổ quốc",
+      "options": [
+        "Lực lượng phản động",
+        "Lực lượng xây dựng và bảo vệ Tổ quốc",
+        "Lực lượng lạc hậu",
+        "Không phải lực lượng"
+      ]
+    },
+    {
+      "question": "Hồ Chí Minh sinh ra trong gia đình theo đạo gì?",
+      "answer": "Gia đình Nho giáo",
+      "options": [
+        "Gia đình Phật giáo",
+        "Gia đình Công giáo",
+        "Gia đình Nho giáo",
+        "Không theo đạo"
+      ]
+    },
+    {
+      "question": "Nghị định nào hướng dẫn Luật Tín ngưỡng Tôn giáo?",
+      "answer": "Nghị định 162/2017/NĐ-CP",
+      "options": [
+        "Nghị định 100/2016/NĐ-CP",
+        "Nghị định 162/2017/NĐ-CP",
+        "Nghị định 200/2018/NĐ-CP",
+        "Nghị định 50/2015/NĐ-CP"
+      ]
+    },
+    {
+      "question": "Tin Lành truyền vào Việt Nam từ thế kỷ nào?",
+      "answer": "Thế kỷ XIX",
+      "options": [
+        "Thế kỷ XVI",
+        "Thế kỷ XVII",
+        "Thế kỷ XIX",
+        "Thế kỷ XX"
+      ]
+    },
+    {
+      "question": "Theo Mác-Lênin khi nào tôn giáo mới thực sự biến mất?",
+      "answer": "Khi xã hội CNXH phát triển cao",
+      "options": [
+        "Ngay sau cách mạng",
+        "Khi xã hội CNXH phát triển cao",
+        "Khi cấm đoán",
+        "Không bao giờ"
+      ]
+    },
+    {
+      "question": "Hồ Chí Minh nói đại đoàn kết dân tộc phải như thế nào?",
+      "answer": "Đoàn kết tất cả những người yêu nước",
+      "options": [
+        "Chỉ đoàn kết Đảng viên",
+        "Đoàn kết tất cả những người yêu nước",
+        "Loại trừ tín đồ",
+        "Chỉ người không đạo"
+      ]
+    },
+    {
+      "question": "Hiến pháp 1946 quy định gì về tôn giáo?",
+      "answer": "Công dân có quyền tự do tín ngưỡng",
+      "options": [
+        "Cấm tôn giáo",
+        "Công dân có quyền tự do tín ngưỡng",
+        "Bắt buộc theo đạo",
+        "Không quy định"
+      ]
+    },
+    {
+      "question": "Đại hội Đại biểu toàn quốc lần thứ mấy của Đảng có Nghị quyết về tôn giáo?",
+      "answer": "Đại hội IV (1976)",
+      "options": [
+        "Đại hội II",
+        "Đại hội IV (1976)",
+        "Đại hội VI",
+        "Đại hội VIII"
+      ]
+    },
+    {
+      "question": "Thánh thất Cao Đài có kiến trúc pha trộn văn hóa nào?",
+      "answer": "Phương Đông và Phương Tây",
+      "options": [
+        "Chỉ Á Đông",
+        "Phương Đông và Phương Tây",
+        "Chỉ Âu Mỹ",
+        "Chỉ Ấn Độ"
+      ]
+    },
+    {
+      "question": "Theo Mác tại sao tôn giáo tồn tại lâu dài?",
+      "answer": "Do điều kiện kinh tế xã hội còn lạc hậu",
+      "options": [
+        "Do ý chí con người",
+        "Do điều kiện kinh tế xã hội còn lạc hậu",
+        "Do thần linh",
+        "Do bản năng"
+      ]
+    },
+    {
+      "question": "Hồ Chí Minh đối xử với các vị chức sắc tôn giáo thế nào?",
+      "answer": "Tôn trọng và đoàn kết",
+      "options": [
+        "Kỳ thị",
+        "Tôn trọng và đoàn kết",
+        "Xa lánh",
+        "Nghi ngờ"
+      ]
+    },
+    {
+      "question": "Hiến pháp nào đầu tiên ghi nhận quyền tự do tín ngưỡng?",
+      "answer": "Hiến pháp 1946",
+      "options": [
+        "Hiến pháp 1959",
+        "Hiến pháp 1946",
+        "Hiến pháp 1980",
+        "Hiến pháp 1992"
+      ]
+    },
+    {
+      "question": "Đại hội Phật giáo toàn quốc lần thứ nhất họp năm nào?",
+      "answer": "1981",
+      "options": [
+        "1945",
+        "1975",
+        "1981",
+        "1990"
+      ]
+    },
+    {
+      "question": "Hồi giáo ở Việt Nam tập trung chủ yếu ở đâu?",
+      "answer": "Các tỉnh Đồng bằng sông Cửu Long và Bình Thuận Ninh Thuận",
+      "options": [
+        "Hà Nội",
+        "Các tỉnh Đồng bằng sông Cửu Long và Bình Thuận Ninh Thuận",
+        "Miền Trung",
+        "Tây Nguyên"
+      ]
+    }
+  ],
+  "phep-la": [
+    {
+      "question": "Chính sách tôn giáo của Đảng ta xuất phát từ quan điểm nào?",
+      "answer": "Chủ nghĩa Mác-Lênin và tư tưởng Hồ Chí Minh",
+      "options": [
+        "Chủ nghĩa duy tâm",
+        "Chủ nghĩa Mác-Lênin và tư tưởng Hồ Chí Minh",
+        "Giáo điều tôn giáo",
+        "Chủ nghĩa thực dụng"
+      ]
+    },
+    {
+      "question": "Việt Nam có bao nhiêu % dân số theo tôn giáo?",
+      "answer": "Khoảng 27%",
+      "options": [
+        "Khoảng 10%",
+        "Khoảng 27%",
+        "Khoảng 50%",
+        "Khoảng 80%"
+      ]
+    },
+    {
+      "question": "Tôn giáo nào có số tín đồ đông nhất Việt Nam?",
+      "answer": "Phật giáo",
+      "options": [
+        "Công giáo",
+        "Phật giáo",
+        "Tin Lành",
+        "Cao Đài"
+      ]
+    },
+    {
+      "question": "Nhà nước Việt Nam có phân biệt đối xử về tôn giáo không?",
+      "answer": "Không",
+      "options": [
+        "Có",
+        "Không",
+        "Chỉ với tôn giáo nhỏ",
+        "Tùy trường hợp"
+      ]
+    },
+    {
+      "question": "Quyền tự do tín ngưỡng tôn giáo là quyền gì?",
+      "answer": "Quyền con người cơ bản",
+      "options": [
+        "Đặc quyền",
+        "Quyền con người cơ bản",
+        "Quyền hạn chế",
+        "Không phải quyền"
+      ]
+    },
+    {
+      "question": "Nhà nước có tách rời tôn giáo khỏi giáo dục không?",
+      "answer": "Có",
+      "options": [
+        "Không",
+        "Có",
+        "Chỉ với Phật giáo",
+        "Chỉ với Công giáo"
+      ]
+    },
+    {
+      "question": "Đảng ta chống biểu hiện nào trong tôn giáo?",
+      "answer": "Lợi dụng tôn giáo chống phá Đảng và Nhà nước",
+      "options": [
+        "Theo đạo",
+        "Lợi dụng tôn giáo chống phá Đảng và Nhà nước",
+        "Hoạt động tôn giáo",
+        "Tụ họp tín đồ"
+      ]
+    },
+    {
+      "question": "Ngày Phật đản được nghỉ lễ từ năm nào?",
+      "answer": "2019",
+      "options": [
+        "2010",
+        "2015",
+        "2019",
+        "2020"
+      ]
+    },
+    {
+      "question": "Tôn giáo nào không có tổ chức giáo hội thống nhất?",
+      "answer": "Phật giáo",
+      "options": [
+        "Công giáo",
+        "Phật giáo",
+        "Tin Lành",
+        "Cao Đài"
+      ]
+    },
+    {
+      "question": "Hội đồng Trị sự Giáo hội Phật giáo Việt Nam thành lập năm nào?",
+      "answer": "1981",
+      "options": [
+        "1975",
+        "1981",
+        "1990",
+        "2000"
+      ]
+    },
+    {
+      "question": "Việt Nam có Giáo hội Phật giáo thống nhất từ năm nào?",
+      "answer": "1981",
+      "options": [
+        "1945",
+        "1975",
+        "1981",
+        "1990"
+      ]
+    },
+    {
+      "question": "Giáo hội Tin Lành Việt Nam (Miền Bắc) thành lập năm nào?",
+      "answer": "1963",
+      "options": [
+        "1950",
+        "1963",
+        "1975",
+        "1980"
+      ]
+    },
+    {
+      "question": "Giáo hội Tin Lành Việt Nam (Miền Nam) thành lập năm nào?",
+      "answer": "1963",
+      "options": [
+        "1950",
+        "1963",
+        "1975",
+        "1980"
+      ]
+    },
+    {
+      "question": "Ủy ban Đoàn kết Công giáo Việt Nam thành lập năm nào?",
+      "answer": "1955",
+      "options": [
+        "1945",
+        "1955",
+        "1965",
+        "1975"
+      ]
+    },
+    {
+      "question": "Tôn giáo Baha'i có ở Việt Nam không?",
+      "answer": "Có",
+      "options": [
+        "Không",
+        "Có",
+        "Chỉ ở Hà Nội",
+        "Chỉ ở Sài Gòn"
+      ]
+    }
+  ],
+  "thap-tu-giao": [
+    {
+      "question": "Ai là người sáng lập đạo Cao Đài?",
+      "answer": "Ngô Văn Chiêu",
+      "options": ["Huỳnh Phú Sổ", "Ngô Văn Chiêu", "Phan Trung Bính", "Trần Quang Vinh"]
+    },
+    {
+      "question": "Đạo Hòa Hảo được sáng lập bởi ai?",
+      "answer": "Huỳnh Phú Sổ",
+      "options": ["Ngô Văn Chiêu", "Huỳnh Phú Sổ", "Phật Thầy Tây An", "Lê Văn Trung"]
+    },
+    {
+      "question": "Tôn giáo nào có đặc điểm thờ Đức Cao Đài Tiên Ông?",
+      "answer": "Đạo Cao Đài",
+      "options": ["Đạo Hòa Hảo", "Đạo Cao Đài", "Phật giáo", "Công giáo"]
+    },
+    {
+      "question": "Đạo Hòa Hảo nhấn mạnh tu tại gia không cần nghi lễ phức tạp?",
+      "answer": "Đúng",
+      "options": ["Đúng", "Sai", "Chỉ xuất gia", "Cần nghi lễ"]
+    },
+    {
+      "question": "Tòa Thánh Cao Đài ở tỉnh nào?",
+      "answer": "Tây Ninh",
+      "options": ["An Giang", "Tây Ninh", "Long An", "Đồng Nai"]
+    }
+  ],
+  "tam-giao-hop-nhat": [
+    {
+      "question": "Phật giáo truyền vào Việt Nam từ thế kỷ nào?",
+      "answer": "Thế kỷ II",
+      "options": ["Thế kỷ I", "Thế kỷ II", "Thế kỷ X", "Thế kỷ XV"]
+    },
+    {
+      "question": "Chùa nào lâu đời nhất Việt Nam?",
+      "answer": "Chùa Dâu (Bắc Ninh)",
+      "options": ["Chùa Một Cột", "Chùa Dâu (Bắc Ninh)", "Chùa Trấn Quốc", "Chùa Hương"]
+    },
+    {
+      "question": "Thiền phái nào nổi tiếng thời Trần?",
+      "answer": "Thiền phái Trúc Lâm",
+      "options": ["Thiền phái Lâm Tế", "Thiền phái Trúc Lâm", "Thiền phái Tào Động", "Thiền phái Vô Ngôn Thông"]
+    },
+    {
+      "question": "Đại lễ Phật đản là ngày mấy âm lịch?",
+      "answer": "15/4",
+      "options": ["8/4", "15/4", "19/5", "1/1"]
+    },
+    {
+      "question": "Lễ Vu Lan là ngày mấy âm lịch?",
+      "answer": "15/7",
+      "options": ["15/4", "15/7", "1/1", "30/12"]
+    }
+  ],
+  "thien-nhan": [
+    {
+      "question": "Công giáo truyền vào Việt Nam từ thế kỷ nào?",
+      "answer": "Thế kỷ XVI",
+      "options": ["Thế kỷ X", "Thế kỷ XVI", "Thế kỷ XIX", "Thế kỷ XX"]
+    },
+    {
+      "question": "Nhà thờ Đức Bà Sài Gòn xây dựng năm nào?",
+      "answer": "1880",
+      "options": ["1850", "1880", "1900", "1920"]
+    },
+    {
+      "question": "Ai là Tổng Giám mục đầu tiên người Việt Nam?",
+      "answer": "Ngô Đình Thục",
+      "options": ["Phaolô Nguyễn Bá Tòng", "Ngô Đình Thục", "Nguyễn Văn Thuận", "Phạm Đình Tụng"]
+    },
+    {
+      "question": "Tin Lành truyền vào Việt Nam từ thế kỷ nào?",
+      "answer": "Thế kỷ XIX",
+      "options": ["Thế kỷ XVI", "Thế kỷ XVII", "Thế kỷ XIX", "Thế kỷ XX"]
+    },
+    {
+      "question": "Giáo hội Tin Lành Việt Nam (Miền Bắc) thành lập năm nào?",
+      "answer": "1963",
+      "options": ["1950", "1963", "1975", "1980"]
+    }
+  ],
+  "tu-tai-gia": [
+    {
+      "question": "Theo Mác-Lênin tôn giáo là gì?",
+      "answer": "Ý thức đảo lộn về thế giới",
+      "options": ["Ý thức đảo lộn về thế giới", "Chân lý tuyệt đối", "Khoa học xã hội", "Nghệ thuật"]
+    },
+    {
+      "question": "Ai nói câu Tôn giáo là tiếng thở dài của sinh vật bị áp bức?",
+      "answer": "Các Mác",
+      "options": ["Các Mác", "Ăng-ghen", "Lê-nin", "Hồ Chí Minh"]
+    },
+    {
+      "question": "Mác nói tôn giáo là thuốc phiện của nhân dân có nghĩa gì?",
+      "answer": "Tôn giáo làm con người quên đi khổ đau hiện tại",
+      "options": ["Tôn giáo là ma túy", "Tôn giáo làm con người quên đi khổ đau hiện tại", "Tôn giáo độc hại", "Tôn giáo gây nghiện"]
+    },
+    {
+      "question": "Ăng-ghen nói nguồn gốc tôn giáo là gì?",
+      "answer": "Từ quan niệm sai lầm về tự nhiên và xã hội",
+      "options": ["Từ thần linh", "Từ quan niệm sai lầm về tự nhiên và xã hội", "Do trời sinh", "Từ bản năng"]
+    },
+    {
+      "question": "Lê-nin chỉ ra rằng xoá bỏ tôn giáo bằng cách nào?",
+      "answer": "Không thể bằng cưỡng bức mà phải bằng giáo dục",
+      "options": ["Cấm đoán", "Bắt buộc", "Không thể bằng cưỡng bức mà phải bằng giáo dục", "Dùng vũ lực"]
+    }
+  ],
+  "tinh-than-dan-toc": [
+    {
+      "question": "Theo Lê-nin thái độ của Đảng đối với tôn giáo là gì?",
+      "answer": "Kiên quyết đấu tranh về tư tưởng nhưng tôn trọng quyền tự do",
+      "options": ["Cấm đoán", "Kiên quyết đấu tranh về tư tưởng nhưng tôn trọng quyền tự do", "Ép buộc bỏ đạo", "Thờ ơ"]
+    },
+    {
+      "question": "Đảng ta xem xét vấn đề tôn giáo trên lập trường nào?",
+      "answer": "Lập trường giai cấp công nhân",
+      "options": ["Lập trường tư sản", "Lập trường giai cấp công nhân", "Lập trường trung lập", "Lập trường tôn giáo"]
+    },
+    {
+      "question": "Chủ tịch Hồ Chí Minh nói gì về tín đồ các tôn giáo?",
+      "answer": "Đồng bào có đạo cũng là con cháu Lạc Long Quân",
+      "options": ["Đồng bào có đạo cũng là con cháu Lạc Long Quân", "Tín đồ là kẻ thù", "Không được theo đạo", "Phải bỏ đạo"]
+    },
+    {
+      "question": "Hồ Chí Minh sinh ra trong gia đình theo đạo gì?",
+      "answer": "Gia đình Nho giáo",
+      "options": ["Gia đình Phật giáo", "Gia đình Công giáo", "Gia đình Nho giáo", "Không theo đạo"]
+    },
+    {
+      "question": "Hồ Chí Minh đối xử với các vị chức sắc tôn giáo thế nào?",
+      "answer": "Tôn trọng và đoàn kết",
+      "options": ["Kỳ thị", "Tôn trọng và đoàn kết", "Xa lánh", "Nghi ngờ"]
+    }
+  ],
+  "an-dien": [
+    {
+      "question": "Việt Nam có bao nhiêu tôn giáo được công nhận?",
+      "answer": "16",
+      "options": ["10", "13", "16", "20"]
+    },
+    {
+      "question": "Tôn giáo nào là tôn giáo bản địa của Việt Nam?",
+      "answer": "Đạo Cao Đài và Đạo Hòa Hảo",
+      "options": ["Phật giáo", "Công giáo", "Đạo Cao Đài và Đạo Hòa Hảo", "Tin Lành"]
+    },
+    {
+      "question": "Tôn giáo nào có số tín đồ đông nhất Việt Nam?",
+      "answer": "Phật giáo",
+      "options": ["Công giáo", "Phật giáo", "Tin Lành", "Cao Đài"]
+    },
+    {
+      "question": "Nhà nước Việt Nam có phân biệt đối xử về tôn giáo không?",
+      "answer": "Không",
+      "options": ["Có", "Không", "Chỉ với tôn giáo nhỏ", "Tùy trường hợp"]
+    },
+    {
+      "question": "Quyền tự do tín ngưỡng tôn giáo là quyền gì?",
+      "answer": "Quyền con người cơ bản",
+      "options": ["Đặc quyền", "Quyền con người cơ bản", "Quyền hạn chế", "Không phải quyền"]
+    }
+  ],
+  "truyen-giao": [
+    {
+      "question": "Tin Lành truyền vào Việt Nam từ thế kỷ nào?",
+      "answer": "Thế kỷ XIX",
+      "options": ["Thế kỷ XVI", "Thế kỷ XVII", "Thế kỷ XIX", "Thế kỷ XX"]
+    },
+    {
+      "question": "Giáo hội Tin Lành Việt Nam (Miền Bắc) thành lập năm nào?",
+      "answer": "1963",
+      "options": ["1950", "1963", "1975", "1980"]
+    },
+    {
+      "question": "Giáo hội Tin Lành Việt Nam (Miền Nam) thành lập năm nào?",
+      "answer": "1963",
+      "options": ["1950", "1963", "1975", "1980"]
+    },
+    {
+      "question": "Thánh Kinh được dịch ra tiếng Việt lần đầu năm nào?",
+      "answer": "1926",
+      "options": ["1900", "1926", "1950", "1975"]
+    },
+    {
+      "question": "Tin Lành nhấn mạnh nguyên tắc nào?",
+      "answer": "Duy nhất Thánh Kinh",
+      "options": ["Truyền thống", "Duy nhất Thánh Kinh", "Giáo hoàng", "Nghi lễ"]
+    }
+  ],
+  "bon-cung-thanh-mau": [
+    {
+      "question": "Đạo Mẫu thờ các vị thánh mẫu bốn cung nào?",
+      "answer": "Thiên, Địa, Thủy, Nhạc",
+      "options": ["Đông, Tây, Nam, Bắc", "Thiên, Địa, Thủy, Nhạc", "Xuân, Hạ, Thu, Đông", "Kim, Mộc, Thủy, Hỏa"]
+    },
+    {
+      "question": "Tín ngưỡng thờ Mẫu xuất phát từ đâu?",
+      "answer": "Tín ngưỡng dân gian Việt Nam",
+      "options": ["Trung Quốc", "Tín ngưỡng dân gian Việt Nam", "Ấn Độ", "Pháp"]
+    },
+    {
+      "question": "Nghi lễ Hầu đồng có đặc điểm gì?",
+      "answer": "Múa hát thể hiện sự giáng lâm của thần thánh",
+      "options": ["Im lặng thiền định", "Múa hát thể hiện sự giáng lâm của thần thánh", "Đọc kinh", "Cầu nguyện"]
+    },
+    {
+      "question": "Mẫu Thượng Thiên là vị thần nào?",
+      "answer": "Liễu Hạnh Công Chúa",
+      "options": ["Quan Âm", "Liễu Hạnh Công Chúa", "Thánh Mẫu", "Bà Chúa"]
+    },
+    {
+      "question": "Đạo Mẫu có vai trò gì trong văn hóa Việt Nam?",
+      "answer": "Bảo tồn di sản văn hóa phi vật thể",
+      "options": ["Không quan trọng", "Bảo tồn di sản văn hóa phi vật thể", "Chỉ giải trí", "Mê tín dị đoan"]
+    }
+  ],
+  "hau-dong": [
+    {
+      "question": "Hầu đồng là nghi lễ của tín ngưỡng nào?",
+      "answer": "Tín ngưỡng thờ Mẫu",
+      "options": ["Phật giáo", "Tín ngưỡng thờ Mẫu", "Công giáo", "Cao Đài"]
+    },
+    {
+      "question": "Hầu đồng được UNESCO công nhận là di sản năm nào?",
+      "answer": "2016",
+      "options": ["2010", "2016", "2020", "2022"]
+    },
+    {
+      "question": "Trong lễ Hầu đồng, người hầu gọi là gì?",
+      "answer": "Đồng cốt, ông đồng, bà đồng",
+      "options": ["Thầy cúng", "Đồng cốt, ông đồng, bà đồng", "Thầy pháp", "Linh mục"]
+    },
+    {
+      "question": "Hầu đồng sử dụng nhạc cụ nào?",
+      "answer": "Trống, mõ, chuông, ngũ âm",
+      "options": ["Đàn piano", "Trống, mõ, chuông, ngũ âm", "Guitar", "Organ"]
+    },
+    {
+      "question": "Mục đích của lễ Hầu đồng là gì?",
+      "answer": "Thỉnh thần thánh giáng lâm ban phước",
+      "options": ["Giải trí", "Thỉnh thần thánh giáng lâm ban phước", "Du lịch", "Biểu diễn nghệ thuật"]
+    }
+  ]
+}
