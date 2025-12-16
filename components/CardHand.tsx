@@ -1,4 +1,5 @@
 import { Card } from '@/types';
+import { useState } from 'react';
 
 interface CardHandProps {
   cards: Card[];
@@ -8,11 +9,19 @@ interface CardHandProps {
 }
 
 export default function CardHand({ cards, onCardClick, disabled, faceDown = false }: CardHandProps) {
+  const [selectedCard, setSelectedCard] = useState<Card | null>(null);
+
   const handleClick = (cardId: string) => {
     console.log('Card clicked:', cardId, 'Disabled:', disabled);
     if (!disabled) {
       onCardClick(cardId);
     }
+  };
+
+  const handleInfoClick = (e: React.MouseEvent, card: Card) => {
+    e.stopPropagation();
+    // alert("clcikc");
+    setSelectedCard(card);
   };
 
   // Màu gradient cho từng loại thẻ theo style Hearthstone
@@ -273,6 +282,17 @@ export default function CardHand({ cards, onCardClick, disabled, faceDown = fals
             </div>
           )}
 
+          {/* Info Icon - Bottom Right */}
+          {!faceDown && (
+            <div
+              onClick={(e) => handleInfoClick(e, card)}
+              className="absolute bottom-2 right-2 w-7 h-7 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-full border-2 border-white/80 flex items-center justify-center shadow-lg hover:scale-110 transition-transform z-20 hover:from-amber-300 hover:to-yellow-400 cursor-pointer"
+              title="Xem chi tiết thẻ"
+            >
+              <span className="text-white font-black text-sm">!</span>
+            </div>
+          )}
+
           {/* Rarity Gem - Bottom Center */}
           {/* <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-6 h-6 bg-linear-to-br from-amber-300 to-amber-600 
             rounded-full border-2 border-amber-200 shadow-md opacity-80" /> */}
@@ -287,6 +307,103 @@ export default function CardHand({ cards, onCardClick, disabled, faceDown = fals
           Không có thẻ. Hãy rút thẻ mới!
         </div>
       )}
+
+      {/* Card Details Modal */}
+      {selectedCard && (
+        <div 
+          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4"
+          onClick={() => setSelectedCard(null)}
+        >
+          <div 
+            className="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 rounded-2xl p-8 max-w-md w-full border-2 border-amber-400/50 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="text-center mb-6">
+              <h2 className="text-2xl font-black text-amber-300 mb-2">{selectedCard.name}</h2>
+              <div className="h-1 w-24 bg-gradient-to-r from-amber-400 to-orange-500 mx-auto rounded-full"></div>
+            </div>
+
+            {/* Card Image/Icon */}
+            <div className="mb-6 flex justify-center">
+              {selectedCard.image ? (
+                <img 
+                  src={selectedCard.image} 
+                  alt={selectedCard.name}
+                  className="w-32 h-48 object-contain rounded-lg border-2 border-amber-400/30"
+                  onError={(e) => {
+                    e.currentTarget.src = '/card-cover.png';
+                  }}
+                />
+              ) : (
+                <div className="text-8xl">{selectedCard.icon}</div>
+              )}
+            </div>
+
+            {/* Description */}
+            <div className="mb-4">
+              <h3 className="text-sm font-black text-slate-300 uppercase tracking-widest mb-2">Mô Tả</h3>
+              <p className="text-slate-200 text-sm leading-relaxed">
+                {selectedCard.description}
+              </p>
+            </div>
+
+            {/* Stats */}
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <div className="bg-slate-900/60 rounded-lg p-3 border border-slate-600">
+                <div className="text-xs text-slate-400 uppercase font-bold mb-1">Giá Trị</div>
+                <div className={`text-xl font-black ${selectedCard.value > 0 ? 'text-green-400' : selectedCard.value < 0 ? 'text-red-400' : 'text-purple-400'}`}>
+                  {selectedCard.value > 0 ? '+' : ''}{selectedCard.value}
+                </div>
+              </div>
+              <div className="bg-slate-900/60 rounded-lg p-3 border border-slate-600">
+                <div className="text-xs text-slate-400 uppercase font-bold mb-1">Loại Hiệu Ứng</div>
+                <div className="text-xs text-slate-300 font-semibold break-words">
+                  {selectedCard.passive ? selectedCard.passive.replace(/-/g, ' ') : 'Không'}
+                </div>
+              </div>
+            </div>
+
+            {/* Passive Effect Detail */}
+            {selectedCard.passive && (
+              <div className="mb-6 bg-purple-900/40 rounded-lg p-4 border border-purple-500/30">
+                <h3 className="text-sm font-black text-purple-300 uppercase tracking-widest mb-2">⚡ Hiệu Ứng Bị Động</h3>
+                <p className="text-sm text-slate-200">
+                  {getPassiveEffectDescription(selectedCard.passive)}
+                </p>
+              </div>
+            )}
+
+            {/* Close Button */}
+            <button
+              onClick={() => setSelectedCard(null)}
+              className="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white font-bold py-2 px-4 rounded-lg transition-all"
+            >
+              ✓ Đóng
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
+
+  function getPassiveEffectDescription(passive: string): string {
+    const descriptions: { [key: string]: string } = {
+      'compassion-heal': 'Hồi 20 HP + Hồi thêm 5 HP cho đồng minh mỗi turn',
+      'immunity-and-reduction': 'Miễn nhiễm damage lần đầu (2 turn) + Giảm 30% damage',
+      'counter-2.5x': 'Phản lại tất cả damage với hệ số 2.5x (2 turn)',
+      'low-hp-bonus': 'Hồi 25 HP + Nếu HP < 30%, hồi thêm 15 HP',
+      'revive-once': 'Hồi sinh với 50 HP khi chết (1 lần/game)',
+      'combo-damage': 'Gây 18 damage + Nếu đối thủ đã nhận damage, gây thêm 12 damage',
+      'choice-3-paths': 'Chọn: Phật (Hồi 15) / Đạo (DEF+10) / Nho (DMG+10)',
+      'preview-cards': 'Xem 3 thẻ tiếp của đối thủ + Counter miễn phí nếu có thẻ ATK',
+      'draw-card': 'Hồi 15 HP + Rút 1 thẻ (không cần trả lời câu hỏi)',
+      'execute-bonus': 'Gây 15 damage + Nếu HP đối thủ > 70%, gây thêm 15 damage',
+      'perfect-answer-bonus': 'Hồi 18 HP + Hồi thêm 12 HP nếu trả lời đúng lần 1',
+      'weaken-debuff': 'Gây 12 damage + Làm yếu: Đối thủ nhận +5 damage (2 turn)',
+      'choice-4-elements': 'Chọn: Thiên (20 DMG) / Địa (DEF+20) / Thủy (Hồi 20) / Sơn lâm (Độc 5 HP)',
+      'copy-card': 'Copy 1 thẻ đã dùng trong game (random)',
+    };
+    return descriptions[passive] || 'Hiệu ứng không xác định';
+  }
 }
