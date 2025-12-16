@@ -57,6 +57,7 @@ export interface Player {
   cards: Card[];
   score: number;
   ready: boolean;
+  hasDrawnCardThisTurn?: boolean; // Track if player has drawn a card this turn
 }
 
 // Game state
@@ -98,6 +99,26 @@ export interface Room {
   createdAt: number;
 }
 
+// Queue entry for matchmaking
+export interface QueueEntry {
+  playerId: string;
+  playerName: string;
+  ipAddress: string; // IP address to uniquely identify players
+  joinedAt: number;
+  socketId?: string; // For reconnection tracking
+  assignedRoomId?: string; // Room they were assigned to (for reconnection)
+}
+
+// Matchmaking queue
+export interface MatchQueue {
+  id: string;
+  entries: QueueEntry[];
+  maxPlayers: number; // 28
+  status: 'waiting' | 'matching' | 'matched'; // waiting = collecting, matching = admin started, matched = games created
+  createdAt: number;
+  matchedAt?: number;
+}
+
 // Leaderboard entry
 export interface LeaderboardEntry {
   playerName: string;
@@ -117,6 +138,7 @@ export interface AdminConfig {
   defaultPlayerHealth: number;
   cardsPerPlayer: number;
   enableLeaderboard: boolean;
+  maxQueueSize: number; // 28
 }
 
 // WebSocket event types
@@ -124,18 +146,25 @@ export interface SocketEvents {
   // Client to Server
   'join-room': (data: { roomId: string; playerName: string }) => void;
   'leave-room': (data: { roomId: string; playerId: string }) => void;
+  'join-queue': (data: { playerName: string }) => void;
+  'leave-queue': (data: { playerId: string }) => void;
+  'reconnect-player': (data: { playerName: string }) => void;
   'play-card': (data: { roomId: string; playerId: string; cardId: string; answer: string }) => void;
   'draw-card': (data: { roomId: string; playerId: string }) => void;
   'player-ready': (data: { roomId: string; playerId: string }) => void;
   'request-rooms': () => void;
+  'request-queue': () => void;
+  'admin-start-matching': () => void;
   
   // Server to Client
   'rooms-update': (rooms: Room[]) => void;
+  'queue-update': (queue: MatchQueue) => void;
   'game-update': (gameState: GameState) => void;
   'player-joined': (player: Player) => void;
   'player-left': (playerId: string) => void;
   'game-started': (gameState: GameState) => void;
   'game-ended': (result: { winner: 'red' | 'blue'; gameState: GameState }) => void;
+  'matched': (data: { roomId: string; playerId: string }) => void;
   'error': (message: string) => void;
   'turn-changed': (turn: 'red' | 'blue') => void;
   'card-played': (action: GameAction) => void;
@@ -148,4 +177,5 @@ export interface Database {
   games: GameState[];
   leaderboard: LeaderboardEntry[];
   config: AdminConfig;
+  queue: MatchQueue | null;
 }

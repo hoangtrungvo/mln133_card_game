@@ -30,86 +30,162 @@ export async function joinRoom(
   roomId: string,
   playerName: string
 ): Promise<{ success: boolean; player?: Player; room?: Room; error?: string }> {
-  const rooms = await readRooms();
-  const room = rooms.find(r => r.id === roomId);
-  
-  if (!room) {
-    return { success: false, error: 'Room not found' };
+  // Validate input
+  if (!roomId || !playerName || typeof playerName !== 'string') {
+    return { success: false, error: 'Invalid room ID or player name' };
   }
   
-  if (room.status !== 'waiting') {
-    return { success: false, error: 'Room is not available' };
+  const trimmedName = playerName.trim();
+  if (trimmedName.length === 0 || trimmedName.length > 50) {
+    return { success: false, error: 'Player name must be between 1 and 50 characters' };
   }
-  
-  if (room.players.length >= room.maxPlayers) {
-    return { success: false, error: 'Room is full' };
-  }
-  
-  const config = await readConfig();
-  
-  // Assign team based on current players
-  const team = room.players.length === 0 ? 'red' : 'blue';
-  
-  const newPlayer: Player = {
-    id: `player-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`,
-    name: playerName,
-    team,
-    health: config.defaultPlayerHealth,
-    maxHealth: config.defaultPlayerHealth,
-    cards: generateCardHand(config.cardsPerPlayer),
-    score: 0,
-    ready: false,
-  };
-  
-  room.players.push(newPlayer);
-  
-  // If room is full, create game state
-  if (room.players.length === room.maxPlayers) {
-    const gameState: GameState = {
-      id: `game-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`,
-      roomId: room.id,
-      players: room.players,
-      currentTurn: 'red', // Red team starts
-      turnNumber: 1,
-      status: 'waiting',
-      winner: null,
-      startTime: null,
-      endTime: null,
-      history: [],
-      passiveEffects: [], // Init empty passive effects
+
+  // Use updateRoom with atomic read-modify-write pattern
+  const result = await updateRoom(roomId, async (room: Room | null) => {
+    // Re-read within lock to ensure consistency
+    if (!room) {
+      throw new Error('Room not found');
+    }
+    
+    // Check room status (re-validate after lock)
+    if (room.status !== 'waiting') {
+      throw new Error(`Room is ${room.status === 'in-progress' ? 'already in progress' : 'finished'}`);
+    }
+    
+    // Check if room is full (re-validate after lock)
+    if (room.players.length >= room.maxPlayers) {
+      throw new Error('Room is full');
+    }
+    
+    // Check for duplicate player name in room
+    const duplicatePlayer = room.players.find((p: Player) => p.name.toLowerCase() === trimmedName.toLowerCase());
+    if (duplicatePlayer) {
+      throw new Error('A player with this name is already in the room');
+    }
+    
+    const config = await readConfig();
+    
+    // Assign team based on current players
+    const team = room.players.length === 0 ? 'red' : 'blue';
+    
+    const newPlayer: Player = {
+      id: `player-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`,
+      name: trimmedName,
+      team,
+      health: config.defaultPlayerHealth,
+      maxHealth: config.defaultPlayerHealth,
+      cards: generateCardHand(config.cardsPerPlayer),
+      score: 0,
+      ready: false,
+      hasDrawnCardThisTurn: false,
     };
     
-    room.gameState = gameState;
-    await addGame(gameState);
+    const updatedPlayers = [...room.players, newPlayer];
+    let updatedGameState = room.gameState;
+    
+    // If room is full, create game state
+    if (updatedPlayers.length === room.maxPlayers) {
+      const gameState: GameState = {
+        id: `game-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`,
+        roomId: room.id,
+        players: updatedPlayers,
+        currentTurn: 'red', // Red team starts
+        turnNumber: 1,
+        status: 'waiting',
+        winner: null,
+        startTime: null,
+        endTime: null,
+        history: [],
+        passiveEffects: [], // Init empty passive effects
+      };
+      
+      updatedGameState = gameState;
+      await addGame(gameState);
+    }
+    
+    return {
+      ...room,
+      players: updatedPlayers,
+      gameState: updatedGameState,
+    };
+  });
+  
+  // Check if result is an error object or null
+  if (!result) {
+    return { success: false, error: 'Failed to join room' };
   }
   
-  await updateRoom(roomId, { players: room.players, gameState: room.gameState });
+  if ('error' in result && result.error) {
+    return { success: false, error: result.error };
+  }
   
-  return { success: true, player: newPlayer, room };
+  // Type guard: result is Room
+  if ('id' in result && 'players' in result) {
+    // Find the player we just added
+    const player = result.players.find((p: Player) => p.name === trimmedName);
+    
+    if (!player) {
+      return { success: false, error: 'Failed to create player' };
+    }
+    
+    return { success: true, player, room: result };
+  }
+  
+  return { success: false, error: 'Unexpected error: invalid room data' };
 }
 
 export async function leaveRoom(
   roomId: string,
   playerId: string
 ): Promise<{ success: boolean; error?: string }> {
-  const rooms = await readRooms();
-  const room = rooms.find(r => r.id === roomId);
+  // Validate input
+  if (!roomId || !playerId) {
+    return { success: false, error: 'Invalid room ID or player ID' };
+  }
+
+  // Use atomic update pattern
+  const result = await updateRoom(roomId, async (room: Room | null) => {
+    // Re-validate after lock
+    if (!room) {
+      throw new Error('Room not found');
+    }
+    
+    // Check if player exists in room
+    const playerExists = room.players.some((p: Player) => p.id === playerId);
+    if (!playerExists) {
+      throw new Error('Player not found in room');
+    }
+    
+    const updatedPlayers = room.players.filter((p: Player) => p.id !== playerId);
+    
+    // If room becomes empty, mark for deletion
+    if (updatedPlayers.length === 0) {
+      // Return null to signal deletion
+      return null;
+    }
+    
+    // Reset game state if player leaves before game starts
+    let updatedGameState = room.gameState;
+    if (room.status === 'waiting' && updatedGameState) {
+      updatedGameState = null;
+    }
+    
+    return {
+      ...room,
+      players: updatedPlayers,
+      gameState: updatedGameState,
+    };
+  });
   
-  if (!room) {
-    return { success: false, error: 'Room not found' };
+  // Handle deletion case
+  if (result === null) {
+    await deleteRoom(roomId);
+    return { success: true };
   }
   
-  room.players = room.players.filter(p => p.id !== playerId);
-  
-  // If room becomes empty, delete it
-  if (room.players.length === 0) {
-    await deleteRoom(roomId);
-  } else {
-    // Reset game state if player leaves before game starts
-    if (room.status === 'waiting') {
-      room.gameState = null;
-    }
-    await updateRoom(roomId, { players: room.players, gameState: room.gameState });
+  // Check if result is an error object
+  if ('error' in result && result.error) {
+    return { success: false, error: result.error };
   }
   
   return { success: true };
