@@ -11,6 +11,32 @@ interface Question {
   options?: string[];
 }
 
+// Allowed card types aligned with game definitions
+const ALLOWED_CARD_TYPES: CardType[] = [
+  'tu-bi',
+  'bat-dong-tam',
+  'nhan-qua',
+  'loi-cau-nguyen',
+  'phep-la',
+  'thap-tu-giao',
+  'tam-giao-hop-nhat',
+  'thien-nhan',
+  'tu-tai-gia',
+  'tinh-than-dan-toc',
+  'an-dien',
+  'truyen-giao',
+  'bon-cung-thanh-mau',
+  'hau-dong',
+];
+
+function initQuestionsStore(): Record<CardType, Question[]> {
+  const store = {} as Record<CardType, Question[]>;
+  for (const t of ALLOWED_CARD_TYPES) {
+    store[t] = [];
+  }
+  return store;
+}
+
 export async function POST(request: NextRequest) {
   try {
     // Check admin password
@@ -44,19 +70,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Parse CSV (expected format: type,question,answer,option1,option2,option3,option4)
-    const questions: Record<CardType, Question[]> = {
-      defense: [],
-      heal: [],
-      attack: [],
-      thunder: [],
-      detox: [],
-      counter: [],
-      shield: [],
-      regen: [],
-      dodge: [],
-      weaken: [],
-      stun: []
-    };
+    // Types aligned with CardType in the app
+    const questions: Record<CardType, Question[]> = initQuestionsStore();
 
     let imported = 0;
     let errors: string[] = [];
@@ -73,9 +88,9 @@ export async function POST(request: NextRequest) {
       }
 
       const [type, question, answer, ...options] = parts;
-      
-      if (!['defense', 'heal', 'attack', 'thunder', 'detox', 'counter', 'shield', 'regen', 'dodge', 'weaken', 'stun'].includes(type)) {
-        errors.push(`Line ${i + 1}: Invalid card type '${type}'`);
+
+      if (!ALLOWED_CARD_TYPES.includes(type as CardType)) {
+        errors.push(`Line ${i + 1}: Invalid card type '${type}'. Expected one of: ${ALLOWED_CARD_TYPES.join(', ')}`);
         continue;
       }
 

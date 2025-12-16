@@ -1,1 +1,24 @@
-[]
+[
+  {
+    "playerName": "admin",
+    "wins": 1,
+    "score": 10,
+    "timeFinished": 1765885646692,
+    "gamesPlayed": 1,
+    "totalDamageDealt": 18,
+    "totalQuestionPoints": 10,
+    "correctAnswers": 1,
+    "partialAnswers": 0
+  },
+  {
+    "playerName": "tops",
+    "wins": 0,
+    "score": 0,
+    "timeFinished": 0,
+    "gamesPlayed": 1,
+    "totalDamageDealt": 0,
+    "totalQuestionPoints": 0,
+    "correctAnswers": 0,
+    "partialAnswers": 0
+  }
+]

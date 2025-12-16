@@ -696,8 +696,9 @@ app.prepare().then(() => {
         console.log('Admin requested to end all games');
         const rooms = await readRooms();
         const activeRooms = rooms.filter(r => 
-          r.status === 'in-progress' && r.gameState && r.gameState.status === 'active'
+          r.gameState && r.gameState.status === 'active'
         );
+        console.log(`Found ${activeRooms.length} active game(s) to end`);
         
         let gamesEnded = 0;
         
@@ -731,8 +732,6 @@ app.prepare().then(() => {
           // Calculate scores and update leaderboard for each player
           for (const p of gameState.players) {
             const won = p.team === gameState.winner;
-            const score = calculateScore(won, p.health, gameState.history.filter(h => h.playerId === p.id).length, gameDuration);
-            p.score = score;
             
             const damageDealt = gameState.history
               .filter(h => h.playerId === p.id && h.card && h.card.value < 0)
@@ -741,6 +740,9 @@ app.prepare().then(() => {
             const totalQuestionPoints = gameState.history
               .filter(h => h.playerId === p.id)
               .reduce((sum, h) => sum + (h.questionPoints || 0), 0);
+            
+            const score = calculateScore(won, p.health, gameState.history.filter(h => h.playerId === p.id).length, gameDuration, totalQuestionPoints);
+            p.score = score;
             
             const correctAnswers = gameState.history
               .filter(h => h.playerId === p.id && h.questionPoints === 10)
@@ -1219,8 +1221,6 @@ app.prepare().then(() => {
         
         for (const p of gameState.players) {
           const won = p.team === gameState.winner;
-          const score = calculateScore(won, p.health, gameState.history.filter(h => h.playerId === p.id).length, gameDuration);
-          p.score = score;
           
           const damageDealt = gameState.history
             .filter(h => h.playerId === p.id && h.card && h.card.value < 0)
@@ -1230,6 +1230,9 @@ app.prepare().then(() => {
           const totalQuestionPoints = gameState.history
             .filter(h => h.playerId === p.id)
             .reduce((sum, h) => sum + (h.questionPoints || 0), 0);
+          
+          const score = calculateScore(won, p.health, gameState.history.filter(h => h.playerId === p.id).length, gameDuration, totalQuestionPoints);
+          p.score = score;
           
           const correctAnswers = gameState.history
             .filter(h => h.playerId === p.id && h.questionPoints === 10)

@@ -94,21 +94,9 @@ export function calculateScore(
   won: boolean,
   remainingHealth: number,
   cardsUsed: number,
-  gameDuration: number // in milliseconds
+  gameDuration: number, // in milliseconds
+  questionPoints: number = 0 // Points from correct answers
 ): number {
-  let score = 0;
-  
-  if (won) {
-    score += 100; // Base win score
-    score += remainingHealth; // Bonus for remaining health
-    score += Math.max(0, 50 - cardsUsed * 5); // Bonus for efficiency
-    
-    // Time bonus (faster wins get more points)
-    const minutes = gameDuration / (1000 * 60);
-    if (minutes < 2) score += 50;
-    else if (minutes < 5) score += 30;
-    else if (minutes < 10) score += 10;
-  }
-  
-  return Math.floor(score);
+  // Score is based only on question points
+  return questionPoints;
 }
