@@ -7,6 +7,7 @@ import { GameState, Card, GameAction } from '@/types';
 import GameBoard from '@/components/GameBoard';
 import QuestionModal from '@/components/QuestionModal';
 import CardPlayAnimation from '@/components/CardPlayAnimation';
+import CardDetailModal from '@/components/CardDetailModal';
 
 let socket: Socket;
 
@@ -26,6 +27,8 @@ export default function GamePage() {
   const [playingCard, setPlayingCard] = useState<GameAction | null>(null);
   const [previewCards, setPreviewCards] = useState<Partial<Card>[]>([]);
   const [showPreview, setShowPreview] = useState(false);
+  const [countdown, setCountdown] = useState<number | null>(null);
+  const [viewingCard, setViewingCard] = useState<Card | null>(null);
 
   // Get playerId safely on client side only
   useEffect(() => {
@@ -110,12 +113,34 @@ export default function GamePage() {
     };
   }, [playerId, roomId, router]);
 
-  const handleReady = () => {
-    if (socket) {
-      socket.emit('player-ready', { roomId, playerId });
-      setIsReady(true);
+  // Auto-ready and countdown when game is waiting
+  useEffect(() => {
+    if (gameState?.status === 'waiting' && socket && playerId) {
+      const currentPlayer = gameState.players.find(p => p.id === playerId);
+      
+      // Auto-set ready if not already ready
+      if (currentPlayer && !currentPlayer.ready) {
+        socket.emit('player-ready', { roomId, playerId });
+        setIsReady(true);
+      }
+      
+      // Start countdown from 5 seconds
+      setCountdown(5);
+      const interval = setInterval(() => {
+        setCountdown((prev) => {
+          if (prev === null || prev <= 1) {
+            clearInterval(interval);
+            return null;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+      
+      return () => clearInterval(interval);
+    } else {
+      setCountdown(null);
     }
-  };
+  }, [gameState?.status, socket, playerId, roomId]);
 
   const handleCardClick = (cardId: string) => {
     console.log('handleCardClick called:', { 
@@ -125,26 +150,26 @@ export default function GamePage() {
       playerId 
     });
     
-    if (socket && gameState?.status === 'active') {
-      const currentPlayer = gameState.players.find(p => p.id === playerId);
-      console.log('Current player:', currentPlayer);
-      
-      const card = currentPlayer?.cards.find(c => c.id === cardId);
-      console.log('Found card:', card);
-      
-      if (card) {
-        console.log('Setting selected card and showing modal');
-        setSelectedCard(card);
-        setShowQuestionModal(true);
-      } else {
-        console.log('Card not found in player cards');
-      }
+    if (!gameState) return;
+    
+    const currentPlayer = gameState.players.find(p => p.id === playerId);
+    if (!currentPlayer) return;
+    
+    const card = currentPlayer.cards.find(c => c.id === cardId);
+    if (!card) return;
+    
+    // Check if it's the player's turn and game is active
+    const isMyTurn = currentPlayer.team === gameState.currentTurn;
+    
+    if (socket && gameState.status === 'active' && isMyTurn) {
+      // It's your turn - show question modal to play the card
+      console.log('Setting selected card and showing question modal');
+      setSelectedCard(card);
+      setShowQuestionModal(true);
     } else {
-      console.log('Cannot play card:', {
-        noSocket: !socket,
-        statusNotActive: gameState?.status !== 'active',
-        currentStatus: gameState?.status
-      });
+      // Not your turn or game not active - show card details only
+      console.log('Showing card details (not your turn)');
+      setViewingCard(card);
     }
   };
 
@@ -166,14 +191,10 @@ export default function GamePage() {
     setSelectedCard(null);
   };
 
-  const handleDrawCard = (cardType?: string) => {
+  const handleDrawCard = () => {
     if (socket) {
-      socket.emit('draw-card', { roomId, playerId, cardType });
+      socket.emit('draw-card', { roomId, playerId }); // No cardType - always randomize
     }
-  };
-
-  const handleBackToLobby = () => {
-    router.push('/multiplayer');
   };
 
   if (!gameState) {
@@ -203,7 +224,7 @@ export default function GamePage() {
                 {currentPlayer?.team === 'red' ? '🔴 Đội Đỏ' : '🔵 Đội Xanh'}: {currentPlayer?.name} (Bạn)
               </div>
               <div className="text-sm text-gray-300 mt-1">
-                {currentPlayer?.ready ? '✅ Sẵn sàng' : '⏳ Chưa sẵn sàng'}
+                ✅ Sẵn sàng
               </div>
             </div>
             
@@ -213,26 +234,27 @@ export default function GamePage() {
                   {opponent.team === 'red' ? '🔴 Đội Đỏ' : '🔵 Đội Xanh'}: {opponent.name}
                 </div>
                 <div className="text-sm text-gray-300 mt-1">
-                  {opponent.ready ? '✅ Sẵn sàng' : '⏳ Chưa sẵn sàng'}
+                  {opponent.ready ? '✅ Sẵn sàng' : '⏳ Đang chờ...'}
                 </div>
               </div>
             )}
           </div>
           
-          <button
-            onClick={handleReady}
-            disabled={currentPlayer?.ready}
-            className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-bold py-4 px-6 rounded-lg text-xl transition-all"
-          >
-            {currentPlayer?.ready ? '✅ Đã sẵn sàng - Đang chờ...' : '⚡ Sẵn sàng!'}
-          </button>
-          
-          <button
-            onClick={handleBackToLobby}
-            className="w-full mt-4 bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-all"
-          >
-            ← Quay lại lobby
-          </button>
+          {/* Countdown Display */}
+          <div className="text-center mb-6">
+            {countdown !== null && countdown > 0 ? (
+              <div className="text-6xl font-bold text-yellow-400 mb-2 animate-pulse">
+                {countdown}
+              </div>
+            ) : (
+              <div className="text-2xl text-green-400 font-bold">
+                ⏳ Đang khởi động trận đấu...
+              </div>
+            )}
+            <div className="text-white text-lg mt-2">
+              Trận đấu sẽ bắt đầu tự động
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -288,7 +310,7 @@ export default function GamePage() {
               🏆 Xem bảng xếp hạng
             </button>
             <button
-              onClick={handleBackToLobby}
+              onClick={() => router.push('/multiplayer')}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-all"
             >
               🔄 Chơi lại
@@ -301,7 +323,7 @@ export default function GamePage() {
 
   // Active game
   return (
-    <div>
+    <>
       <GameBoard 
         gameState={gameState} 
         currentPlayerId={playerId} 
@@ -385,6 +407,14 @@ export default function GamePage() {
           onComplete={() => setPlayingCard(null)}
         />
       )}
-    </div>
+      
+      {/* Card Detail Modal - For viewing cards when not your turn */}
+      {viewingCard && (
+        <CardDetailModal
+          card={viewingCard}
+          onClose={() => setViewingCard(null)}
+        />
+      )}
+    </>
   );
 }

@@ -1,22 +1,58 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { AdminConfig, Room } from '@/types';
+import { Play, Users, Loader2 } from 'lucide-react';
+import { io, Socket } from 'socket.io-client';
+import { AdminConfig, Room, MatchQueue } from '@/types';
 
 export default function AdminPage() {
   const router = useRouter();
+  const socketRef = useRef<Socket | null>(null);
   const [config, setConfig] = useState<AdminConfig | null>(null);
   const [rooms, setRooms] = useState<Room[]>([]);
+  const [queue, setQueue] = useState<MatchQueue | null>(null);
   const [maxRooms, setMaxRooms] = useState(5);
   const [newRoomName, setNewRoomName] = useState('');
   const [loading, setLoading] = useState(true);
   const [uploadingQuestions, setUploadingQuestions] = useState(false);
   const [adminPassword, setAdminPassword] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [startingMatching, setStartingMatching] = useState(false);
 
   useEffect(() => {
     fetchData();
+    
+    // Initialize socket for queue updates
+    const socket = io({
+      path: '/api/socket',
+    });
+    
+    socketRef.current = socket;
+    
+    socket.on('connect', () => {
+      console.log('Admin connected to server');
+      socket.emit('request-queue');
+    });
+    
+    socket.on('queue-update', (updatedQueue: MatchQueue) => {
+      setQueue(updatedQueue);
+    });
+    
+    socket.on('matching-complete', (data: { roomsCreated: number }) => {
+      alert(`Ghép cặp hoàn tất! Đã tạo ${data.roomsCreated} phòng.`);
+      setStartingMatching(false);
+      fetchData();
+    });
+    
+    socket.on('error', (message: string) => {
+      alert(message);
+      setStartingMatching(false);
+    });
+    
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
   const fetchData = async () => {
@@ -73,7 +109,7 @@ export default function AdminPage() {
       const res = await fetch('/api/admin/rooms', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: newRoomName }),
+        body: JSON.stringify({ name: newRoomName.trim() }),
       });
 
       if (res.ok) {
@@ -87,6 +123,38 @@ export default function AdminPage() {
     } catch (error) {
       console.error('Error creating room:', error);
       alert('Lỗi khi tạo phòng!');
+    }
+  };
+
+  const handleStartMatching = async () => {
+    if (!queue) {
+      alert('Không có thông tin hàng chờ');
+      return;
+    }
+    
+    if (queue.entries.length < 2) {
+      alert('Cần ít nhất 2 người chơi để bắt đầu ghép cặp');
+      return;
+    }
+    
+    if (queue.entries.length % 2 !== 0) {
+      alert('Cần số chẵn người chơi để ghép cặp (hiện tại: ' + queue.entries.length + ')');
+      return;
+    }
+    
+    if (queue.status !== 'waiting') {
+      alert('Ghép cặp đang trong tiến trình hoặc đã hoàn tất');
+      return;
+    }
+    
+    if (!confirm(`Bắt đầu ghép cặp ${queue.entries.length} người chơi thành ${queue.entries.length / 2} trận đấu?`)) {
+      return;
+    }
+    
+    setStartingMatching(true);
+    
+    if (socketRef.current) {
+      socketRef.current.emit('admin-start-matching');
     }
   };
 
@@ -305,6 +373,81 @@ export default function AdminPage() {
               </p>
             </div>
           </div>
+        </div>
+
+        {/* Queue Management Section */}
+        <div className="bg-gray-800 rounded-xl p-6 mb-8 border-2 border-gray-700">
+          <h2 className="text-2xl font-bold text-white mb-4">🎯 Quản Lý Hàng Chờ</h2>
+          
+          {queue && (
+            <div className="mb-6">
+              <div className="bg-gray-700 rounded-lg p-4 mb-4">
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <div className="text-sm text-gray-400 mb-1">Số người trong hàng chờ</div>
+                    <div className="text-3xl font-bold text-white">
+                      {queue.entries.length} / {queue.maxPlayers}
+                    </div>
+                  </div>
+                  <div className={`px-4 py-2 rounded-full font-semibold ${
+                    queue.status === 'waiting' 
+                      ? 'bg-green-500/20 text-green-400 border border-green-500/50'
+                      : queue.status === 'matching'
+                      ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/50'
+                      : 'bg-blue-500/20 text-blue-400 border border-blue-500/50'
+                  }`}>
+                    {queue.status === 'waiting' ? 'Đang chờ' : queue.status === 'matching' ? 'Đang ghép cặp' : 'Đã ghép'}
+                  </div>
+                </div>
+                
+                <div className="text-sm text-gray-300 mb-4">
+                  {queue.entries.length % 2 === 0 && queue.entries.length >= 2
+                    ? '✅ Sẵn sàng ghép cặp'
+                    : queue.entries.length === 0
+                    ? 'Chưa có người chơi'
+                    : '⏳ Đang chờ người chơi thêm (cần số chẵn)'}
+                </div>
+                
+                {queue.entries.length > 0 && (
+                  <div className="mt-4">
+                    <div className="text-sm text-gray-400 mb-2">Danh sách người chơi:</div>
+                    <div className="flex flex-wrap gap-2">
+                      {queue.entries.map((entry, index) => (
+                        <span
+                          key={entry.playerId}
+                          className="bg-gray-600 text-white px-3 py-1 rounded-lg text-sm"
+                        >
+                          {index + 1}. {entry.playerName}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+              
+              <button
+                onClick={handleStartMatching}
+                disabled={startingMatching || queue.status !== 'waiting' || queue.entries.length < 2 || queue.entries.length % 2 !== 0}
+                className={`w-full py-4 px-6 rounded-lg font-bold transition-all flex items-center justify-center gap-2 ${
+                  startingMatching || queue.status !== 'waiting' || queue.entries.length < 2 || queue.entries.length % 2 !== 0
+                    ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                    : 'bg-green-600 hover:bg-green-700 text-white'
+                }`}
+              >
+                {startingMatching ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    Đang ghép cặp...
+                  </>
+                ) : (
+                  <>
+                    <Play className="w-5 h-5" />
+                    Bắt Đầu Ghép Cặp ({queue.entries.length} người → {queue.entries.length / 2} trận)
+                  </>
+                )}
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Create Room Section */}

@@ -3,8 +3,9 @@ import { parse } from 'url';
 import next from 'next';
 import { Server as IOServer } from 'socket.io';
 import { GameState, GameAction, PassiveEffect } from './types';
-import { readGames, updateGame, updateRoom, readRooms } from './lib/database';
+import { readGames, updateGame, updateRoom, readRooms, readQueue, updateQueue } from './lib/database';
 import { joinRoom, leaveRoom, getAllRooms } from './lib/roomManager';
+import { joinQueue, leaveQueue, leaveQueueByName, leaveQueueByIP, leaveQueueBySocketId, reconnectPlayer, startMatching, getQueue } from './lib/queueManager';
 import { applyCardEffect, calculateScore, generateCard } from './lib/gameLogic';
 import { updateLeaderboard } from './lib/leaderboard';
 
@@ -37,8 +38,17 @@ app.prepare().then(() => {
     }
   });
 
+  // Helper function to extract IP address from socket
+  const getClientIP = (socket: any): string => {
+    return socket.handshake.address || 
+           (socket.request.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() ||
+           socket.request.socket.remoteAddress ||
+           'unknown';
+  };
+
   io.on('connection', (socket) => {
-    console.log('Client connected:', socket.id);
+    const clientIP = getClientIP(socket);
+    console.log('Client connected:', socket.id, 'from IP:', clientIP);
 
     // Helper function to apply damage with passive effects
     const applyDamageWithPassives = (
@@ -110,51 +120,349 @@ app.prepare().then(() => {
 
     // Join room
     socket.on('join-room', async (data: { roomId: string; playerName: string }) => {
-      // Validate input
-      if (!data.roomId || !data.playerName) {
-        socket.emit('error', 'Invalid room ID or player name');
-        return;
-      }
-      if (typeof data.playerName !== 'string' || data.playerName.length > 50) {
-        socket.emit('error', 'Player name must be a string (max 50 chars)');
-        return;
-      }
-      
-      console.log('Received join-room request:', data, 'from socket:', socket.id);
-      const result = await joinRoom(data.roomId, data.playerName);
-      
-      console.log('Join room result:', { success: result.success, playerId: result.player?.id, error: result.error });
-      
-      if (result.success && result.player && result.room) {
-        socket.join(data.roomId);
-        console.log('Emitting player-joined to socket:', socket.id, 'with data:', { roomId: data.roomId, playerId: result.player.id });
-        // Emit to the player who just joined
-        socket.emit('player-joined', { 
-          roomId: data.roomId, 
-          playerId: result.player.id 
-        });
-        // Broadcast game update to all players in the room
-        io.to(data.roomId).emit('game-update', result.room.gameState);
+      try {
+        // Validate input
+        if (!data.roomId || !data.playerName) {
+          socket.emit('error', 'Invalid room ID or player name');
+          return;
+        }
+        if (typeof data.playerName !== 'string' || data.playerName.trim().length === 0 || data.playerName.length > 50) {
+          socket.emit('error', 'Player name must be between 1 and 50 characters');
+          return;
+        }
         
-        // Update rooms list for all clients
-        const rooms = await getAllRooms();
-        io.emit('rooms-update', rooms);
-      } else {
-        console.log('Join room failed, emitting error:', result.error);
-        socket.emit('error', result.error || 'Failed to join room');
+        console.log('Received join-room request:', data, 'from socket:', socket.id);
+        
+        try {
+          const result = await joinRoom(data.roomId, data.playerName);
+          
+          console.log('Join room result:', { success: result.success, playerId: result.player?.id, error: result.error });
+          
+          if (result.success && result.player && result.room) {
+            socket.join(data.roomId);
+            console.log('Emitting player-joined to socket:', socket.id, 'with data:', { roomId: data.roomId, playerId: result.player.id });
+            
+            // Emit to the player who just joined
+            socket.emit('player-joined', { 
+              roomId: data.roomId, 
+              playerId: result.player.id 
+            });
+            
+            // Broadcast game update to all players in the room
+            if (result.room.gameState) {
+              io.to(data.roomId).emit('game-update', result.room.gameState);
+            }
+            
+            // Update rooms list for all clients
+            const rooms = await getAllRooms();
+            io.emit('rooms-update', rooms);
+          } else {
+            console.log('Join room failed, emitting error:', result.error);
+            socket.emit('error', result.error || 'Failed to join room');
+          }
+        } catch (error: any) {
+          console.error('Error in join-room handler:', error);
+          socket.emit('error', error.message || 'An error occurred while joining the room');
+        }
+      } catch (error: any) {
+        console.error('Unexpected error in join-room:', error);
+        socket.emit('error', 'An unexpected error occurred');
       }
     });
 
     // Leave room
     socket.on('leave-room', async (data: { roomId: string; playerId: string }) => {
-      const result = await leaveRoom(data.roomId, data.playerId);
-      
-      if (result.success) {
-        socket.leave(data.roomId);
-        io.to(data.roomId).emit('player-left', data.playerId);
+      try {
+        // Validate input
+        if (!data.roomId || !data.playerId) {
+          socket.emit('error', 'Invalid room ID or player ID');
+          return;
+        }
         
-        const rooms = await getAllRooms();
-        io.emit('rooms-update', rooms);
+        console.log('Received leave-room request:', data, 'from socket:', socket.id);
+        
+        try {
+          const result = await leaveRoom(data.roomId, data.playerId);
+          
+          if (result.success) {
+            socket.leave(data.roomId);
+            io.to(data.roomId).emit('player-left', data.playerId);
+            
+            // Update rooms list for all clients
+            const rooms = await getAllRooms();
+            io.emit('rooms-update', rooms);
+            
+            console.log('Player left room successfully:', data.playerId);
+          } else {
+            console.log('Leave room failed:', result.error);
+            socket.emit('error', result.error || 'Failed to leave room');
+          }
+        } catch (error: any) {
+          console.error('Error in leave-room handler:', error);
+          socket.emit('error', error.message || 'An error occurred while leaving the room');
+        }
+      } catch (error: any) {
+        console.error('Unexpected error in leave-room:', error);
+        socket.emit('error', 'An unexpected error occurred');
+      }
+    });
+
+    // Queue operations
+    socket.on('request-queue', async () => {
+      try {
+        const queue = await getQueue();
+        socket.emit('queue-update', queue);
+      } catch (error: any) {
+        console.error('Error fetching queue:', error);
+        socket.emit('error', 'Failed to fetch queue');
+      }
+    });
+
+    // Join queue
+    socket.on('join-queue', async (data: { playerName: string }) => {
+      try {
+        if (!data.playerName || typeof data.playerName !== 'string') {
+          socket.emit('error', 'Invalid player name');
+          return;
+        }
+        
+        // Get IP address from socket
+        const clientIP = getClientIP(socket);
+        console.log('Received join-queue request:', data, 'from socket:', socket.id, 'IP:', clientIP);
+        
+        // Helper to check if a socket ID is still connected
+        const isSocketConnected = (socketIdToCheck: string): boolean => {
+          return io.sockets.sockets.has(socketIdToCheck);
+        };
+        
+        try {
+          // NOTE: We don't pre-check the queue because:
+          // 1. It causes race conditions (reading without lock)
+          // 2. joinQueue() already handles duplicate socket IDs internally
+          // 3. With ngrok, all players have the same IP, so we can't use IP for duplicates
+          // 4. Socket ID is the unique identifier
+          // 5. Fast Refresh reconnection is handled by the disconnect grace period
+          
+          console.log('[SERVER] join-queue request received:', { playerName: data.playerName, socketId: socket.id, ip: clientIP });
+          console.log('[SERVER] Calling joinQueue...');
+          const result = await joinQueue(data.playerName, socket.id, clientIP, isSocketConnected);
+          console.log('joinQueue result:', { success: result.success, hasEntry: !!result.entry, error: result.error });
+          
+          if (result.success && result.entry) {
+            // Use the queue from the result (already updated and written)
+            // This avoids race conditions from reading the file again
+            if (!result.queue) {
+              console.error('ERROR: result.queue is missing! This should not happen.');
+              const fallbackQueue = await getQueue();
+              console.log('Using fallback queue with', fallbackQueue.entries.length, 'entries');
+              io.emit('queue-update', fallbackQueue);
+              return;
+            }
+            
+            const queue = result.queue;
+            console.log('Queue after join - Total entries:', queue.entries.length);
+            console.log('Queue entries:', queue.entries.map(e => ({ name: e.playerName, socket: e.socketId, id: e.playerId })));
+            
+            // Verify the entry we just added is in the queue
+            const foundEntry = queue.entries.find(e => e.socketId === socket.id);
+            if (!foundEntry) {
+              console.error('WARNING: Entry not found in queue after join! Socket:', socket.id, 'Expected entry:', result.entry);
+            }
+            
+            console.log('Broadcasting queue-update to all clients. Queue has', queue.entries.length, 'entries');
+            io.emit('queue-update', queue);
+            console.log('Emitted queue-update event to all sockets');
+            
+            console.log('Player joined queue:', result.entry.playerName, 'IP:', clientIP, 'Socket:', socket.id);
+          } else if (result.room && result.player) {
+            // Player is already in an active room - automatically reconnect them
+            socket.join(result.room.id);
+            
+            socket.emit('matched', {
+              roomId: result.room.id,
+              playerId: result.player.id
+            });
+            
+            // Send game state
+            if (result.room.gameState) {
+              socket.emit('game-update', result.room.gameState);
+            }
+            
+            console.log('Player redirected to active room:', data.playerName, 'room:', result.room.id, 'IP:', clientIP);
+          } else {
+            const errorMsg = result.error || 'Failed to join queue';
+            console.error('Join queue failed:', errorMsg);
+            socket.emit('error', errorMsg);
+          }
+        } catch (error: any) {
+          console.error('Error in join-queue handler:', error);
+          socket.emit('error', error.message || 'An error occurred while joining queue');
+        }
+      } catch (error: any) {
+        console.error('Unexpected error in join-queue:', error);
+        socket.emit('error', 'An unexpected error occurred');
+      }
+    });
+
+    // Leave queue
+    socket.on('leave-queue', async (data: { playerId?: string; playerName?: string }) => {
+      try {
+        if (!data.playerId && !data.playerName) {
+          socket.emit('error', 'Invalid player ID or name');
+          return;
+        }
+        
+        console.log('Received leave-queue request:', data);
+        
+        try {
+          let result;
+          if (data.playerId) {
+            result = await leaveQueue(data.playerId);
+          } else if (data.playerName) {
+            // Pass socket ID if available to make name-based leave more precise
+            result = await leaveQueueByName(data.playerName, socket.id);
+          } else {
+            socket.emit('error', 'Invalid player ID or name');
+            return;
+          }
+          
+          if (result.success) {
+            // Broadcast queue update
+            const queue = await getQueue();
+            io.emit('queue-update', queue);
+            
+            console.log('Player left queue:', data.playerId || data.playerName);
+          } else {
+            socket.emit('error', result.error || 'Failed to leave queue');
+          }
+        } catch (error: any) {
+          console.error('Error in leave-queue handler:', error);
+          socket.emit('error', error.message || 'An error occurred while leaving queue');
+        }
+      } catch (error: any) {
+        console.error('Unexpected error in leave-queue:', error);
+        socket.emit('error', 'An unexpected error occurred');
+      }
+    });
+
+    // Reconnect player (now uses IP address instead of name)
+    socket.on('reconnect-player', async (data: { playerName?: string }) => {
+      try {
+        // Get IP address from socket
+        const clientIP = getClientIP(socket);
+        console.log('Received reconnect request from socket:', socket.id, 'IP:', clientIP, 'name:', data.playerName);
+        
+        try {
+          const result = await reconnectPlayer(clientIP, socket.id, data.playerName);
+          
+          if (result.success) {
+            if (result.room && result.player) {
+              // Player reconnected to an active room
+              socket.join(result.room.id);
+              
+              socket.emit('matched', {
+                roomId: result.room.id,
+                playerId: result.player.id
+              });
+              
+              // Send game state
+              if (result.room.gameState) {
+                socket.emit('game-update', result.room.gameState);
+              }
+              
+              console.log('Player reconnected to room:', result.room.id, 'IP:', clientIP);
+            } else {
+              // Player is in queue - send queue update
+              const queue = await getQueue();
+              socket.emit('queue-update', queue);
+              console.log('Player reconnected to queue, IP:', clientIP);
+            }
+          } else {
+            socket.emit('error', result.error || 'No active game or queue entry found. Please join the queue.');
+          }
+        } catch (error: any) {
+          console.error('Error in reconnect-player handler:', error);
+          socket.emit('error', error.message || 'An error occurred while reconnecting');
+        }
+      } catch (error: any) {
+        console.error('Unexpected error in reconnect-player:', error);
+        socket.emit('error', 'An unexpected error occurred');
+      }
+    });
+
+    // Admin start matching
+    socket.on('admin-start-matching', async () => {
+      try {
+        console.log('Admin requested to start matching');
+        
+        try {
+          const result = await startMatching();
+          
+          if (result.success && result.queueEntries) {
+            // Get all created rooms
+            const rooms = await getAllRooms();
+            const newlyCreatedRooms = rooms.filter(r => {
+              const timeDiff = Date.now() - r.createdAt;
+              return timeDiff < 5000; // Rooms created in last 5 seconds
+            });
+            
+            // Notify each matched player using queue entries
+            for (const entry of result.queueEntries) {
+              if (entry.assignedRoomId && entry.socketId) {
+                const room = newlyCreatedRooms.find(r => r.id === entry.assignedRoomId);
+                if (room && room.gameState) {
+                  const player = room.gameState.players.find(p => p.id === entry.playerId);
+                  if (player) {
+                    const playerSocket = io.sockets.sockets.get(entry.socketId);
+                    if (playerSocket) {
+                      playerSocket.join(room.id);
+                      playerSocket.emit('matched', {
+                        roomId: room.id,
+                        playerId: player.id
+                      });
+                      playerSocket.emit('game-update', room.gameState);
+                    }
+                  }
+                }
+              }
+            }
+            
+            // Broadcast game updates to all rooms
+            for (const room of newlyCreatedRooms) {
+              if (room.gameState) {
+                io.to(room.id).emit('game-update', room.gameState);
+              }
+            }
+            
+            // Reset queue to waiting status and clear entries after notification
+            await updateQueue(async (queue) => {
+              if (queue) {
+                queue.entries = [];
+                queue.status = 'waiting';
+                queue.matchedAt = undefined;
+              }
+              return queue;
+            });
+            
+            // Broadcast queue update
+            const queue = await getQueue();
+            io.emit('queue-update', queue);
+            
+            // Update rooms list
+            io.emit('rooms-update', rooms);
+            
+            socket.emit('matching-complete', { roomsCreated: result.roomsCreated });
+            console.log('Matching completed. Created', result.roomsCreated, 'rooms');
+          } else {
+            socket.emit('error', result.error || 'Failed to start matching');
+          }
+        } catch (error: any) {
+          console.error('Error in admin-start-matching handler:', error);
+          socket.emit('error', error.message || 'An error occurred while starting matching');
+        }
+      } catch (error: any) {
+        console.error('Unexpected error in admin-start-matching:', error);
+        socket.emit('error', 'An unexpected error occurred');
       }
     });
 
@@ -174,6 +482,16 @@ app.prepare().then(() => {
             room.gameState.status = 'active';
             room.gameState.startTime = Date.now();
             room.status = 'in-progress';
+            
+            // Initialize hasDrawnCardThisTurn for all players
+            for (const p of room.gameState.players) {
+              p.hasDrawnCardThisTurn = false;
+            }
+            // The first player (red team) hasn't drawn a card yet
+            const firstPlayer = room.gameState.players.find(p => p.team === room.gameState.currentTurn);
+            if (firstPlayer) {
+              firstPlayer.hasDrawnCardThisTurn = false;
+            }
             
             await updateRoom(data.roomId, { status: room.status, gameState: room.gameState });
             await updateGame(room.gameState.id, { status: 'active', startTime: room.gameState.startTime });
@@ -590,9 +908,37 @@ app.prepare().then(() => {
         
         io.to(data.roomId).emit('game-ended', { winner: gameState.winner, gameState });
       } else {
-        // Game continues - switch turn
+        // Game continues - check if player has drawn a card this turn
+        // If not, auto-draw a card before ending the turn (only if hand is not full)
+        if (!player.hasDrawnCardThisTurn && player.cards.length < 6) {
+          const newCard = generateCard();
+          player.cards.push(newCard);
+          player.hasDrawnCardThisTurn = true;
+          
+          // Add auto-draw action to history
+          const autoDrawAction: GameAction = {
+            playerId: player.id,
+            playerName: player.name,
+            team: player.team,
+            action: 'draw-card',
+            timestamp: Date.now(),
+            effect: `Tự động rút thẻ: ${newCard.name}`,
+          };
+          gameState.history.push(autoDrawAction);
+        } else if (!player.hasDrawnCardThisTurn && player.cards.length >= 6) {
+          // Hand is full, mark as drawn to prevent further auto-draw attempts
+          player.hasDrawnCardThisTurn = true;
+        }
+        
+        // Switch turn
         gameState.currentTurn = gameState.currentTurn === 'red' ? 'blue' : 'red';
         gameState.turnNumber += 1;
+        
+        // Reset hasDrawnCardThisTurn for the new current player
+        const newCurrentPlayer = gameState.players.find(p => p.team === gameState.currentTurn);
+        if (newCurrentPlayer) {
+          newCurrentPlayer.hasDrawnCardThisTurn = false;
+        }
         
         // Apply passive effects at start of turn
         for (const p of gameState.players) {
@@ -651,13 +997,26 @@ app.prepare().then(() => {
         return;
       }
       
+      // Check if hand is full (max 6 cards)
+      if (player.cards.length >= 6) {
+        socket.emit('error', 'Tay bài đã đầy! (Tối đa 6 thẻ)');
+        return;
+      }
+      
       // Generate a new card with specified type or random
       const newCard = generateCard(data.cardType as any);
       player.cards.push(newCard);
+      player.hasDrawnCardThisTurn = true;
       
       // Drawing a card counts as a turn
       gameState.currentTurn = gameState.currentTurn === 'red' ? 'blue' : 'red';
       gameState.turnNumber += 1;
+      
+      // Reset hasDrawnCardThisTurn for the new current player
+      const newCurrentPlayer = gameState.players.find(p => p.team === gameState.currentTurn);
+      if (newCurrentPlayer) {
+        newCurrentPlayer.hasDrawnCardThisTurn = false;
+      }
       
       // Decrement passive effect durations at the end of each turn
       gameState.passiveEffects = gameState.passiveEffects
@@ -675,8 +1034,53 @@ app.prepare().then(() => {
       io.to(data.roomId).emit('game-update', gameState);
     });
 
-    socket.on('disconnect', () => {
-      console.log('Client disconnected:', socket.id);
+    socket.on('disconnect', async () => {
+      // Get IP address from socket (may not be available on disconnect, use stored socketId instead)
+      const clientIP = getClientIP(socket);
+      console.log('Client disconnected:', socket.id, 'IP:', clientIP);
+      
+      // Wait a bit before removing from queue (grace period for Fast Refresh/reconnection)
+      // This prevents players from being removed during Fast Refresh
+      const disconnectedSocketId = socket.id; // Store socket ID before timeout
+      setTimeout(async () => {
+        console.log(`[DISCONNECT] Checking if socket ${disconnectedSocketId} should be removed from queue...`);
+        // Check if entry still exists with this socket ID
+        // If player reconnected (Fast Refresh), join-queue would have updated the socket ID
+        const currentQueue = await getQueue();
+        console.log(`[DISCONNECT] Current queue has ${currentQueue.entries.length} entries:`, currentQueue.entries.map(e => ({ name: e.playerName, socket: e.socketId })));
+        const entry = currentQueue.entries.find(e => e.socketId === disconnectedSocketId);
+        
+        // Only remove if entry still has this socket ID (meaning it wasn't updated by reconnection)
+        if (entry) {
+          console.log(`[DISCONNECT] Found entry for disconnected socket ${disconnectedSocketId}:`, entry.playerName);
+          // Check if socket is still connected (double-check)
+          const isStillConnected = io.sockets.sockets.has(disconnectedSocketId);
+          console.log(`[DISCONNECT] Socket ${disconnectedSocketId} still connected?`, isStillConnected);
+          if (!isStillConnected) {
+            // Socket is definitely disconnected, remove from queue
+            try {
+              console.log(`[DISCONNECT] Removing socket ${disconnectedSocketId} from queue...`);
+              const leaveResult = await leaveQueueBySocketId(disconnectedSocketId);
+              if (leaveResult.success) {
+                // Broadcast queue update to all clients
+                const queue = await getQueue();
+                console.log(`[DISCONNECT] After removal, queue has ${queue.entries.length} entries:`, queue.entries.map(e => ({ name: e.playerName, socket: e.socketId })));
+                io.emit('queue-update', queue);
+                console.log('Removed disconnected player from queue, socket:', disconnectedSocketId, 'IP:', clientIP);
+              } else {
+                console.log(`[DISCONNECT] Failed to remove socket ${disconnectedSocketId}:`, leaveResult.error);
+              }
+            } catch (error: any) {
+              // Player might not have been in queue, which is fine
+              console.log('Player was not in queue or already removed:', disconnectedSocketId, error.message);
+            }
+          } else {
+            console.log('Socket reconnected, keeping entry:', disconnectedSocketId);
+          }
+        } else {
+          console.log('Entry not found or already updated with new socket ID:', disconnectedSocketId);
+        }
+      }, 2000); // 2 second grace period for Fast Refresh
     });
   });
 
