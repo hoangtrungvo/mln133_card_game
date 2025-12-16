@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 // Load questions from JSON file
-function loadQuestions(): Record<CardType, Array<{ question: string; answer: string; options?: string[] }>> {
+function loadQuestions(): Record<CardType, Array<{ question: string; answer: string; options?: string[]; points?: number }>> {
   try {
     const questionsPath = path.join(process.cwd(), 'data', 'questions.json');
     const fileContent = fs.readFileSync(questionsPath, 'utf-8');
@@ -11,7 +11,7 @@ function loadQuestions(): Record<CardType, Array<{ question: string; answer: str
   } catch (error) {
     console.error('Error loading questions.json:', error);
     // Fallback to default questions if file doesn't exist
-    return {} as Record<CardType, Array<{ question: string; answer: string; options?: string[] }>>;
+    return {} as Record<CardType, Array<{ question: string; answer: string; options?: string[]; points?: number }>>;
   }
 }
 
@@ -59,6 +59,7 @@ export function generateCard(cardType?: CardType): Card {
     question: randomQuestion.question,
     correctAnswer: randomQuestion.answer,
     options: randomQuestion.options,
+    points: randomQuestion.points || 10, // Load points from question, default 10
   };
 }
 

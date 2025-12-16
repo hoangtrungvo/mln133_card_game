@@ -11,9 +11,17 @@ interface QuestionModalProps {
 }
 
 // Fibonacci point reduction: 10 → 8 → 5 → 3 → 2 → 1 (minimum 1)
-function getFibonacciPoints(attemptCount: number): number {
+// Returns ratio (0-1) for scaling question points
+function getFibonacciRatio(attemptCount: number): number {
   const sequence = [10, 8, 5, 3, 2, 1];
-  return attemptCount < sequence.length ? sequence[attemptCount] : 1;
+  const fibScore = attemptCount < sequence.length ? sequence[attemptCount] : 1;
+  return fibScore / 10; // Return ratio (max 1.0 for attempt 0)
+}
+
+// Calculate final question points based on base points and attempt count
+function calculateQuestionPoints(basePoints: number, attemptCount: number): number {
+  const ratio = getFibonacciRatio(attemptCount);
+  return Math.round(basePoints * ratio);
 }
 
 export default function QuestionModal({ card, onSubmit, onCancel, questionTimerSeconds = 15 }: QuestionModalProps) {
@@ -79,8 +87,9 @@ export default function QuestionModal({ card, onSubmit, onCancel, questionTimerS
     // Check if answer is correct
     const isCorrect = answer.toLowerCase().trim() === card.correctAnswer.toLowerCase().trim();
     if (isCorrect) {
-      // Calculate Fibonacci points based on attempt count
-      const questionPoints = getFibonacciPoints(attemptCount);
+      // Calculate points based on base points from question and attempt count
+      const basePoints = (card as any).points || 10; // Default to 10 if not specified
+      const questionPoints = calculateQuestionPoints(basePoints, attemptCount);
       card.questionStartTime = (card.questionStartTime || Date.now()) - (questionTimerSeconds - remainingTime) * 1000;
       // Persist points and attempt count on card (fixes persistence bug)
       (card as any).questionPoints = questionPoints;
@@ -144,22 +153,22 @@ export default function QuestionModal({ card, onSubmit, onCancel, questionTimerS
                 <div className={`px-3 py-1 rounded-lg border ${
                   hasExpired 
                     ? 'bg-gray-900/50 border-gray-500/50'
-                    : getFibonacciPoints(attemptCount) === 10
+                    : getFibonacciRatio(attemptCount) === 1
                     ? 'bg-green-900/50 border-green-500/50'
-                    : getFibonacciPoints(attemptCount) >= 5
+                    : getFibonacciRatio(attemptCount) >= 0.5
                     ? 'bg-yellow-900/50 border-yellow-500/50'
                     : 'bg-orange-900/50 border-orange-500/50'
                 }`}>
                   <span className={`text-xs font-bold ${
                     hasExpired
                       ? 'text-gray-300'
-                      : getFibonacciPoints(attemptCount) === 10
+                      : getFibonacciRatio(attemptCount) === 1
                       ? 'text-green-300'
-                      : getFibonacciPoints(attemptCount) >= 5
+                      : getFibonacciRatio(attemptCount) >= 0.5
                       ? 'text-yellow-300'
                       : 'text-orange-300'
                   }`}>
-                    {hasExpired ? '⭐ 0đ' : `⭐ ${getFibonacciPoints(attemptCount)}đ`}
+                    {hasExpired ? '⭐ 0đ' : `⭐ ${calculateQuestionPoints((card as any).points || 10, attemptCount)}đ`}
                   </span>
                 </div>
               </div>

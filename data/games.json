@@ -1585,34 +1585,34 @@
             ]
           },
           {
-            "id": "card-1765885640280-ni850rbuv",
-            "type": "an-dien",
-            "name": "Ân Điển",
-            "value": 18,
-            "description": "Hồi 18 HP + Nếu trả lời đúng ngay lần 1, hồi thêm 12 HP",
-            "color": "bg-gradient-to-br from-blue-400 to-blue-600",
-            "icon": "🕊️",
-            "image": "/andien.jpg",
-            "passive": "perfect-answer-bonus",
-            "question": "Tôn giáo nào là tôn giáo bản địa của Việt Nam?",
-            "correctAnswer": "Đạo Cao Đài và Đạo Hòa Hảo",
+            "id": "card-1765885627949-d4zgxyva9",
+            "type": "thap-tu-giao",
+            "name": "Thập Tự Giáo",
+            "value": -18,
+            "description": "Gây 18 damage + Nếu đối thủ đã nhận damage turn trước, gây thêm 12 damage",
+            "color": "bg-gradient-to-br from-red-700 to-red-900",
+            "icon": "⚔️",
+            "image": "/thaptugiao.jpg",
+            "passive": "combo-damage",
+            "question": "Tòa Thánh Cao Đài ở tỉnh nào?",
+            "correctAnswer": "Tây Ninh",
             "options": [
-              "Phật giáo",
-              "Công giáo",
-              "Đạo Cao Đài và Đạo Hòa Hảo",
-              "Tin Lành"
+              "An Giang",
+              "Tây Ninh",
+              "Long An",
+              "Đồng Nai"
             ]
           }
         ],
-        "score": 10,
+        "score": 0,
         "ready": false,
-        "hasDrawnCardThisTurn": true
+        "hasDrawnCardThisTurn": false
       },
       {
         "id": "player-1765885623166-82wwq45xk",
         "name": "tops",
         "team": "blue",
-        "health": 82,
+        "health": 100,
         "maxHealth": 100,
         "cards": [
           {
@@ -1716,20 +1716,522 @@
         "hasDrawnCardThisTurn": false
       }
     ],
-    "currentTurn": "blue",
-    "turnNumber": 2,
+    "currentTurn": "red",
+    "turnNumber": 1,
+    "status": "active",
+    "winner": null,
+    "startTime": 1765885627954,
+    "endTime": null,
+    "history": [],
+    "passiveEffects": [],
+    "turnTimerSeconds": 30,
+    "questionTimerSeconds": 15,
+    "currentTurnStartTime": 1765885627954
+  },
+  {
+    "id": "game-1765891381073-irr4def8b",
+    "roomId": "room-1765891381073-latmg5ud3",
+    "players": [
+      {
+        "id": "player-1765891372096-n2xxevvff",
+        "name": "t3213",
+        "team": "red",
+        "health": 95,
+        "maxHealth": 100,
+        "cards": [
+          {
+            "id": "card-1765891381061-97qws7g9m",
+            "type": "hau-dong",
+            "name": "Hầu Đồng",
+            "value": 0,
+            "description": "Copy 1 thẻ đã dùng trong game (random)",
+            "color": "bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500",
+            "icon": "💃",
+            "image": "/haudong.jpg",
+            "passive": "copy-card",
+            "question": "Quản lý lễ hội tín ngưỡng cần hướng tới điều gì?",
+            "correctAnswer": "Văn minh, tiết kiệm, chống mê tín",
+            "options": [
+              "Chỉ phục vụ thương mại",
+              "Văn minh, tiết kiệm, chống mê tín",
+              "Tự phát không kiểm soát",
+              "Khuyến khích bói toán"
+            ]
+          },
+          {
+            "id": "card-1765891381063-dtk5srtre",
+            "type": "hau-dong",
+            "name": "Hầu Đồng",
+            "value": 0,
+            "description": "Copy 1 thẻ đã dùng trong game (random)",
+            "color": "bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500",
+            "icon": "💃",
+            "image": "/haudong.jpg",
+            "passive": "copy-card",
+            "question": "Vì sao Nhà nước khuyến khích loại bỏ mê tín dị đoan?",
+            "correctAnswer": "Vì gây tác hại xã hội và có thể bị lợi dụng",
+            "options": [
+              "Vì gây tác hại xã hội và có thể bị lợi dụng",
+              "Vì tăng đoàn kết",
+              "Vì làm giàu văn hóa",
+              "Vì là hoạt động khoa học"
+            ]
+          },
+          {
+            "id": "card-1765891381067-g1254dpks",
+            "type": "nhan-qua",
+            "name": "Nhân Quả",
+            "value": 0,
+            "description": "Counter: Phản lại x2.5 damage",
+            "color": "bg-gradient-to-br from-purple-600 to-indigo-800",
+            "icon": "☸️",
+            "image": "/nhanqua.jpg",
+            "passive": "counter-2.5x",
+            "question": "Điều nào KHÔNG phải là tiêu chí cơ bản của một tôn giáo?",
+            "correctAnswer": "Có quân đội riêng",
+            "options": [
+              "Có quân đội riêng",
+              "Có hệ thống giáo thuyết",
+              "Có niềm tin vào đấng siêu nhiên",
+              "Có hệ thống tín đồ đông đảo"
+            ]
+          },
+          {
+            "id": "card-1765891475594-jgvmjv6ko",
+            "type": "phep-la",
+            "name": "Phép Lạ",
+            "value": 0,
+            "description": "Hồi sinh với 50 HP khi chết (1 lần/game)",
+            "color": "bg-gradient-to-br from-yellow-300 to-amber-500",
+            "icon": "🕊️",
+            "image": "/phepla.png",
+            "passive": "revive-once",
+            "question": "Tại sao Đảng ta khẳng định tín ngưỡng",
+            "correctAnswer": " tôn giáo sẽ tồn tại lâu dài cùng dân tộc?",
+            "options": [
+              "tránh cả tả khuynh lẫn hữu khuynh",
+              "Vì đó là quan điểm khoa học và cách mạng",
+              "Vì đó là chính sách của Đảng",
+              "tôn giáo sẽ tồn tại lâu dài cùng dân tộc?"
+            ]
+          },
+          {
+            "id": "card-1765891512897-bfermg1lr",
+            "type": "nhan-qua",
+            "name": "Nhân Quả",
+            "value": 0,
+            "description": "Counter: Phản lại x2.5 damage",
+            "color": "bg-gradient-to-br from-purple-600 to-indigo-800",
+            "icon": "☸️",
+            "image": "/nhanqua.jpg",
+            "passive": "counter-2.5x",
+            "question": "Nguồn gốc tự nhiên",
+            "correctAnswer": " kinh tế - xã hội của tôn giáo liên quan đến điều gì?",
+            "options": [
+              "Sự phát triển của giáo dục",
+              "kinh tế - xã hội của tôn giáo liên quan đến điều gì?",
+              "Lực lượng sản xuất chưa phát triển",
+              "con người yếu đuối trước thiên nhiên"
+            ]
+          },
+          {
+            "id": "card-1765891542615-k3h2mt5f6",
+            "type": "thap-tu-giao",
+            "name": "Thập Tự Giáo",
+            "value": -18,
+            "description": "Gây 18 damage + Nếu đối thủ đã nhận damage turn trước, gây thêm 12 damage",
+            "color": "bg-gradient-to-br from-red-700 to-red-900",
+            "icon": "⚔️",
+            "image": "/thaptugiao.jpg",
+            "passive": "combo-damage",
+            "question": "Chính sách tôn giáo của Việt Nam gắn với mục tiêu chung nào?",
+            "correctAnswer": "Đại đoàn kết toàn dân tộc",
+            "options": [
+              "Đại đoàn kết toàn dân tộc",
+              "Chỉ phát triển kinh tế tư nhân",
+              "Tách biệt dân tộc với tôn giáo",
+              "Ưu tiên lợi ích nhóm"
+            ]
+          }
+        ],
+        "score": 50,
+        "ready": false,
+        "hasDrawnCardThisTurn": false
+      },
+      {
+        "id": "player-1765891366566-n6reka1th",
+        "name": "tops",
+        "team": "blue",
+        "health": 82,
+        "maxHealth": 100,
+        "cards": [
+          {
+            "id": "card-1765891381068-dxp4hdavl",
+            "type": "phep-la",
+            "name": "Phép Lạ",
+            "value": 0,
+            "description": "Hồi sinh với 50 HP khi chết (1 lần/game)",
+            "color": "bg-gradient-to-br from-yellow-300 to-amber-500",
+            "icon": "🕊️",
+            "image": "/phepla.png",
+            "passive": "revive-once",
+            "question": "Tại sao Đảng ta khẳng định tín ngưỡng",
+            "correctAnswer": " tôn giáo sẽ tồn tại lâu dài cùng dân tộc?",
+            "options": [
+              "tránh cả tả khuynh lẫn hữu khuynh",
+              "Vì đó là quan điểm khoa học và cách mạng",
+              "Vì đó là chính sách của Đảng",
+              "tôn giáo sẽ tồn tại lâu dài cùng dân tộc?"
+            ]
+          },
+          {
+            "id": "card-1765891381073-v5rf4l5ok",
+            "type": "tu-tai-gia",
+            "name": "Tu Tại Gia",
+            "value": 15,
+            "description": "Hồi 15 HP + Rút 1 thẻ (Không cần trả lời câu hỏi)",
+            "color": "bg-gradient-to-br from-amber-700 to-yellow-900",
+            "icon": "🏠",
+            "image": "/tutaigia.jpg",
+            "passive": "draw-card",
+            "question": "Đặc điểm 'chung sống hòa bình' giữa các tôn giáo thể hiện qua điều gì?",
+            "correctAnswer": "Tôn trọng lẫn nhau trong cộng đồng",
+            "options": [
+              "Cạnh tranh bạo lực",
+              "Cấm giao lưu",
+              "Tôn trọng lẫn nhau trong cộng đồng",
+              "Loại trừ tôn giáo khác"
+            ]
+          },
+          {
+            "id": "card-1765891468827-3taq6mb73",
+            "type": "tu-tai-gia",
+            "name": "Tu Tại Gia",
+            "value": 15,
+            "description": "Hồi 15 HP + Rút 1 thẻ (Không cần trả lời câu hỏi)",
+            "color": "bg-gradient-to-br from-amber-700 to-yellow-900",
+            "icon": "🏠",
+            "image": "/tutaigia.jpg",
+            "passive": "draw-card",
+            "question": "Nguyên tắc nào đúng trong quản lý tín ngưỡng, tôn giáo?",
+            "correctAnswer": "Bình đẳng trước pháp luật",
+            "options": [
+              "Chỉ ưu tiên tôn giáo lớn",
+              "Tôn giáo đứng ngoài pháp luật",
+              "Tùy ý địa phương",
+              "Bình đẳng trước pháp luật"
+            ]
+          },
+          {
+            "id": "card-1765891510038-ggwnc8hmf",
+            "type": "loi-cau-nguyen",
+            "name": "Lời Cầu Nguyện",
+            "value": 25,
+            "description": "Hồi 25 HP + Bonus: Nếu HP < 30%, hồi thêm 15 HP",
+            "color": "bg-gradient-to-br from-white to-gray-300",
+            "icon": "🙏",
+            "image": "/loicaunguyen.jpg",
+            "passive": "low-hp-bonus",
+            "question": "Nhà nước Việt Nam khuyến khích hoạt động nào sau đây của các tổ chức tôn giáo?",
+            "correctAnswer": "Hoạt động nhân đạo, từ thiện và đóng góp cho xã hội",
+            "options": [
+              "Kích động chia rẽ dân tộc",
+              "Hoạt động nhân đạo, từ thiện và đóng góp cho xã hội",
+              "Lợi dụng tôn giáo để trục lợi",
+              "Tuyên truyền mê tín dị đoan"
+            ]
+          },
+          {
+            "id": "card-1765891521558-dxrpoukbm",
+            "type": "bat-dong-tam",
+            "name": "Bất Động Tâm",
+            "value": 0,
+            "description": "Miễn nhiễm damage lần đầu trong 2 turn + Giảm 30% damage",
+            "color": "bg-gradient-to-br from-green-400 to-emerald-600",
+            "icon": "🧘",
+            "image": "/batdongtam.jpg",
+            "passive": "immunity-and-reduction",
+            "question": "Nguồn gốc tâm lý của tôn giáo xuất phát từ đâu?",
+            "correctAnswer": "Sự sợ hãi",
+            "options": [
+              "mong muốn bình yên của con người",
+              "Sự sợ hãi",
+              "lo lắng",
+              "Không có quy định cụ thể"
+            ]
+          },
+          {
+            "id": "card-1765892309832-yhmxx6skd",
+            "type": "tu-bi",
+            "name": "Từ Bi",
+            "value": 20,
+            "description": "Hồi 20 HP + Passive: Hồi thêm 5 HP cho đồng minh mỗi turn",
+            "color": "bg-gradient-to-br from-yellow-500 to-orange-500",
+            "icon": "🙏",
+            "image": "/tubi.jpg",
+            "passive": "compassion-heal",
+            "question": "Hiện nay Việt Nam có bao nhiêu tôn giáo được công nhận?",
+            "correctAnswer": "16 tôn giáo",
+            "options": [
+              "20 tôn giáo",
+              "12 tôn giáo",
+              "16 tôn giáo",
+              "10 tôn giáo"
+            ],
+            "points": 10
+          }
+        ],
+        "score": 50,
+        "ready": false,
+        "hasDrawnCardThisTurn": true
+      }
+    ],
+    "currentTurn": "red",
+    "turnNumber": 27,
     "status": "finished",
     "winner": "red",
-    "startTime": 1765885627954,
-    "endTime": 1765885646691,
+    "startTime": 1765891381073,
+    "endTime": 1765892317334,
     "history": [
       {
-        "playerId": "player-1765885618553-9uy0k2dg1",
-        "playerName": "admin",
+        "playerId": "player-1765891372096-n2xxevvff",
+        "playerName": "t3213",
         "team": "red",
         "action": "play-card",
         "card": {
-          "id": "card-1765885627949-d4zgxyva9",
+          "id": "card-1765891381062-364219o74",
+          "type": "truyen-giao",
+          "name": "Truyền Giáo",
+          "value": -12,
+          "description": "Gây 12 damage + Làm yếu: Đối thủ nhận +5 damage mọi nguồn (2 turn)",
+          "color": "bg-gradient-to-br from-orange-500 to-red-600",
+          "icon": "📖",
+          "image": "/truyengiao.jpg",
+          "passive": "weaken-debuff",
+          "question": "Trong thực tiễn, công tác tôn giáo cần hướng tới điều gì?",
+          "correctAnswer": "Phát huy giá trị đạo đức, nhân văn của tôn giáo",
+          "options": [
+            "Phát huy giá trị đạo đức, nhân văn của tôn giáo",
+            "Tạo đặc quyền cho một tôn giáo",
+            "Khuyến khích cực đoan",
+            "Tách tín đồ khỏi xã hội"
+          ]
+        },
+        "timestamp": 1765891405857,
+        "effect": "Truyền Giáo: -12 HP + Debuff: +5 damage (2 turn) (+10 điểm câu hỏi)",
+        "questionPoints": 10,
+        "answerTime": 0
+      },
+      {
+        "playerId": "player-1765891366566-n6reka1th",
+        "playerName": "tops",
+        "team": "blue",
+        "action": "play-card",
+        "card": {
+          "id": "card-1765891381070-5btqapc9l",
+          "type": "hau-dong",
+          "name": "Hầu Đồng",
+          "value": 0,
+          "description": "Copy 1 thẻ đã dùng trong game (random)",
+          "color": "bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500",
+          "icon": "💃",
+          "image": "/haudong.jpg",
+          "passive": "copy-card",
+          "question": "Nguyên tắc bình đẳng trong tôn giáo có nghĩa là gì?",
+          "correctAnswer": "Mọi tổ chức, cá nhân tôn giáo đều bình đẳng trước pháp luật",
+          "options": [
+            "Chỉ người không theo đạo có quyền",
+            "Tôn giáo đứng trên pháp luật",
+            "Mọi tổ chức, cá nhân tôn giáo đều bình đẳng trước pháp luật",
+            "Chỉ tôn giáo lớn có quyền"
+          ]
+        },
+        "timestamp": 1765891434645,
+        "effect": "Hầu Đồng: Copy thẻ \"Truyền Giáo\" (+10 điểm câu hỏi)",
+        "questionPoints": 10,
+        "answerTime": 0
+      },
+      {
+        "playerId": "player-1765891372096-n2xxevvff",
+        "playerName": "t3213",
+        "team": "red",
+        "action": "play-card",
+        "card": {
+          "id": "card-1765891405858-1qejqfa6j",
+          "type": "an-dien",
+          "name": "Ân Điển",
+          "value": 18,
+          "description": "Hồi 18 HP + Nếu trả lời đúng ngay lần 1, hồi thêm 12 HP",
+          "color": "bg-gradient-to-br from-blue-400 to-blue-600",
+          "icon": "🕊️",
+          "image": "/andien.jpg",
+          "passive": "perfect-answer-bonus",
+          "question": "Trong công tác tôn giáo, điều gì cần được ưu tiên?",
+          "correctAnswer": "Vận động, thuyết phục và đối thoại",
+          "options": [
+            "Áp đặt, cưỡng bức",
+            "Chỉ phạt tiền",
+            "Vận động, thuyết phục và đối thoại",
+            "Bỏ mặc"
+          ]
+        },
+        "timestamp": 1765891454308,
+        "effect": "Ân Điển: +30 HP (Perfect!) (+10 điểm câu hỏi)",
+        "questionPoints": 10,
+        "answerTime": 0
+      },
+      {
+        "playerId": "player-1765891366566-n6reka1th",
+        "playerName": "tops",
+        "team": "blue",
+        "action": "play-card",
+        "card": {
+          "id": "card-1765891381072-y5cwn4rub",
+          "type": "nhan-qua",
+          "name": "Nhân Quả",
+          "value": 0,
+          "description": "Counter: Phản lại x2.5 damage",
+          "color": "bg-gradient-to-br from-purple-600 to-indigo-800",
+          "icon": "☸️",
+          "image": "/nhanqua.jpg",
+          "passive": "counter-2.5x",
+          "question": "Mặt chính trị trong vấn đề tôn giáo phản ánh điều gì?",
+          "correctAnswer": "Mâu thuẫn đối kháng về lợi ích kinh tế",
+          "options": [
+            "Sự khác biệt về niềm tin giữa các tôn giáo",
+            "Mâu thuẫn đối kháng về lợi ích kinh tế",
+            "Sự khác biệt về lễ nghi tôn giáo",
+            "chính trị giữa các giai cấp"
+          ]
+        },
+        "timestamp": 1765891468826,
+        "effect": "Nhân Quả: Phản đòn x2.5 damage (2 turn) (+10 điểm câu hỏi)",
+        "questionPoints": 10,
+        "answerTime": 0
+      },
+      {
+        "playerId": "player-1765891372096-n2xxevvff",
+        "playerName": "t3213",
+        "team": "red",
+        "action": "play-card",
+        "card": {
+          "id": "card-1765891454309-e3mgtdmx4",
+          "type": "truyen-giao",
+          "name": "Truyền Giáo",
+          "value": -12,
+          "description": "Gây 12 damage + Làm yếu: Đối thủ nhận +5 damage mọi nguồn (2 turn)",
+          "color": "bg-gradient-to-br from-orange-500 to-red-600",
+          "icon": "📖",
+          "image": "/truyengiao.jpg",
+          "passive": "weaken-debuff",
+          "question": "Một cách giảm tác động tiêu cực của mê tín là gì?",
+          "correctAnswer": "Tăng giáo dục và phổ biến kiến thức khoa học",
+          "options": [
+            "Cấm thảo luận",
+            "Khuyến khích bói toán",
+            "Bỏ giáo dục",
+            "Tăng giáo dục và phổ biến kiến thức khoa học"
+          ]
+        },
+        "timestamp": 1765891475592,
+        "effect": "Truyền Giáo: -12 HP + Debuff + Phản đòn: -30 HP (+10 điểm câu hỏi)",
+        "questionPoints": 10,
+        "answerTime": 0
+      },
+      {
+        "playerId": "player-1765891366566-n6reka1th",
+        "playerName": "tops",
+        "team": "blue",
+        "action": "play-card",
+        "card": {
+          "id": "card-1765891434647-gp9xobj4x",
+          "type": "bat-dong-tam",
+          "name": "Bất Động Tâm",
+          "value": 0,
+          "description": "Miễn nhiễm damage lần đầu trong 2 turn + Giảm 30% damage",
+          "color": "bg-gradient-to-br from-green-400 to-emerald-600",
+          "icon": "🧘",
+          "image": "/batdongtam.jpg",
+          "passive": "immunity-and-reduction",
+          "question": "Sự khác biệt cơ bản về thế giới quan giữa tôn giáo và chủ nghĩa Mác - Lênin là gì?",
+          "correctAnswer": "Tôn giáo theo thế giới quan duy tâm",
+          "options": [
+            "Tôn giáo theo thế giới quan duy vật",
+            "Mác - Lênin theo thế giới quan duy tâm",
+            "Tôn giáo theo thế giới quan duy tâm",
+            "Mác - Lênin theo thế giới quan duy vật biện chứng"
+          ]
+        },
+        "timestamp": 1765891490430,
+        "effect": "Bất Động Tâm: Miễn nhiễm lần đầu + Giảm 30% damage (2 turn) (+10 điểm câu hỏi)",
+        "questionPoints": 10,
+        "answerTime": 0
+      },
+      {
+        "playerId": "player-1765891372096-n2xxevvff",
+        "playerName": "t3213",
+        "team": "red",
+        "action": "play-card",
+        "card": {
+          "id": "card-1765891381065-yxxwge9tx",
+          "type": "loi-cau-nguyen",
+          "name": "Lời Cầu Nguyện",
+          "value": 25,
+          "description": "Hồi 25 HP + Bonus: Nếu HP < 30%, hồi thêm 15 HP",
+          "color": "bg-gradient-to-br from-white to-gray-300",
+          "icon": "🙏",
+          "image": "/loicaunguyen.jpg",
+          "passive": "low-hp-bonus",
+          "question": "Một trong các đặc điểm nổi bật của tôn giáo ở Việt Nam là gì?",
+          "correctAnswer": "Đa dạng, đan xen và chung sống hòa bình",
+          "options": [
+            "Chỉ tồn tại một tôn giáo chủ đạo",
+            "Thường xuyên xảy ra xung đột tôn giáo",
+            "Không có giao lưu giữa các tôn giáo",
+            "Đa dạng, đan xen và chung sống hòa bình"
+          ]
+        },
+        "timestamp": 1765891497403,
+        "effect": "Lời Cầu Nguyện: +25 HP (+10 điểm câu hỏi)",
+        "questionPoints": 10,
+        "answerTime": 0
+      },
+      {
+        "playerId": "player-1765891366566-n6reka1th",
+        "playerName": "tops",
+        "team": "blue",
+        "action": "play-card",
+        "card": {
+          "id": "card-1765891490431-1t6em7q4p",
+          "type": "an-dien",
+          "name": "Ân Điển",
+          "value": 18,
+          "description": "Hồi 18 HP + Nếu trả lời đúng ngay lần 1, hồi thêm 12 HP",
+          "color": "bg-gradient-to-br from-blue-400 to-blue-600",
+          "icon": "🕊️",
+          "image": "/andien.jpg",
+          "passive": "perfect-answer-bonus",
+          "question": "Quan hệ giữa tôn giáo và dân tộc ở Việt Nam nên được củng cố bằng gì?",
+          "correctAnswer": "Bằng tinh thần yêu nước và đoàn kết cộng đồng",
+          "options": [
+            "Bằng bạo lực",
+            "Bằng cô lập tín đồ",
+            "Bằng tinh thần yêu nước và đoàn kết cộng đồng",
+            "Bằng phân biệt đối xử"
+          ]
+        },
+        "timestamp": 1765891521557,
+        "effect": "Ân Điển: +30 HP (Perfect!) (+10 điểm câu hỏi)",
+        "questionPoints": 10,
+        "answerTime": 0
+      },
+      {
+        "playerId": "player-1765891372096-n2xxevvff",
+        "playerName": "t3213",
+        "team": "red",
+        "action": "play-card",
+        "card": {
+          "id": "card-1765891497404-gpoj6cvrt",
           "type": "thap-tu-giao",
           "name": "Thập Tự Giáo",
           "value": -18,
@@ -1738,24 +2240,173 @@
           "icon": "⚔️",
           "image": "/thaptugiao.jpg",
           "passive": "combo-damage",
-          "question": "Tòa Thánh Cao Đài ở tỉnh nào?",
-          "correctAnswer": "Tây Ninh",
+          "question": "Đặc điểm 'đan xen' tôn giáo ở Việt Nam có thể hiểu là gì?",
+          "correctAnswer": "Nhiều tôn giáo cùng tồn tại trên cùng địa bàn",
           "options": [
-            "An Giang",
-            "Tây Ninh",
-            "Long An",
-            "Đồng Nai"
+            "Tôn giáo chỉ tồn tại ở nông thôn",
+            "Mỗi tỉnh chỉ có một tôn giáo",
+            "Tôn giáo chỉ tồn tại ở thành thị",
+            "Nhiều tôn giáo cùng tồn tại trên cùng địa bàn"
           ]
         },
-        "timestamp": 1765885640280,
+        "timestamp": 1765891542614,
         "effect": "Thập Tự Giáo: -18 HP (+10 điểm câu hỏi)",
+        "questionPoints": 10,
+        "answerTime": 0
+      },
+      {
+        "playerId": "player-1765891366566-n6reka1th",
+        "playerName": "tops",
+        "team": "blue",
+        "action": "skip-turn",
+        "timestamp": 1765891573227,
+        "effect": "tops bỏ lượt (hết thời gian)"
+      },
+      {
+        "playerId": "player-1765891372096-n2xxevvff",
+        "playerName": "t3213",
+        "team": "red",
+        "action": "skip-turn",
+        "timestamp": 1765891606731,
+        "effect": "t3213 bỏ lượt (hết thời gian)"
+      },
+      {
+        "playerId": "player-1765891366566-n6reka1th",
+        "playerName": "tops",
+        "team": "blue",
+        "action": "skip-turn",
+        "timestamp": 1765891665258,
+        "effect": "tops bỏ lượt (hết thời gian)"
+      },
+      {
+        "playerId": "player-1765891372096-n2xxevvff",
+        "playerName": "t3213",
+        "team": "red",
+        "action": "skip-turn",
+        "timestamp": 1765891696235,
+        "effect": "t3213 bỏ lượt (hết thời gian)"
+      },
+      {
+        "playerId": "player-1765891366566-n6reka1th",
+        "playerName": "tops",
+        "team": "blue",
+        "action": "skip-turn",
+        "timestamp": 1765891785254,
+        "effect": "tops bỏ lượt (hết thời gian)"
+      },
+      {
+        "playerId": "player-1765891372096-n2xxevvff",
+        "playerName": "t3213",
+        "team": "red",
+        "action": "skip-turn",
+        "timestamp": 1765891845249,
+        "effect": "t3213 bỏ lượt (hết thời gian)"
+      },
+      {
+        "playerId": "player-1765891366566-n6reka1th",
+        "playerName": "tops",
+        "team": "blue",
+        "action": "skip-turn",
+        "timestamp": 1765891905253,
+        "effect": "tops bỏ lượt (hết thời gian)"
+      },
+      {
+        "playerId": "player-1765891372096-n2xxevvff",
+        "playerName": "t3213",
+        "team": "red",
+        "action": "skip-turn",
+        "timestamp": 1765891965261,
+        "effect": "t3213 bỏ lượt (hết thời gian)"
+      },
+      {
+        "playerId": "player-1765891366566-n6reka1th",
+        "playerName": "tops",
+        "team": "blue",
+        "action": "skip-turn",
+        "timestamp": 1765892025267,
+        "effect": "tops bỏ lượt (hết thời gian)"
+      },
+      {
+        "playerId": "player-1765891372096-n2xxevvff",
+        "playerName": "t3213",
+        "team": "red",
+        "action": "skip-turn",
+        "timestamp": 1765892064343,
+        "effect": "t3213 bỏ lượt (hết thời gian)"
+      },
+      {
+        "playerId": "player-1765891366566-n6reka1th",
+        "playerName": "tops",
+        "team": "blue",
+        "action": "skip-turn",
+        "timestamp": 1765892134120,
+        "effect": "tops bỏ lượt (hết thời gian)"
+      },
+      {
+        "playerId": "player-1765891372096-n2xxevvff",
+        "playerName": "t3213",
+        "team": "red",
+        "action": "skip-turn",
+        "timestamp": 1765892205244,
+        "effect": "t3213 bỏ lượt (hết thời gian)"
+      },
+      {
+        "playerId": "player-1765891366566-n6reka1th",
+        "playerName": "tops",
+        "team": "blue",
+        "action": "skip-turn",
+        "timestamp": 1765892265254,
+        "effect": "tops bỏ lượt (hết thời gian)"
+      },
+      {
+        "playerId": "player-1765891372096-n2xxevvff",
+        "playerName": "t3213",
+        "team": "red",
+        "action": "skip-turn",
+        "timestamp": 1765892296538,
+        "effect": "t3213 bỏ lượt (hết thời gian)"
+      },
+      {
+        "playerId": "player-1765891366566-n6reka1th",
+        "playerName": "tops",
+        "team": "blue",
+        "action": "play-card",
+        "card": {
+          "id": "card-1765891381071-wmmkcqicw",
+          "type": "phep-la",
+          "name": "Phép Lạ",
+          "value": 0,
+          "description": "Hồi sinh với 50 HP khi chết (1 lần/game)",
+          "color": "bg-gradient-to-br from-yellow-300 to-amber-500",
+          "icon": "🕊️",
+          "image": "/phepla.png",
+          "passive": "revive-once",
+          "question": "Tính quần chúng của tôn giáo thể hiện ở điểm nào?",
+          "correctAnswer": "Tôn giáo phổ biến ở nhiều dân tộc",
+          "options": [
+            "Tôn giáo chỉ tồn tại ở một số quốc gia.",
+            "có số lượng tín đồ đông đảo.",
+            "Chỉ trí thức mới theo tôn giáo.",
+            "Tôn giáo phổ biến ở nhiều dân tộc"
+          ]
+        },
+        "timestamp": 1765892309831,
+        "effect": "Phép Lạ: Hồi sinh với 50 HP khi chết (1 lần) (+10 điểm câu hỏi)",
         "questionPoints": 10,
         "answerTime": 0
       }
     ],
-    "passiveEffects": [],
+    "passiveEffects": [
+      {
+        "id": "effect-1765892309831-7n1crmwun",
+        "playerId": "player-1765891366566-n6reka1th",
+        "effect": "revive-once",
+        "duration": 999,
+        "value": 50
+      }
+    ],
     "turnTimerSeconds": 30,
     "questionTimerSeconds": 15,
-    "currentTurnStartTime": 1765885640280
+    "currentTurnStartTime": 1765892309832
   }
 ]

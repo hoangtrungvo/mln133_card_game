@@ -43,6 +43,7 @@ export interface Card {
   question: string; // Câu hỏi người chơi phải trả lời
   correctAnswer: string; // Đáp án đúng (case-insensitive)
   options?: string[]; // Các lựa chọn (optional, có thể dùng multiple choice hoặc text input)
+  points?: number; // Base points for this question (from questions.json)
   attemptCount?: number; // Số lần trả lời (mặc định 0)
   questionStartTime?: number; // Timestamp khi bắt đầu trả lời câu hỏi
   questionPoints?: number; // Points for this question (persisted even after cancel)
