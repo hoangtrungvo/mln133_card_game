@@ -7,42 +7,91 @@ interface QuestionModalProps {
   card: Card;
   onSubmit: (answer: string) => void;
   onCancel: () => void;
+  questionTimerSeconds?: number; // Timer duration for answering question
 }
 
-export default function QuestionModal({ card, onSubmit, onCancel }: QuestionModalProps) {
+// Fibonacci point reduction: 10 → 8 → 5 → 3 → 2 → 1 (minimum 1)
+function getFibonacciPoints(attemptCount: number): number {
+  const sequence = [10, 8, 5, 3, 2, 1];
+  return attemptCount < sequence.length ? sequence[attemptCount] : 1;
+}
+
+export default function QuestionModal({ card, onSubmit, onCancel, questionTimerSeconds = 15 }: QuestionModalProps) {
   const [selectedAnswer, setSelectedAnswer] = useState('');
   const [textAnswer, setTextAnswer] = useState('');
-  const [elapsedTime, setElapsedTime] = useState(0);
+  const [remainingTime, setRemainingTime] = useState(questionTimerSeconds);
+  // Restore attemptCount and questionPoints from card if they exist (persistence fix)
   const [attemptCount, setAttemptCount] = useState(card.attemptCount || 0);
+  const [hasExpired, setHasExpired] = useState(false);
 
   useEffect(() => {
-    // Start timer
+    // Reset timer when modal opens for a new card, but preserve attemptCount from card
+    setRemainingTime(questionTimerSeconds);
+    setHasExpired(false);
+    // Restore attemptCount from card if it exists (persistence fix)
+    if (card.attemptCount !== undefined) {
+      setAttemptCount(card.attemptCount);
+    } else {
+      setAttemptCount(0);
+    }
+    // Reset answer selections
+    setSelectedAnswer('');
+    setTextAnswer('');
+  }, [card.id, questionTimerSeconds]); // Reset when card ID changes
+
+  useEffect(() => {
+    // Start countdown timer
+    if (hasExpired || remainingTime <= 0) {
+      return; // Don't run timer if expired
+    }
+
     const interval = setInterval(() => {
-      setElapsedTime(prev => prev + 1);
+      setRemainingTime(prev => {
+        if (prev <= 1) {
+          // Time expired - auto-submit with 0 points
+          setHasExpired(true);
+          // Set questionPoints to 0 and play card anyway
+          (card as any).questionPoints = 0;
+          (card as any).answerTime = questionTimerSeconds * 1000;
+          (card as any).attemptsFinal = attemptCount + 1;
+          // Submit with empty answer (will be wrong, but card still plays)
+          setTimeout(() => onSubmit(''), 0);
+          return 0;
+        }
+        return prev - 1;
+      });
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [remainingTime, hasExpired, questionTimerSeconds, attemptCount, card, onSubmit]);
 
   const handleSubmit = () => {
+    if (hasExpired) {
+      return; // Don't allow submission after timeout
+    }
+
     const answer = card.options ? selectedAnswer : textAnswer;
     if (!answer.trim()) {
       alert('Vui lòng chọn hoặc nhập câu trả lời!');
       return;
     }
     
-    // Increment attempt count
+    // Check if answer is correct
     const isCorrect = answer.toLowerCase().trim() === card.correctAnswer.toLowerCase().trim();
     if (isCorrect) {
-      // Lưu điểm trước khi submit
-      const questionPoints = attemptCount === 0 ? 10 : 5; // 10 đúng lần 1, 5 sai rồi đúng
-      card.questionStartTime = (card.questionStartTime || Date.now()) - elapsedTime * 1000;
-      // Gắn điểm vào card để server có thể đọc
+      // Calculate Fibonacci points based on attempt count
+      const questionPoints = getFibonacciPoints(attemptCount);
+      card.questionStartTime = (card.questionStartTime || Date.now()) - (questionTimerSeconds - remainingTime) * 1000;
+      // Persist points and attempt count on card (fixes persistence bug)
       (card as any).questionPoints = questionPoints;
-      (card as any).answerTime = elapsedTime * 1000;
+      (card as any).answerTime = (questionTimerSeconds - remainingTime) * 1000;
       (card as any).attemptsFinal = attemptCount + 1;
+      (card as any).attemptCount = attemptCount; // Persist attempt count
     } else {
-      setAttemptCount(attemptCount + 1);
+      // Wrong answer - increment attempt count and recalculate points
+      const newAttemptCount = attemptCount + 1;
+      setAttemptCount(newAttemptCount);
+      (card as any).attemptCount = newAttemptCount; // Persist on card
       setSelectedAnswer('');
       setTextAnswer('');
       alert('Sai rồi! Thử lại nha 🤔');
@@ -72,15 +121,45 @@ export default function QuestionModal({ card, onSubmit, onCancel }: QuestionModa
             <div className="text-center mb-6 relative z-10">
               {/* Timer and attempt counter */}
               <div className="flex justify-center gap-4 mb-4">
-                <div className="bg-blue-900/50 px-3 py-1 rounded-lg border border-blue-500/50">
-                  <span className="text-blue-300 text-xs font-bold">⏱️ {elapsedTime}s</span>
+                <div className={`px-3 py-1 rounded-lg border ${
+                  remainingTime > 5 
+                    ? 'bg-blue-900/50 border-blue-500/50' 
+                    : remainingTime > 0
+                    ? 'bg-red-900/50 border-red-500/50 animate-pulse'
+                    : 'bg-gray-900/50 border-gray-500/50'
+                }`}>
+                  <span className={`text-xs font-bold ${
+                    remainingTime > 5 
+                      ? 'text-blue-300' 
+                      : remainingTime > 0
+                      ? 'text-red-300'
+                      : 'text-gray-300'
+                  }`}>
+                    ⏱️ {remainingTime}s
+                  </span>
                 </div>
                 <div className="bg-orange-900/50 px-3 py-1 rounded-lg border border-orange-500/50">
                   <span className="text-orange-300 text-xs font-bold">🎯 Lần {attemptCount + 1}</span>
                 </div>
-                <div className={`px-3 py-1 rounded-lg border ${attemptCount === 0 ? 'bg-green-900/50 border-green-500/50' : 'bg-yellow-900/50 border-yellow-500/50'}`}>
-                  <span className={`text-xs font-bold ${attemptCount === 0 ? 'text-green-300' : 'text-yellow-300'}`}>
-                    {attemptCount === 0 ? '⭐ 10đ' : '⭐ 5đ'}
+                <div className={`px-3 py-1 rounded-lg border ${
+                  hasExpired 
+                    ? 'bg-gray-900/50 border-gray-500/50'
+                    : getFibonacciPoints(attemptCount) === 10
+                    ? 'bg-green-900/50 border-green-500/50'
+                    : getFibonacciPoints(attemptCount) >= 5
+                    ? 'bg-yellow-900/50 border-yellow-500/50'
+                    : 'bg-orange-900/50 border-orange-500/50'
+                }`}>
+                  <span className={`text-xs font-bold ${
+                    hasExpired
+                      ? 'text-gray-300'
+                      : getFibonacciPoints(attemptCount) === 10
+                      ? 'text-green-300'
+                      : getFibonacciPoints(attemptCount) >= 5
+                      ? 'text-yellow-300'
+                      : 'text-orange-300'
+                  }`}>
+                    {hasExpired ? '⭐ 0đ' : `⭐ ${getFibonacciPoints(attemptCount)}đ`}
                   </span>
                 </div>
               </div>

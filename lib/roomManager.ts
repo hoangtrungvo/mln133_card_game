@@ -83,22 +83,36 @@ export async function joinRoom(
     const updatedPlayers = [...room.players, newPlayer];
     let updatedGameState = room.gameState;
     
-    // If room is full, create game state
+    // If room is full, create game state and start immediately
     if (updatedPlayers.length === room.maxPlayers) {
+      const startTime = Date.now();
       const gameState: GameState = {
         id: `game-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`,
         roomId: room.id,
         players: updatedPlayers,
         currentTurn: 'red', // Red team starts
         turnNumber: 1,
-        status: 'waiting',
+        status: 'active', // Start immediately, no waiting
         winner: null,
-        startTime: null,
+        startTime: startTime,
         endTime: null,
         history: [],
         passiveEffects: [], // Init empty passive effects
+        turnTimerSeconds: parseInt(process.env.TURN_TIMER_SECONDS || '30', 10),
+        questionTimerSeconds: parseInt(process.env.QUESTION_TIMER_SECONDS || '15', 10),
+        currentTurnStartTime: Date.now(), // Start turn timer immediately
       };
       
+      // Initialize hasDrawnCardThisTurn for all players
+      for (const p of gameState.players) {
+        p.hasDrawnCardThisTurn = false;
+      }
+      // The first player (red team) hasn't drawn a card yet
+      const firstPlayer = gameState.players.find(p => p.team === gameState.currentTurn);
+      if (firstPlayer) {
+        firstPlayer.hasDrawnCardThisTurn = false;
+      }
+    
       updatedGameState = gameState;
       await addGame(gameState);
     }
@@ -158,8 +172,12 @@ export async function leaveRoom(
     
     const updatedPlayers = room.players.filter((p: Player) => p.id !== playerId);
     
-    // If room becomes empty, mark for deletion
-    if (updatedPlayers.length === 0) {
+    // Don't delete room if there's an active or paused game (players can reconnect)
+    const hasActiveGame = room.gameState && 
+      (room.gameState.status === 'active' || room.gameState.status === 'paused');
+    
+    // If room becomes empty and no active game, mark for deletion
+    if (updatedPlayers.length === 0 && !hasActiveGame) {
       // Return null to signal deletion
       return null;
     }

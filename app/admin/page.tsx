@@ -39,16 +39,21 @@ export default function AdminPage() {
       setQueue(updatedQueue);
     });
     
-    socket.on('matching-complete', (data: { roomsCreated: number }) => {
-      alert(`Ghép cặp hoàn tất! Đã tạo ${data.roomsCreated} phòng.`);
-      setStartingMatching(false);
-      fetchData();
-    });
-    
-    socket.on('error', (message: string) => {
-      alert(message);
-      setStartingMatching(false);
-    });
+      socket.on('matching-complete', (data: { roomsCreated: number }) => {
+        alert(`Ghép cặp hoàn tất! Đã tạo ${data.roomsCreated} phòng.`);
+        setStartingMatching(false);
+        fetchData();
+      });
+      
+      socket.on('admin-end-all-games-complete', (data: { gamesEnded: number }) => {
+        alert(`Đã kết thúc ${data.gamesEnded} trận đấu.`);
+        fetchData();
+      });
+      
+      socket.on('error', (message: string) => {
+        alert(message);
+        setStartingMatching(false);
+      });
     
     return () => {
       socket.disconnect();
@@ -371,6 +376,26 @@ export default function AdminPage() {
               <p className="text-gray-500 text-xs mt-2">
                 Format: type,question,answer,option1,option2,...
               </p>
+            </div>
+
+            {/* End All Games */}
+            <div className="bg-gray-700 rounded-lg p-4">
+              <h3 className="text-white font-bold mb-2">🛑 Kết thúc tất cả trận đấu</h3>
+              <p className="text-gray-400 text-sm mb-3">
+                Kết thúc tất cả trận đấu đang diễn ra và gửi dữ liệu lên bảng xếp hạng
+              </p>
+              <button
+                onClick={() => {
+                  if (confirm('Bạn có chắc muốn kết thúc tất cả trận đấu đang diễn ra?')) {
+                    if (socketRef.current) {
+                      socketRef.current.emit('admin-end-all-games');
+                    }
+                  }
+                }}
+                className="w-full bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg font-bold transition-all"
+              >
+                🛑 Kết thúc tất cả trận đấu
+              </button>
             </div>
           </div>
         </div>
