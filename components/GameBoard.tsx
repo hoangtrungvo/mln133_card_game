@@ -1,23 +1,119 @@
 import { GameState, GameAction } from '@/types';
 import PlayerZone from './PlayerZone';
-import { Sword, Lightbulb, ScrollText } from 'lucide-react';
+import { Sword, Lightbulb, ScrollText, Clock, Pause } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 interface GameBoardProps {
   gameState: GameState;
   currentPlayerId: string;
   onCardClick: (cardId: string) => void;
   onDrawCard: () => void;
+  onSkipTurn?: () => void;
+  isAnsweringQuestion?: boolean; // Whether player is currently answering a question
 }
 
-export default function GameBoard({ gameState, currentPlayerId, onCardClick, onDrawCard }: GameBoardProps) {
+export default function GameBoard({ gameState, currentPlayerId, onCardClick, onDrawCard, onSkipTurn, isAnsweringQuestion = false }: GameBoardProps) {
   const currentPlayer = gameState.players.find(p => p.id === currentPlayerId);
   const opponent = gameState.players.find(p => p.id !== currentPlayerId);
+  
+  const [gameElapsedTime, setGameElapsedTime] = useState(0);
+  const [turnRemainingTime, setTurnRemainingTime] = useState<number | null>(null);
+  const [pauseElapsedTime, setPauseElapsedTime] = useState(0);
+  const [turnTimerPausedValue, setTurnTimerPausedValue] = useState<number | null>(null); // Store the remaining time when paused
   
   if (!currentPlayer || !opponent) {
     return <div className="text-white">Loading...</div>;
   }
   
   const isMyTurn = currentPlayer.team === gameState.currentTurn;
+  const turnTimerSeconds = gameState.turnTimerSeconds || 30;
+  const isPaused = gameState.status === 'paused';
+  const disconnectedPlayer = isPaused && gameState.pausedByPlayerId 
+    ? gameState.players.find(p => p.id === gameState.pausedByPlayerId)
+    : null;
+  
+  // Game timer (overall elapsed time) - only when active
+  useEffect(() => {
+    if (gameState.status === 'active' && gameState.startTime) {
+      const updateGameTimer = () => {
+        const elapsed = Math.floor((Date.now() - gameState.startTime!) / 1000);
+        setGameElapsedTime(elapsed);
+      };
+      updateGameTimer();
+      const interval = setInterval(updateGameTimer, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [gameState.status, gameState.startTime]);
+  
+  // Pause timer (elapsed time since pause)
+  useEffect(() => {
+    if (isPaused && gameState.pausedAt) {
+      const updatePauseTimer = () => {
+        const elapsed = Math.floor((Date.now() - gameState.pausedAt!) / 1000);
+        setPauseElapsedTime(elapsed);
+      };
+      updatePauseTimer();
+      const interval = setInterval(updatePauseTimer, 1000);
+      return () => clearInterval(interval);
+    } else {
+      setPauseElapsedTime(0);
+    }
+  }, [isPaused, gameState.pausedAt]);
+  
+  // Capture the current remaining time when question modal opens
+  useEffect(() => {
+    if (isAnsweringQuestion && isMyTurn && turnTimerPausedValue === null && turnRemainingTime !== null) {
+      setTurnTimerPausedValue(turnRemainingTime);
+      console.log(`[GameBoard] Turn timer paused at ${turnRemainingTime}s remaining`);
+    } else if (!isAnsweringQuestion && turnTimerPausedValue !== null) {
+      console.log(`[GameBoard] Turn timer resumed from ${turnTimerPausedValue}s remaining`);
+      setTurnTimerPausedValue(null);
+    }
+  }, [isAnsweringQuestion, isMyTurn, turnRemainingTime, turnTimerPausedValue]);
+
+  // Turn timer (countdown for current turn) - pause when answering question
+  useEffect(() => {
+    // If answering question, pause the timer (show last known value, don't update)
+    if (isAnsweringQuestion && isMyTurn && turnTimerPausedValue !== null) {
+      // Keep showing the paused value, don't update
+      setTurnRemainingTime(turnTimerPausedValue);
+      return;
+    }
+    
+    // Only run timer when active, not paused, and not answering question
+    if (gameState.status === 'active' && gameState.currentTurnStartTime && turnTimerSeconds && isMyTurn && !isAnsweringQuestion) {
+      const updateTurnTimer = () => {
+        const elapsed = Math.floor((Date.now() - gameState.currentTurnStartTime!) / 1000);
+        const remaining = Math.max(0, turnTimerSeconds - elapsed);
+        setTurnRemainingTime(remaining);
+        
+        // Auto-skip turn if timer expires
+        if (remaining === 0 && onSkipTurn) {
+          onSkipTurn();
+        }
+      };
+      updateTurnTimer();
+      const interval = setInterval(updateTurnTimer, 1000);
+      return () => clearInterval(interval);
+    } else {
+      // Reset when not active or not my turn
+      if (!isAnsweringQuestion) {
+        setTurnTimerPausedValue(null);
+      }
+      setTurnRemainingTime(null);
+    }
+  }, [gameState.status, gameState.currentTurnStartTime, isMyTurn, turnTimerSeconds, onSkipTurn, isAnsweringQuestion, turnTimerPausedValue]);
+  
+  // Format time as MM:SS or HH:MM:SS
+  const formatTime = (seconds: number): string => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    if (hours > 0) {
+      return `${hours}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+    return `${minutes}:${secs.toString().padStart(2, '0')}`;
+  };
   
   return (
     <div 
@@ -38,6 +134,34 @@ export default function GameBoard({ gameState, currentPlayerId, onCardClick, onD
             <div className="relative bg-linear-to-br from-amber-900 via-yellow-800 to-amber-950 rounded-xl p-1 shadow-2xl">
               <div className="bg-linear-to-br from-slate-800 via-slate-900 to-black rounded-lg px-3 py-3 border-2 border-amber-200/20">
                 <div className="flex flex-col items-center gap-2">
+                  {/* Pause Indicator */}
+                  {isPaused && (
+                    <div className="bg-linear-to-br from-orange-700 to-orange-800 px-3 py-2 rounded-lg border-2 border-orange-500/50 shadow-md w-full text-center animate-pulse">
+                      <div className="flex items-center justify-center gap-2 mb-1">
+                        <Pause className="w-4 h-4 text-orange-200" />
+                        <span className="text-orange-200 text-xs font-black" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>
+                          TẠM DỪNG
+                        </span>
+                      </div>
+                      <div className="text-orange-300 text-xs font-semibold">
+                        {disconnectedPlayer ? `${disconnectedPlayer.name} đã ngắt kết nối` : 'Đang chờ người chơi...'}
+                      </div>
+                      <div className="text-orange-200 text-xs font-bold mt-1">
+                        ⏱️ {formatTime(pauseElapsedTime)}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Game Timer */}
+                  {gameState.status === 'active' && gameState.startTime && (
+                    <div className="bg-linear-to-br from-blue-700 to-blue-800 px-3 py-1.5 rounded-lg border-2 border-blue-500/50 shadow-md w-full text-center flex items-center justify-center gap-1.5">
+                      <Clock className="w-3 h-3 text-blue-200" />
+                      <span className="text-blue-200 text-xs font-black" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>
+                        {formatTime(gameElapsedTime)}
+                      </span>
+                    </div>
+                  )}
+                  
                   {/* Turn number */}
                   <div className="bg-linear-to-br from-slate-700 to-slate-800 px-3 py-1.5 rounded-lg border-2 border-slate-600 shadow-md w-full text-center flex items-center justify-center gap-1.5">
                     <Sword className="w-3 h-3 text-amber-300" />
@@ -57,14 +181,29 @@ export default function GameBoard({ gameState, currentPlayerId, onCardClick, onD
                     <span>Lượt: {gameState.players.find(p => p.team === gameState.currentTurn)?.name || 'Đang chờ'}</span>
                   </div>
                   
-                  {/* Your turn indicator */}
+                  {/* Your turn indicator with timer */}
                   {isMyTurn && gameState.status === 'active' && (
-                    <div className="bg-linear-to-br from-yellow-500 to-amber-600 px-3 py-1.5 rounded-xl border-2 border-yellow-300/50 shadow-lg shadow-yellow-500/50 animate-pulse w-full text-center flex items-center justify-center gap-1.5">
-                      <Lightbulb className="w-3 h-3 text-black" />
-                      <span className="text-black text-xs font-black" style={{ textShadow: '0 1px 2px rgba(255,255,255,0.5)' }}>
-                        Lượt bạn!
-                      </span>
-                    </div>
+                    <>
+                      <div className="bg-linear-to-br from-yellow-500 to-amber-600 px-3 py-1.5 rounded-xl border-2 border-yellow-300/50 shadow-lg shadow-yellow-500/50 animate-pulse w-full text-center flex items-center justify-center gap-1.5">
+                        <Lightbulb className="w-3 h-3 text-black" />
+                        <span className="text-black text-xs font-black" style={{ textShadow: '0 1px 2px rgba(255,255,255,0.5)' }}>
+                          Lượt bạn!
+                        </span>
+                      </div>
+                      {turnRemainingTime !== null && (
+                        <div className={`px-3 py-1.5 rounded-xl font-black text-xs shadow-xl border-2 w-full text-center flex items-center justify-center gap-1.5 ${
+                          turnRemainingTime > 10
+                            ? 'bg-linear-to-br from-green-600 to-green-800 text-white border-green-400/40 shadow-green-500/40'
+                            : turnRemainingTime > 5
+                            ? 'bg-linear-to-br from-yellow-600 to-yellow-800 text-white border-yellow-400/40 shadow-yellow-500/40'
+                            : 'bg-linear-to-br from-red-600 to-red-800 text-white border-red-400/40 shadow-red-500/40 animate-pulse'
+                        }`}
+                          style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
+                          <Clock className="w-3 h-3" />
+                          <span>⏱️ {turnRemainingTime}s</span>
+                        </div>
+                      )}
+                    </>
                   )}
                 </div>
               </div>

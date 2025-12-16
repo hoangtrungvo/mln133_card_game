@@ -45,6 +45,8 @@ export interface Card {
   options?: string[]; // Các lựa chọn (optional, có thể dùng multiple choice hoặc text input)
   attemptCount?: number; // Số lần trả lời (mặc định 0)
   questionStartTime?: number; // Timestamp khi bắt đầu trả lời câu hỏi
+  questionPoints?: number; // Points for this question (persisted even after cancel)
+  answerTime?: number; // Time taken to answer (ms)
 }
 
 // Player in a game
@@ -67,12 +69,18 @@ export interface GameState {
   players: Player[];
   currentTurn: 'red' | 'blue';
   turnNumber: number;
-  status: 'waiting' | 'active' | 'finished';
+  status: 'waiting' | 'active' | 'finished' | 'paused';
   winner: 'red' | 'blue' | null;
   startTime: number | null;
   endTime: number | null;
   history: GameAction[];
   passiveEffects: PassiveEffect[];
+  currentTurnStartTime?: number; // When current turn started
+  turnTimerSeconds?: number; // Turn timer duration (from env)
+  questionTimerSeconds?: number; // Question timer duration (from env)
+  pausedAt?: number; // When game was paused (timestamp)
+  pausedByPlayerId?: string; // Which player disconnected (caused pause)
+  pausedTurnStartTime?: number; // Store turn start time when paused (to resume timer correctly)
 }
 
 // Game action for history tracking
@@ -80,7 +88,7 @@ export interface GameAction {
   playerId: string;
   playerName: string;
   team: 'red' | 'blue';
-  action: 'play-card' | 'skip-turn';
+  action: 'play-card' | 'skip-turn' | 'draw-card';
   card?: Card;
   timestamp: number;
   effect: string; // Description of what happened
@@ -148,13 +156,15 @@ export interface SocketEvents {
   'leave-room': (data: { roomId: string; playerId: string }) => void;
   'join-queue': (data: { playerName: string }) => void;
   'leave-queue': (data: { playerId: string }) => void;
-  'reconnect-player': (data: { playerName: string }) => void;
+  'reconnect-player': (data: { playerId?: string; playerName?: string }) => void;
   'play-card': (data: { roomId: string; playerId: string; cardId: string; answer: string }) => void;
   'draw-card': (data: { roomId: string; playerId: string }) => void;
   'player-ready': (data: { roomId: string; playerId: string }) => void;
   'request-rooms': () => void;
   'request-queue': () => void;
   'admin-start-matching': () => void;
+  'admin-end-all-games': () => void;
+  'skip-turn': (data: { roomId: string; playerId: string }) => void;
   
   // Server to Client
   'rooms-update': (rooms: Room[]) => void;
@@ -164,11 +174,14 @@ export interface SocketEvents {
   'player-left': (playerId: string) => void;
   'game-started': (gameState: GameState) => void;
   'game-ended': (result: { winner: 'red' | 'blue'; gameState: GameState }) => void;
+  'game-paused': (data: { gameState: GameState; disconnectedPlayerName: string }) => void;
+  'game-resumed': (gameState: GameState) => void;
   'matched': (data: { roomId: string; playerId: string }) => void;
   'error': (message: string) => void;
   'turn-changed': (turn: 'red' | 'blue') => void;
   'card-played': (action: GameAction) => void;
   'preview-opponent-cards': (data: { cards: Partial<Card>[] }) => void;
+  'admin-end-all-games-complete': (data: { gamesEnded: number }) => void;
 }
 
 // Database structure

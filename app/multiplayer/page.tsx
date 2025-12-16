@@ -245,8 +245,12 @@ export default function MultiplayerPage() {
   const handleReconnect = () => {
     if (!socketRef.current) return;
     
-    // Reconnect is now IP-based, name is optional for updating
+    // Get stored playerId from localStorage (set when matched)
+    const storedPlayerId = localStorage.getItem('playerId');
+    
+    // Reconnect using playerId (most reliable) or playerName as fallback
     socketRef.current.emit('reconnect-player', { 
+      playerId: storedPlayerId || undefined,
       playerName: playerName.trim() || undefined 
     });
   };
@@ -386,6 +390,7 @@ export default function MultiplayerPage() {
                     onClick={handleReconnect}
                     className="flex-1 inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700
                       text-white font-semibold py-4 px-6 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
+                    title={localStorage.getItem('playerId') ? `Sử dụng ID đã lưu để kết nối lại` : playerName ? `Sử dụng tên "${playerName}" để kết nối lại` : 'Kết nối lại bằng tên hoặc ID đã lưu'}
                   >
                     <User className="w-5 h-5" />
                     {playerName ? `Kết Nối Lại (${playerName})` : 'Kết Nối Lại'}
@@ -408,7 +413,7 @@ export default function MultiplayerPage() {
               <p className="text-blue-200 text-sm">
                 <strong>💡 Hướng dẫn:</strong> Tham gia hàng chờ và chờ admin bắt đầu ghép cặp. 
                 Khi có số chẵn người chơi (tối đa 28), admin có thể bắt đầu ghép cặp ngẫu nhiên. 
-                Nếu bạn bị ngắt kết nối, hãy nhập lại tên cũ để kết nối lại vào phòng của bạn.
+                Nếu bạn bị ngắt kết nối, hãy nhấn "Kết Nối Lại" để quay lại phòng của bạn (sử dụng tên hoặc ID đã lưu).
               </p>
             </div>
           </div>

@@ -359,43 +359,164 @@ export async function leaveQueueBySocketId(socketId: string): Promise<{ success:
   return { success: true };
 }
 
-// Reconnect player - find their assigned room or rejoin queue by IP or socket ID
+// Reconnect player - find their assigned room or rejoin queue by playerId, playerName, or IP
 export async function reconnectPlayer(
-  ipAddress: string,
-  socketId: string,
-  newPlayerName?: string
+  playerId?: string,
+  playerName?: string,
+  socketId?: string,
+  ipAddress?: string
 ): Promise<{ success: boolean; room?: Room; player?: Player; error?: string }> {
-  if (!ipAddress || typeof ipAddress !== 'string') {
-    return { success: false, error: 'Invalid IP address' };
-  }
-  
   const queue = await getQueue();
   const rooms = await readRooms();
   
-  // First try to find by IP (in case socket ID changed)
-  // But prioritize entries that are assigned to rooms
-  let queueEntry = queue.entries.find(e => e.ipAddress === ipAddress && e.assignedRoomId);
+  console.log(`[reconnectPlayer] Searching for player - playerId: ${playerId}, playerName: ${playerName}`);
+  console.log(`[reconnectPlayer] Total rooms: ${rooms.length}, Total queue entries: ${queue.entries.length}`);
   
-  // If not found by IP with room, try any entry with this IP
-  if (!queueEntry) {
-    queueEntry = queue.entries.find(e => e.ipAddress === ipAddress);
+  // Log all rooms for debugging
+  for (const room of rooms) {
+    if (room.gameState) {
+      const gamePlayers = room.gameState.players.map(p => `${p.name}(${p.id.substring(0, 8)}...)`).join(', ');
+      const roomPlayers = room.players.map(p => `${p.name}(${p.id.substring(0, 8)}...)`).join(', ');
+      console.log(`[reconnectPlayer] Room ${room.id}: status=${room.status}, gameStatus=${room.gameState.status}, gamePlayers=[${gamePlayers}], roomPlayers=[${roomPlayers}]`);
+      if (room.gameState.status === 'paused') {
+        console.log(`[reconnectPlayer] Room ${room.id} is paused by: ${room.gameState.pausedByPlayerId}`);
+      }
+    } else {
+      console.log(`[reconnectPlayer] Room ${room.id}: status=${room.status}, no gameState, roomPlayers=[${room.players.map(p => `${p.name}(${p.id.substring(0, 8)}...)`).join(', ')}]`);
+    }
   }
   
-  if (queueEntry) {
-    // Update socket ID, IP, and optionally name
-    await updateQueue(async (q) => {
-      if (q) {
-        const entry = q.entries.find(e => e.playerId === queueEntry!.playerId);
-        if (entry) {
-          entry.socketId = socketId;
-          entry.ipAddress = ipAddress; // Update IP in case it changed
-          if (newPlayerName) {
-            entry.playerName = newPlayerName.trim();
+  // Priority 1: Search directly in rooms by playerId (most reliable)
+  if (playerId) {
+    for (const room of rooms) {
+      if (room.status !== 'finished' && room.gameState) {
+        // Check if player is currently in the room
+        let player = room.gameState.players.find(p => p.id === playerId);
+        
+        if (player) {
+          console.log(`[reconnectPlayer] Found player in room by playerId: ${playerId}, room: ${room.id}`);
+          // Update player name in room if changed
+          if (playerName && playerName.trim() !== player.name) {
+            player.name = playerName.trim();
+            await updateRoom(room.id, { gameState: room.gameState });
+          }
+          return { success: true, room, player };
+        }
+        
+        // If not found but game is paused and this player caused the pause, restore from history
+        if (!player && room.gameState.status === 'paused' && room.gameState.pausedByPlayerId === playerId) {
+          console.log(`[reconnectPlayer] Game paused by this player, restoring from history: ${playerId}, room: ${room.id}`);
+          // Find player info from game history
+          const playerActions = room.gameState.history.filter(h => h.playerId === playerId);
+          if (playerActions.length > 0) {
+            const lastAction = playerActions.sort((a, b) => b.timestamp - a.timestamp)[0];
+            // Find the other player to determine team
+            const otherPlayer = room.gameState.players[0];
+            if (otherPlayer) {
+              // Recreate player with basic info from history
+              const restoredPlayer: Player = {
+                id: playerId,
+                name: playerName?.trim() || lastAction.playerName || 'Unknown',
+                team: otherPlayer.team === 'red' ? 'blue' : 'red', // Opposite team
+                health: 100, // Default - we don't have this in history easily
+                maxHealth: 100,
+                cards: [], // Cards will be restored from game state if available
+                score: 0,
+                ready: false,
+                hasDrawnCardThisTurn: false,
+              };
+              
+              // Try to find player's actual state from game state history or restore from last known state
+              // For now, add them back to the players array
+              room.gameState.players.push(restoredPlayer);
+              await updateRoom(room.id, { gameState: room.gameState });
+              
+              console.log(`[reconnectPlayer] Restored player to room: ${playerId}, room: ${room.id}`);
+              return { success: true, room, player: restoredPlayer };
+            }
           }
         }
       }
-      return q;
-    });
+    }
+  }
+  
+  // Priority 2: Search in rooms by playerName
+  if (playerName) {
+    const trimmedName = playerName.trim();
+    for (const room of rooms) {
+      if (room.status !== 'finished' && room.gameState) {
+        const player = room.gameState.players.find(p => p.name.trim() === trimmedName);
+        if (player) {
+          console.log(`[reconnectPlayer] Found player in room by playerName: ${trimmedName}, room: ${room.id}`);
+          return { success: true, room, player };
+        }
+        
+        // Also check if game is paused and player name matches (for reconnection after disconnect)
+        if (room.gameState.status === 'paused') {
+          // Check history to find the player who disconnected
+          const pausedPlayerId = room.gameState.pausedByPlayerId;
+          if (pausedPlayerId) {
+            const pausedPlayer = room.gameState.players.find(p => p.id === pausedPlayerId);
+            if (pausedPlayer && pausedPlayer.name.trim() === trimmedName) {
+              console.log(`[reconnectPlayer] Found paused game by playerName: ${trimmedName}, room: ${room.id}`);
+              return { success: true, room, player: pausedPlayer };
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  // Priority 3: Search in queue entries (for players not yet in rooms)
+  let queueEntry: QueueEntry | undefined;
+  
+  if (playerId) {
+    queueEntry = queue.entries.find(e => e.playerId === playerId);
+    if (queueEntry) {
+      console.log(`[reconnectPlayer] Found entry in queue by playerId: ${playerId}`);
+    }
+  }
+  
+  if (!queueEntry && playerName) {
+    const trimmedName = playerName.trim();
+    queueEntry = queue.entries.find(e => e.playerName.trim() === trimmedName);
+    if (queueEntry) {
+      console.log(`[reconnectPlayer] Found entry in queue by playerName: ${trimmedName}`);
+    }
+  }
+  
+  // Priority 4: Fallback to IP address (for backwards compatibility, but unreliable with ngrok)
+  if (!queueEntry && ipAddress && !playerId && !playerName) {
+    queueEntry = queue.entries.find(e => e.ipAddress === ipAddress && e.assignedRoomId);
+    if (!queueEntry) {
+      queueEntry = queue.entries.find(e => e.ipAddress === ipAddress);
+    }
+    if (queueEntry) {
+      console.log(`[reconnectPlayer] Found entry by IP (fallback): ${ipAddress}`);
+    }
+  }
+  
+  if (queueEntry) {
+    // Update socket ID and IP if provided
+    if (socketId || ipAddress) {
+      await updateQueue(async (q) => {
+        if (q) {
+          const entry = q.entries.find(e => e.playerId === queueEntry!.playerId);
+          if (entry) {
+            if (socketId) {
+              entry.socketId = socketId;
+            }
+            if (ipAddress) {
+              entry.ipAddress = ipAddress; // Update IP in case it changed
+            }
+            if (playerName) {
+              entry.playerName = playerName.trim();
+            }
+          }
+        }
+        return q;
+      });
+    }
     
     // If player is assigned to a room, check if room is still active
     if (queueEntry.assignedRoomId) {
@@ -404,8 +525,8 @@ export async function reconnectPlayer(
         const player = room.gameState.players.find(p => p.id === queueEntry!.playerId);
         if (player) {
           // Update player name in room if changed
-          if (newPlayerName && newPlayerName.trim() !== player.name) {
-            player.name = newPlayerName.trim();
+          if (playerName && playerName.trim() !== player.name) {
+            player.name = playerName.trim();
             await updateRoom(room.id, { gameState: room.gameState });
           }
           return { success: true, room, player };
@@ -417,7 +538,7 @@ export async function reconnectPlayer(
     return { success: true };
   }
   
-  return { success: false, error: 'No active game or queue entry found for this IP address' };
+  return { success: false, error: 'No active game or queue entry found. Please provide your player ID or name.' };
 }
 
 // Start matching - randomly pair players
@@ -496,20 +617,34 @@ export async function startMatching(): Promise<{ success: boolean; roomsCreated:
       ready: false,
     };
     
-    // Create game state
+    // Create game state and start immediately
+    const startTime = Date.now();
     const gameState: GameState = {
       id: `game-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`,
       roomId: `room-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`,
       players: [player1, player2],
       currentTurn: 'red',
       turnNumber: 1,
-      status: 'waiting',
+      status: 'active', // Start immediately, no waiting
       winner: null,
-      startTime: null,
+      startTime: startTime,
       endTime: null,
       history: [],
       passiveEffects: [],
+      turnTimerSeconds: parseInt(process.env.TURN_TIMER_SECONDS || '30', 10),
+      questionTimerSeconds: parseInt(process.env.QUESTION_TIMER_SECONDS || '15', 10),
+      currentTurnStartTime: Date.now(), // Start turn timer immediately
     };
+    
+    // Initialize hasDrawnCardThisTurn for all players
+    for (const p of gameState.players) {
+      p.hasDrawnCardThisTurn = false;
+    }
+    // The first player (red team) hasn't drawn a card yet
+    const firstPlayer = gameState.players.find(p => p.team === gameState.currentTurn);
+    if (firstPlayer) {
+      firstPlayer.hasDrawnCardThisTurn = false;
+    }
     
     // Create room
     const room: Room = {

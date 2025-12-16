@@ -1,55 +1,74 @@
 [
   {
-    "id": "room-1765873110697-6o6j42syg",
-    "name": "Nguyen Quan vs cursor",
+    "id": "room-1765880881568-ff8thv9s7",
+    "name": "NyanWyan vs Nguyen Quan",
     "players": [
       {
-        "id": "player-1765873098678-y8k7buy1t",
-        "name": "Nguyen Quan",
+        "id": "player-1765880876475-t20cvhxzk",
+        "name": "NyanWyan",
         "team": "red",
         "health": 100,
         "maxHealth": 100,
         "cards": [
           {
-            "id": "card-1765873110691-rw0sre9a7",
-            "type": "truyen-giao",
-            "name": "Truyền Giáo",
-            "value": -12,
-            "description": "Gây 12 damage + Làm yếu: Đối thủ nhận +5 damage mọi nguồn (2 turn)",
-            "color": "bg-gradient-to-br from-orange-500 to-red-600",
-            "icon": "📖",
-            "image": "/truyengiao.jpg",
-            "passive": "weaken-debuff",
-            "question": "Tin Lành nhấn mạnh nguyên tắc nào?",
-            "correctAnswer": "Duy nhất Thánh Kinh",
+            "id": "card-1765880881562-idn9479bj",
+            "type": "loi-cau-nguyen",
+            "name": "Lời Cầu Nguyện",
+            "value": 25,
+            "description": "Hồi 25 HP + Bonus: Nếu HP < 30%, hồi thêm 15 HP",
+            "color": "bg-gradient-to-br from-white to-gray-300",
+            "icon": "🙏",
+            "image": "/loicaunguyen.jpg",
+            "passive": "low-hp-bonus",
+            "question": "Đạo nào là tôn giáo bản địa của Việt Nam?",
+            "correctAnswer": "Đạo Cao Đài và Đạo Hòa Hảo",
             "options": [
-              "Truyền thống",
-              "Duy nhất Thánh Kinh",
-              "Giáo hoàng",
-              "Nghi lễ"
+              "Phật giáo",
+              "Công giáo",
+              "Đạo Cao Đài và Đạo Hòa Hảo",
+              "Tin Lành"
             ]
           },
           {
-            "id": "card-1765873110692-r2g9ihmng",
-            "type": "tu-tai-gia",
-            "name": "Tu Tại Gia",
-            "value": 15,
-            "description": "Hồi 15 HP + Rút 1 thẻ (Không cần trả lời câu hỏi)",
-            "color": "bg-gradient-to-br from-amber-700 to-yellow-900",
-            "icon": "🏠",
-            "image": "/tutaigia.jpg",
-            "passive": "draw-card",
-            "question": "Lê-nin chỉ ra rằng xoá bỏ tôn giáo bằng cách nào?",
-            "correctAnswer": "Không thể bằng cưỡng bức mà phải bằng giáo dục",
+            "id": "card-1765880881562-4lsx3wlfd",
+            "type": "hau-dong",
+            "name": "Hầu Đồng",
+            "value": 0,
+            "description": "Copy 1 thẻ đã dùng trong game (random)",
+            "color": "bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500",
+            "icon": "💃",
+            "image": "/haudong.jpg",
+            "passive": "copy-card",
+            "question": "Trong lễ Hầu đồng, người hầu gọi là gì?",
+            "correctAnswer": "Đồng cốt, ông đồng, bà đồng",
             "options": [
-              "Cấm đoán",
-              "Bắt buộc",
-              "Không thể bằng cưỡng bức mà phải bằng giáo dục",
-              "Dùng vũ lực"
+              "Thầy cúng",
+              "Đồng cốt, ông đồng, bà đồng",
+              "Thầy pháp",
+              "Linh mục"
             ]
           },
           {
-            "id": "card-1765873110692-7phyzaud1",
+            "id": "card-1765880881563-1wpbv91ii",
+            "type": "tu-bi",
+            "name": "Từ Bi",
+            "value": 20,
+            "description": "Hồi 20 HP + Passive: Hồi thêm 5 HP cho đồng minh mỗi turn",
+            "color": "bg-gradient-to-br from-yellow-500 to-orange-500",
+            "icon": "🙏",
+            "image": "/tubi.jpg",
+            "passive": "compassion-heal",
+            "question": "Luật Tín ngưỡng Tôn giáo được Quốc hội thông qua năm nào?",
+            "correctAnswer": "2016",
+            "options": [
+              "2010",
+              "2013",
+              "2016",
+              "2020"
+            ]
+          },
+          {
+            "id": "card-1765880881564-5feco825n",
             "type": "phep-la",
             "name": "Phép Lạ",
             "value": 0,
@@ -58,25 +77,113 @@
             "icon": "🕊️",
             "image": "/phepla.png",
             "passive": "revive-once",
-            "question": "Ngày Phật đản được nghỉ lễ từ năm nào?",
-            "correctAnswer": "2019",
+            "question": "Nhà nước Việt Nam có phân biệt đối xử về tôn giáo không?",
+            "correctAnswer": "Không",
             "options": [
-              "2010",
-              "2015",
-              "2019",
-              "2020"
+              "Có",
+              "Không",
+              "Chỉ với tôn giáo nhỏ",
+              "Tùy trường hợp"
             ]
           },
           {
-            "id": "card-1765873110693-t7zs3nibo",
-            "type": "bat-dong-tam",
-            "name": "Bất Động Tâm",
+            "id": "card-1765880881565-kp3ctig73",
+            "type": "nhan-qua",
+            "name": "Nhân Quả",
             "value": 0,
-            "description": "Miễn nhiễm damage lần đầu trong 2 turn + Giảm 30% damage",
-            "color": "bg-gradient-to-br from-green-400 to-emerald-600",
-            "icon": "🧘",
-            "image": "/batdongtam.jpg",
-            "passive": "immunity-and-reduction",
+            "description": "Counter: Phản lại x2.5 damage",
+            "color": "bg-gradient-to-br from-purple-600 to-indigo-800",
+            "icon": "☸️",
+            "image": "/nhanqua.jpg",
+            "passive": "counter-2.5x",
+            "question": "Đảng ta xử lý thế nào với hành vi lợi dụng tôn giáo?",
+            "correctAnswer": "Xử lý nghiêm theo pháp luật",
+            "options": [
+              "Không xử lý",
+              "Xử lý nghiêm theo pháp luật",
+              "Khuyên nhủ",
+              "Bỏ qua"
+            ]
+          }
+        ],
+        "score": 0,
+        "ready": false,
+        "hasDrawnCardThisTurn": false
+      },
+      {
+        "id": "player-1765880870477-33h1awfkt",
+        "name": "Nguyen Quan",
+        "team": "blue",
+        "health": 100,
+        "maxHealth": 100,
+        "cards": [
+          {
+            "id": "card-1765880881565-fi9tegpnk",
+            "type": "tu-bi",
+            "name": "Từ Bi",
+            "value": 20,
+            "description": "Hồi 20 HP + Passive: Hồi thêm 5 HP cho đồng minh mỗi turn",
+            "color": "bg-gradient-to-br from-yellow-500 to-orange-500",
+            "icon": "🙏",
+            "image": "/tubi.jpg",
+            "passive": "compassion-heal",
+            "question": "Nhà thờ Đức Bà Sài Gòn xây dựng năm nào?",
+            "correctAnswer": "1880",
+            "options": [
+              "1850",
+              "1880",
+              "1900",
+              "1920"
+            ]
+          },
+          {
+            "id": "card-1765880881566-5rv0mi4wb",
+            "type": "thap-tu-giao",
+            "name": "Thập Tự Giáo",
+            "value": -18,
+            "description": "Gây 18 damage + Nếu đối thủ đã nhận damage turn trước, gây thêm 12 damage",
+            "color": "bg-gradient-to-br from-red-700 to-red-900",
+            "icon": "⚔️",
+            "image": "/thaptugiao.jpg",
+            "passive": "combo-damage",
+            "question": "Tôn giáo nào có đặc điểm thờ Đức Cao Đài Tiên Ông?",
+            "correctAnswer": "Đạo Cao Đài",
+            "options": [
+              "Đạo Hòa Hảo",
+              "Đạo Cao Đài",
+              "Phật giáo",
+              "Công giáo"
+            ]
+          },
+          {
+            "id": "card-1765880881567-l0mxeqtuh",
+            "type": "tinh-than-dan-toc",
+            "name": "Tinh Thần Dân Tộc",
+            "value": -15,
+            "description": "Gây 15 damage + Nếu HP đối thủ > 70%, gây thêm 15 damage",
+            "color": "bg-gradient-to-br from-yellow-600 to-amber-800",
+            "icon": "🇻🇳",
+            "image": "/tinhThanDanToc.jpg",
+            "passive": "execute-bonus",
+            "question": "Đảng ta xem xét vấn đề tôn giáo trên lập trường nào?",
+            "correctAnswer": "Lập trường giai cấp công nhân",
+            "options": [
+              "Lập trường tư sản",
+              "Lập trường giai cấp công nhân",
+              "Lập trường trung lập",
+              "Lập trường tôn giáo"
+            ]
+          },
+          {
+            "id": "card-1765880881568-jbotczius",
+            "type": "tinh-than-dan-toc",
+            "name": "Tinh Thần Dân Tộc",
+            "value": -15,
+            "description": "Gây 15 damage + Nếu HP đối thủ > 70%, gây thêm 15 damage",
+            "color": "bg-gradient-to-br from-yellow-600 to-amber-800",
+            "icon": "🇻🇳",
+            "image": "/tinhThanDanToc.jpg",
+            "passive": "execute-bonus",
             "question": "Chủ tịch Hồ Chí Minh nói gì về tín đồ các tôn giáo?",
             "correctAnswer": "Đồng bào có đạo cũng là con cháu Lạc Long Quân",
             "options": [
@@ -87,63 +194,102 @@
             ]
           },
           {
-            "id": "card-1765873110694-aaq2ii8il",
-            "type": "hau-dong",
-            "name": "Hầu Đồng",
+            "id": "card-1765880881568-det0fp5c4",
+            "type": "bon-cung-thanh-mau",
+            "name": "Bốn Cung Thánh Mẫu",
             "value": 0,
-            "description": "Copy 1 thẻ đã dùng trong game (random)",
-            "color": "bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500",
-            "icon": "💃",
-            "image": "/haudong.jpg",
-            "passive": "copy-card",
-            "question": "Hầu đồng sử dụng nhạc cụ nào?",
-            "correctAnswer": "Trống, mõ, chuông, ngũ âm",
+            "description": "Chọn: Thiên (20 DMG) / Địa (+20 DEF) / Thủy (Hồi 20 HP) / Sơn lâm (Độc 5 HP/turn x3)",
+            "color": "bg-gradient-to-br from-pink-400 via-blue-400 to-yellow-400",
+            "icon": "👸",
+            "image": "/boncungthanhmau.jpg",
+            "passive": "choice-4-elements",
+            "question": "Tín ngưỡng thờ Mẫu xuất phát từ đâu?",
+            "correctAnswer": "Tín ngưỡng dân gian Việt Nam",
             "options": [
-              "Đàn piano",
-              "Trống, mõ, chuông, ngũ âm",
-              "Guitar",
-              "Organ"
+              "Trung Quốc",
+              "Tín ngưỡng dân gian Việt Nam",
+              "Ấn Độ",
+              "Pháp"
             ]
           }
         ],
         "score": 0,
-        "ready": false
+        "ready": false,
+        "hasDrawnCardThisTurn": false
       }
     ],
     "maxPlayers": 2,
-    "status": "in-progress",
+    "status": "waiting",
     "gameState": {
-      "id": "game-1765873110697-x835lstyb",
-      "roomId": "room-1765873110697-6o6j42syg",
+      "id": "game-1765880881568-cd5n4wja5",
+      "roomId": "room-1765880881568-ff8thv9s7",
       "players": [
         {
-          "id": "player-1765873098678-y8k7buy1t",
-          "name": "Nguyen Quan",
+          "id": "player-1765880876475-t20cvhxzk",
+          "name": "NyanWyan",
           "team": "red",
           "health": 100,
           "maxHealth": 100,
           "cards": [
             {
-              "id": "card-1765873110692-r2g9ihmng",
-              "type": "tu-tai-gia",
-              "name": "Tu Tại Gia",
-              "value": 15,
-              "description": "Hồi 15 HP + Rút 1 thẻ (Không cần trả lời câu hỏi)",
-              "color": "bg-gradient-to-br from-amber-700 to-yellow-900",
-              "icon": "🏠",
-              "image": "/tutaigia.jpg",
-              "passive": "draw-card",
-              "question": "Lê-nin chỉ ra rằng xoá bỏ tôn giáo bằng cách nào?",
-              "correctAnswer": "Không thể bằng cưỡng bức mà phải bằng giáo dục",
+              "id": "card-1765880881562-idn9479bj",
+              "type": "loi-cau-nguyen",
+              "name": "Lời Cầu Nguyện",
+              "value": 25,
+              "description": "Hồi 25 HP + Bonus: Nếu HP < 30%, hồi thêm 15 HP",
+              "color": "bg-gradient-to-br from-white to-gray-300",
+              "icon": "🙏",
+              "image": "/loicaunguyen.jpg",
+              "passive": "low-hp-bonus",
+              "question": "Đạo nào là tôn giáo bản địa của Việt Nam?",
+              "correctAnswer": "Đạo Cao Đài và Đạo Hòa Hảo",
               "options": [
-                "Cấm đoán",
-                "Bắt buộc",
-                "Không thể bằng cưỡng bức mà phải bằng giáo dục",
-                "Dùng vũ lực"
+                "Phật giáo",
+                "Công giáo",
+                "Đạo Cao Đài và Đạo Hòa Hảo",
+                "Tin Lành"
               ]
             },
             {
-              "id": "card-1765873110692-7phyzaud1",
+              "id": "card-1765880881562-4lsx3wlfd",
+              "type": "hau-dong",
+              "name": "Hầu Đồng",
+              "value": 0,
+              "description": "Copy 1 thẻ đã dùng trong game (random)",
+              "color": "bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500",
+              "icon": "💃",
+              "image": "/haudong.jpg",
+              "passive": "copy-card",
+              "question": "Trong lễ Hầu đồng, người hầu gọi là gì?",
+              "correctAnswer": "Đồng cốt, ông đồng, bà đồng",
+              "options": [
+                "Thầy cúng",
+                "Đồng cốt, ông đồng, bà đồng",
+                "Thầy pháp",
+                "Linh mục"
+              ]
+            },
+            {
+              "id": "card-1765880881563-1wpbv91ii",
+              "type": "tu-bi",
+              "name": "Từ Bi",
+              "value": 20,
+              "description": "Hồi 20 HP + Passive: Hồi thêm 5 HP cho đồng minh mỗi turn",
+              "color": "bg-gradient-to-br from-yellow-500 to-orange-500",
+              "icon": "🙏",
+              "image": "/tubi.jpg",
+              "passive": "compassion-heal",
+              "question": "Luật Tín ngưỡng Tôn giáo được Quốc hội thông qua năm nào?",
+              "correctAnswer": "2016",
+              "options": [
+                "2010",
+                "2013",
+                "2016",
+                "2020"
+              ]
+            },
+            {
+              "id": "card-1765880881564-5feco825n",
               "type": "phep-la",
               "name": "Phép Lạ",
               "value": 0,
@@ -152,36 +298,36 @@
               "icon": "🕊️",
               "image": "/phepla.png",
               "passive": "revive-once",
-              "question": "Ngày Phật đản được nghỉ lễ từ năm nào?",
-              "correctAnswer": "2019",
+              "question": "Nhà nước Việt Nam có phân biệt đối xử về tôn giáo không?",
+              "correctAnswer": "Không",
               "options": [
-                "2010",
-                "2015",
-                "2019",
-                "2020"
+                "Có",
+                "Không",
+                "Chỉ với tôn giáo nhỏ",
+                "Tùy trường hợp"
               ]
             },
             {
-              "id": "card-1765873110693-t7zs3nibo",
-              "type": "bat-dong-tam",
-              "name": "Bất Động Tâm",
+              "id": "card-1765880881565-kp3ctig73",
+              "type": "nhan-qua",
+              "name": "Nhân Quả",
               "value": 0,
-              "description": "Miễn nhiễm damage lần đầu trong 2 turn + Giảm 30% damage",
-              "color": "bg-gradient-to-br from-green-400 to-emerald-600",
-              "icon": "🧘",
-              "image": "/batdongtam.jpg",
-              "passive": "immunity-and-reduction",
-              "question": "Chủ tịch Hồ Chí Minh nói gì về tín đồ các tôn giáo?",
-              "correctAnswer": "Đồng bào có đạo cũng là con cháu Lạc Long Quân",
+              "description": "Counter: Phản lại x2.5 damage",
+              "color": "bg-gradient-to-br from-purple-600 to-indigo-800",
+              "icon": "☸️",
+              "image": "/nhanqua.jpg",
+              "passive": "counter-2.5x",
+              "question": "Đảng ta xử lý thế nào với hành vi lợi dụng tôn giáo?",
+              "correctAnswer": "Xử lý nghiêm theo pháp luật",
               "options": [
-                "Đồng bào có đạo cũng là con cháu Lạc Long Quân",
-                "Tín đồ là kẻ thù",
-                "Không được theo đạo",
-                "Phải bỏ đạo"
+                "Không xử lý",
+                "Xử lý nghiêm theo pháp luật",
+                "Khuyên nhủ",
+                "Bỏ qua"
               ]
             },
             {
-              "id": "card-1765873110694-aaq2ii8il",
+              "id": "card-1765880919819-1wqzy7c3i",
               "type": "hau-dong",
               "name": "Hầu Đồng",
               "value": 0,
@@ -201,112 +347,56 @@
             }
           ],
           "score": 0,
-          "ready": true
+          "ready": false,
+          "hasDrawnCardThisTurn": true
         },
         {
-          "id": "player-1765873089884-xuc8i0d9b",
-          "name": "cursor",
+          "id": "player-1765880870477-33h1awfkt",
+          "name": "Nguyen Quan",
           "team": "blue",
-          "health": 88,
+          "health": 100,
           "maxHealth": 100,
           "cards": [
             {
-              "id": "card-1765873110695-4c61k3dhd",
-              "type": "loi-cau-nguyen",
-              "name": "Lời Cầu Nguyện",
-              "value": 25,
-              "description": "Hồi 25 HP + Bonus: Nếu HP < 30%, hồi thêm 15 HP",
-              "color": "bg-gradient-to-br from-white to-gray-300",
+              "id": "card-1765880881565-fi9tegpnk",
+              "type": "tu-bi",
+              "name": "Từ Bi",
+              "value": 20,
+              "description": "Hồi 20 HP + Passive: Hồi thêm 5 HP cho đồng minh mỗi turn",
+              "color": "bg-gradient-to-br from-yellow-500 to-orange-500",
               "icon": "🙏",
-              "image": "/loicaunguyen.jpg",
-              "passive": "low-hp-bonus",
-              "question": "Công giáo truyền vào Việt Nam từ thế kỷ nào?",
-              "correctAnswer": "Thế kỷ XVI",
+              "image": "/tubi.jpg",
+              "passive": "compassion-heal",
+              "question": "Nhà thờ Đức Bà Sài Gòn xây dựng năm nào?",
+              "correctAnswer": "1880",
               "options": [
-                "Thế kỷ X",
-                "Thế kỷ XVI",
-                "Thế kỷ XIX",
-                "Thế kỷ XX"
-              ]
-            },
-            {
-              "id": "card-1765873110695-3grzws4r1",
-              "type": "thien-nhan",
-              "name": "Thiên Nhãn",
-              "value": 0,
-              "description": "Xem 3 thẻ tiếp của đối thủ + Nếu có thẻ ATK, được đặt counter miễn phí",
-              "color": "bg-gradient-to-br from-purple-600 to-indigo-700",
-              "icon": "🔮",
-              "image": "/thiennhan.jpg",
-              "passive": "preview-cards",
-              "question": "Công giáo truyền vào Việt Nam từ thế kỷ nào?",
-              "correctAnswer": "Thế kỷ XVI",
-              "options": [
-                "Thế kỷ X",
-                "Thế kỷ XVI",
-                "Thế kỷ XIX",
-                "Thế kỷ XX"
-              ]
-            },
-            {
-              "id": "card-1765873110696-xq6336t87",
-              "type": "truyen-giao",
-              "name": "Truyền Giáo",
-              "value": -12,
-              "description": "Gây 12 damage + Làm yếu: Đối thủ nhận +5 damage mọi nguồn (2 turn)",
-              "color": "bg-gradient-to-br from-orange-500 to-red-600",
-              "icon": "📖",
-              "image": "/truyengiao.jpg",
-              "passive": "weaken-debuff",
-              "question": "Thánh Kinh được dịch ra tiếng Việt lần đầu năm nào?",
-              "correctAnswer": "1926",
-              "options": [
+                "1850",
+                "1880",
                 "1900",
-                "1926",
-                "1950",
-                "1975"
+                "1920"
               ]
             },
             {
-              "id": "card-1765873110696-nwf6v457h",
-              "type": "bon-cung-thanh-mau",
-              "name": "Bốn Cung Thánh Mẫu",
-              "value": 0,
-              "description": "Chọn: Thiên (20 DMG) / Địa (+20 DEF) / Thủy (Hồi 20 HP) / Sơn lâm (Độc 5 HP/turn x3)",
-              "color": "bg-gradient-to-br from-pink-400 via-blue-400 to-yellow-400",
-              "icon": "👸",
-              "image": "/boncungthanhmau.jpg",
-              "passive": "choice-4-elements",
-              "question": "Nghi lễ Hầu đồng có đặc điểm gì?",
-              "correctAnswer": "Múa hát thể hiện sự giáng lâm của thần thánh",
+              "id": "card-1765880881566-5rv0mi4wb",
+              "type": "thap-tu-giao",
+              "name": "Thập Tự Giáo",
+              "value": -18,
+              "description": "Gây 18 damage + Nếu đối thủ đã nhận damage turn trước, gây thêm 12 damage",
+              "color": "bg-gradient-to-br from-red-700 to-red-900",
+              "icon": "⚔️",
+              "image": "/thaptugiao.jpg",
+              "passive": "combo-damage",
+              "question": "Tôn giáo nào có đặc điểm thờ Đức Cao Đài Tiên Ông?",
+              "correctAnswer": "Đạo Cao Đài",
               "options": [
-                "Im lặng thiền định",
-                "Múa hát thể hiện sự giáng lâm của thần thánh",
-                "Đọc kinh",
-                "Cầu nguyện"
+                "Đạo Hòa Hảo",
+                "Đạo Cao Đài",
+                "Phật giáo",
+                "Công giáo"
               ]
             },
             {
-              "id": "card-1765873110697-wuyc9frkn",
-              "type": "nhan-qua",
-              "name": "Nhân Quả",
-              "value": 0,
-              "description": "Counter: Phản lại x2.5 damage",
-              "color": "bg-gradient-to-br from-purple-600 to-indigo-800",
-              "icon": "☸️",
-              "image": "/nhanqua.jpg",
-              "passive": "counter-2.5x",
-              "question": "Ăng-ghen nói nguồn gốc tôn giáo là gì?",
-              "correctAnswer": "Từ quan niệm sai lầm về tự nhiên và xã hội",
-              "options": [
-                "Từ thần linh",
-                "Từ quan niệm sai lầm về tự nhiên và xã hội",
-                "Do trời sinh",
-                "Từ bản năng"
-              ]
-            },
-            {
-              "id": "card-1765873878057-rphoztb8o",
+              "id": "card-1765880881567-l0mxeqtuh",
               "type": "tinh-than-dan-toc",
               "name": "Tinh Thần Dân Tộc",
               "value": -15,
@@ -315,59 +405,83 @@
               "icon": "🇻🇳",
               "image": "/tinhThanDanToc.jpg",
               "passive": "execute-bonus",
-              "question": "Hồ Chí Minh đối xử với các vị chức sắc tôn giáo thế nào?",
-              "correctAnswer": "Tôn trọng và đoàn kết",
+              "question": "Đảng ta xem xét vấn đề tôn giáo trên lập trường nào?",
+              "correctAnswer": "Lập trường giai cấp công nhân",
               "options": [
-                "Kỳ thị",
-                "Tôn trọng và đoàn kết",
-                "Xa lánh",
-                "Nghi ngờ"
+                "Lập trường tư sản",
+                "Lập trường giai cấp công nhân",
+                "Lập trường trung lập",
+                "Lập trường tôn giáo"
+              ]
+            },
+            {
+              "id": "card-1765880881568-jbotczius",
+              "type": "tinh-than-dan-toc",
+              "name": "Tinh Thần Dân Tộc",
+              "value": -15,
+              "description": "Gây 15 damage + Nếu HP đối thủ > 70%, gây thêm 15 damage",
+              "color": "bg-gradient-to-br from-yellow-600 to-amber-800",
+              "icon": "🇻🇳",
+              "image": "/tinhThanDanToc.jpg",
+              "passive": "execute-bonus",
+              "question": "Chủ tịch Hồ Chí Minh nói gì về tín đồ các tôn giáo?",
+              "correctAnswer": "Đồng bào có đạo cũng là con cháu Lạc Long Quân",
+              "options": [
+                "Đồng bào có đạo cũng là con cháu Lạc Long Quân",
+                "Tín đồ là kẻ thù",
+                "Không được theo đạo",
+                "Phải bỏ đạo"
+              ]
+            },
+            {
+              "id": "card-1765880881568-det0fp5c4",
+              "type": "bon-cung-thanh-mau",
+              "name": "Bốn Cung Thánh Mẫu",
+              "value": 0,
+              "description": "Chọn: Thiên (20 DMG) / Địa (+20 DEF) / Thủy (Hồi 20 HP) / Sơn lâm (Độc 5 HP/turn x3)",
+              "color": "bg-gradient-to-br from-pink-400 via-blue-400 to-yellow-400",
+              "icon": "👸",
+              "image": "/boncungthanhmau.jpg",
+              "passive": "choice-4-elements",
+              "question": "Tín ngưỡng thờ Mẫu xuất phát từ đâu?",
+              "correctAnswer": "Tín ngưỡng dân gian Việt Nam",
+              "options": [
+                "Trung Quốc",
+                "Tín ngưỡng dân gian Việt Nam",
+                "Ấn Độ",
+                "Pháp"
               ]
             }
           ],
           "score": 0,
-          "ready": true
+          "ready": false,
+          "hasDrawnCardThisTurn": false
         }
       ],
-      "currentTurn": "red",
-      "turnNumber": 3,
-      "status": "active",
+      "currentTurn": "blue",
+      "turnNumber": 2,
+      "status": "paused",
       "winner": null,
-      "startTime": 1765873111658,
+      "startTime": 1765880881568,
       "endTime": null,
       "history": [
         {
-          "playerId": "player-1765873098678-y8k7buy1t",
-          "playerName": "Nguyen Quan",
+          "playerId": "player-1765880876475-t20cvhxzk",
+          "playerName": "NyanWyan",
           "team": "red",
-          "action": "play-card",
-          "card": {
-            "id": "card-1765873110691-rw0sre9a7",
-            "type": "truyen-giao",
-            "name": "Truyền Giáo",
-            "value": -12,
-            "description": "Gây 12 damage + Làm yếu: Đối thủ nhận +5 damage mọi nguồn (2 turn)",
-            "color": "bg-gradient-to-br from-orange-500 to-red-600",
-            "icon": "📖",
-            "image": "/truyengiao.jpg",
-            "passive": "weaken-debuff",
-            "question": "Tin Lành nhấn mạnh nguyên tắc nào?",
-            "correctAnswer": "Duy nhất Thánh Kinh",
-            "options": [
-              "Truyền thống",
-              "Duy nhất Thánh Kinh",
-              "Giáo hoàng",
-              "Nghi lễ"
-            ]
-          },
-          "timestamp": 1765873731433,
-          "effect": "Truyền Giáo: -12 HP + Debuff: +5 damage (2 turn)",
-          "questionPoints": 10,
-          "answerTime": 0
+          "action": "skip-turn",
+          "timestamp": 1765880919819,
+          "effect": "NyanWyan bỏ lượt (hết thời gian)"
         }
       ],
-      "passiveEffects": []
+      "passiveEffects": [],
+      "turnTimerSeconds": 30,
+      "questionTimerSeconds": 15,
+      "currentTurnStartTime": 1765880919819,
+      "pausedAt": 1765880942817,
+      "pausedByPlayerId": "player-1765880870477-33h1awfkt",
+      "pausedTurnStartTime": 1765880919819
     },
-    "createdAt": 1765873110697
+    "createdAt": 1765880881568
   }
 ]
